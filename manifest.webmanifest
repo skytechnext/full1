@@ -1,0 +1,21 @@
+{
+  "name": "Casa Escondida Anilao — Strategy & Odoo 19 ERP Blueprint",
+  "short_name": "Casa Escondida",
+  "description": "Client due-diligence, market analysis and Odoo 19 ERP transformation blueprint for Casa Escondida Anilao Resort & Dive Center, by Technext.",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0a0f1a",
+  "theme_color": "#0a0f1a",
+  "categories": ["business", "productivity"],
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Staff Guides", "url": "staff-guides.html" },
+    { "name": "Stakeholder Questions", "url": "stakeholder-questions.html" }
+  ]
+}

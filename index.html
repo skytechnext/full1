@@ -3,6 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#0a0f1a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Casa Escondida">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" type="image/png" href="icon-192.png">
 <title>Casa Escondida Anilao · Strategic Due Diligence & Odoo 19 ERP Blueprint · Technext</title>
 <meta name="description" content="Comprehensive client due-diligence, market analysis and Odoo 19 ERP transformation blueprint for Casa Escondida Anilao Resort &amp; Dive Center, prepared by Technext.">
 <script>/* Chart.js 4.4.1 (vendored inline) */
@@ -2111,6 +2118,10 @@ html[data-theme="light"] #topbar{background:rgba(255,255,255,.85)}
 #sidenav a:hover{background:var(--panel);color:var(--ink)}
 #sidenav a.active{background:var(--panel);color:var(--teal);border-left-color:var(--teal);font-weight:600}
 main{min-width:0;padding:0 clamp(16px,3.5vw,56px)}
+.navtoggle{padding:5px 11px;font-size:1rem;line-height:1}
+body.nav-collapsed #sidenav{display:none}
+body.nav-collapsed .shell{grid-template-columns:1fr}
+#sidenav{transition:none}
 section{padding:64px 0 32px;border-bottom:1px solid var(--line);scroll-margin-top:70px}
 .wrap{max-width:var(--maxw);margin:0 auto}
 
@@ -2251,11 +2262,11 @@ footer{padding:50px 24px 70px;text-align:center;color:var(--muted);font-size:.82
 <body>
 <div id="progress"></div>
 <div id="topbar">
-  <div class="brand"><span class="logo">🌊</span><span>Technext × Casa Escondida</span></div>
+  <div class="brand"><button class="tb-btn navtoggle" onclick="toggleNav()" aria-label="Toggle sidebar" title="Toggle sidebar">☰</button><span class="logo">🌊</span><span>Technext × Casa Escondida</span></div>
   <div class="tb-actions">
     <input id="search" placeholder="Search report…" oninput="doSearch(this.value)">
     <button class="tb-btn" onclick="toggleTheme()">◐ Theme</button>
-    <button class="tb-btn" onclick="window.print()">⎙ PDF</button>
+    <button class="tb-btn" id="installBtn" style="display:none" onclick="pwaInstall()">⬇ Install</button>
   </div>
 </div>
 
@@ -3726,6 +3737,17 @@ regChart(()=>mkChart('cRisk',{type:'bubble',data:{datasets:[
   {label:'Connectivity',data:[{x:2.4,y:3.6,r:11}],backgroundColor:'rgba(244,114,182,.6)'}
 ]},options:baseOpts({scales:{x:{title:{display:true,text:'Probability →',color:inkColors().tick},min:1,max:5,grid:{color:inkColors().grid},ticks:{color:inkColors().tick}},y:{title:{display:true,text:'Impact →',color:inkColors().tick},min:1,max:5,grid:{color:inkColors().grid},ticks:{color:inkColors().tick}}}})}));
 /*CHART-DEFS*/
+</script>
+<script>
+/* ---------- SIDEBAR TOGGLE ---------- */
+function toggleNav(){document.body.classList.toggle('nav-collapsed');try{localStorage.setItem('ce_nav',document.body.classList.contains('nav-collapsed')?'0':'1')}catch(e){}}
+(function(){try{if(localStorage.getItem('ce_nav')==='0')document.body.classList.add('nav-collapsed')}catch(e){}})();
+/* ---------- PWA: install prompt + service worker ---------- */
+let _deferredPrompt=null;
+window.addEventListener('beforeinstallprompt',(e)=>{e.preventDefault();_deferredPrompt=e;const b=document.getElementById('installBtn');if(b)b.style.display='';});
+function pwaInstall(){if(_deferredPrompt){_deferredPrompt.prompt();_deferredPrompt.userChoice.finally(()=>{_deferredPrompt=null;const b=document.getElementById('installBtn');if(b)b.style.display='none';});}}
+window.addEventListener('appinstalled',()=>{const b=document.getElementById('installBtn');if(b)b.style.display='none';});
+if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{});});}
 </script>
 </body>
 </html>
