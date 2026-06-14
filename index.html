@@ -9,7 +9,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Casa Escondida">
 <link rel="apple-touch-icon" href="icon-192.png">
-<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="icon" href="assets/favicon.svg">
 <title>Casa Escondida Anilao · Strategic Due Diligence & Odoo 19 ERP Blueprint · Technext</title>
 <meta name="description" content="Comprehensive client due-diligence, market analysis and Odoo 19 ERP transformation blueprint for Casa Escondida Anilao Resort &amp; Dive Center, prepared by Technext.">
 <script>/* Chart.js 4.4.1 (vendored inline) */
@@ -2118,10 +2118,22 @@ html[data-theme="light"] #topbar{background:rgba(255,255,255,.85)}
 #sidenav a:hover{background:var(--panel);color:var(--ink)}
 #sidenav a.active{background:var(--panel);color:var(--teal);border-left-color:var(--teal);font-weight:600}
 main{min-width:0;padding:0 clamp(16px,3.5vw,56px)}
-.navtoggle{padding:5px 11px;font-size:1rem;line-height:1}
+.navtoggle{padding:5px 11px;font-size:1.05rem;line-height:1}
+.brandlogo{height:30px;width:auto;display:block}
+.tb-sub{color:var(--muted);font-size:.8rem;font-weight:600}
 body.nav-collapsed #sidenav{display:none}
 body.nav-collapsed .shell{grid-template-columns:1fr}
-#sidenav{transition:none}
+/* sidebar control cluster (search/theme/install moved here) */
+.nav-controls{padding:4px 8px 14px;border-bottom:1px solid var(--line);margin-bottom:8px}
+.nav-controls #search{width:100%;margin-bottom:8px;display:block}
+.nav-btnrow{display:flex;gap:8px;flex-wrap:wrap}
+.nav-btnrow .tb-btn{flex:1;text-align:center}
+/* responsive mermaid diagrams */
+.mermaid{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.mermaid svg{max-width:100%;height:auto;display:block;margin:0 auto}
+@media(max-width:760px){.mermaid svg{min-width:560px}}
+#scrim{position:fixed;inset:56px 0 0 0;background:rgba(0,0,0,.5);z-index:840;opacity:0;pointer-events:none;transition:opacity .3s}
+body.nav-open #scrim{opacity:1;pointer-events:auto}
 section{padding:64px 0 32px;border-bottom:1px solid var(--line);scroll-margin-top:70px}
 .wrap{max-width:var(--maxw);margin:0 auto}
 
@@ -2253,7 +2265,11 @@ footer{padding:50px 24px 70px;text-align:center;color:var(--muted);font-size:.82
   .print-only{display:block}
 }
 @media(max-width:1080px){
-  .shell{grid-template-columns:1fr}#sidenav{display:none}
+  .shell{grid-template-columns:1fr}
+  #sidenav{position:fixed;left:0;top:56px;bottom:0;width:84vw;max-width:320px;background:var(--bg2);z-index:850;
+    transform:translateX(-104%);transition:transform .3s ease;box-shadow:var(--shadow);height:auto}
+  body.nav-open #sidenav{transform:none}
+  body.nav-collapsed #sidenav{display:block} /* on mobile, visibility is driven by nav-open */
   .g4{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:1fr}
 }
 @media(max-width:680px){.g2,.g4,.quad{grid-template-columns:1fr}#search{display:none}}
@@ -2262,16 +2278,12 @@ footer{padding:50px 24px 70px;text-align:center;color:var(--muted);font-size:.82
 <body>
 <div id="progress"></div>
 <div id="topbar">
-  <div class="brand"><button class="tb-btn navtoggle" onclick="toggleNav()" aria-label="Toggle sidebar" title="Toggle sidebar">☰</button><span class="logo">🌊</span><span>Technext × Casa Escondida</span></div>
-  <div class="tb-actions">
-    <input id="search" placeholder="Search report…" oninput="doSearch(this.value)">
-    <button class="tb-btn" onclick="toggleTheme()">◐ Theme</button>
-    <button class="tb-btn" id="installBtn" style="display:none" onclick="pwaInstall()">⬇ Install</button>
-  </div>
+  <div class="brand"><button class="tb-btn navtoggle" onclick="toggleNav()" aria-label="Toggle menu" title="Menu">☰</button><img class="brandlogo" src="assets/logo-white.svg" alt="Casa Escondida"><span class="tb-sub">× Technext</span></div>
 </div>
 
+<div id="scrim" onclick="closeNavMobile()"></div>
 <div class="shell">
-  <nav id="sidenav"></nav>
+  <nav id="sidenav" onclick="if(event.target.tagName==='A')closeNavMobile()"></nav>
   <main>
 
   <!-- ============ HERO ============ -->
@@ -3627,7 +3639,8 @@ function runCount(el){el.classList.add('cnt-done');const t=parseFloat(el.dataset
 function buildNav(){
   const nav=document.getElementById('sidenav');const groups={};
   document.querySelectorAll('section[data-nav]').forEach(s=>{const g=s.dataset.grp||'';(groups[g]=groups[g]||[]).push(s);});
-  let html='';for(const g in groups){if(g)html+=`<div class="grp">${g}</div>`;groups[g].forEach(s=>{html+=`<a href="#${s.id}">${s.dataset.nav}</a>`;});}
+  let html='<div class="nav-controls"><input id="search" placeholder="Search report…" oninput="doSearch(this.value)"><div class="nav-btnrow"><button class="tb-btn" onclick="toggleTheme()">◐ Theme</button><button class="tb-btn" id="installBtn" style="display:none" onclick="pwaInstall()">⬇ Install</button></div></div>';
+  for(const g in groups){if(g)html+=`<div class="grp">${g}</div>`;groups[g].forEach(s=>{html+=`<a href="#${s.id}">${s.dataset.nav}</a>`;});}
   nav.innerHTML=html;
 }
 window.addEventListener('scroll',()=>{
@@ -3740,8 +3753,12 @@ regChart(()=>mkChart('cRisk',{type:'bubble',data:{datasets:[
 </script>
 <script>
 /* ---------- SIDEBAR TOGGLE ---------- */
-function toggleNav(){document.body.classList.toggle('nav-collapsed');try{localStorage.setItem('ce_nav',document.body.classList.contains('nav-collapsed')?'0':'1')}catch(e){}}
-(function(){try{if(localStorage.getItem('ce_nav')==='0')document.body.classList.add('nav-collapsed')}catch(e){}})();
+function toggleNav(){
+  if(window.matchMedia('(max-width:1080px)').matches){document.body.classList.toggle('nav-open');}
+  else{document.body.classList.toggle('nav-collapsed');try{localStorage.setItem('ce_nav',document.body.classList.contains('nav-collapsed')?'0':'1')}catch(e){}}
+}
+function closeNavMobile(){document.body.classList.remove('nav-open');}
+(function(){try{if(localStorage.getItem('ce_nav')==='0'&&!window.matchMedia('(max-width:1080px)').matches)document.body.classList.add('nav-collapsed')}catch(e){}})();
 /* ---------- PWA: install prompt + service worker ---------- */
 let _deferredPrompt=null;
 window.addEventListener('beforeinstallprompt',(e)=>{e.preventDefault();_deferredPrompt=e;const b=document.getElementById('installBtn');if(b)b.style.display='';});
