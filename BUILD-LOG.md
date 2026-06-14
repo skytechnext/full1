@@ -45,3 +45,21 @@ maintenance, project, calendar, contacts, **website, website_sale**, mail.
   a QloApps subscription activated; cannot be installed over the API. Rooms are currently modelled as priced,
   bookable eCommerce products. Spec in `odoo-build-spec/`.
 - **Chart-of-accounts swap to l10n_ph** — needs an empty-books window (see above).
+
+## Update — 14 Jun 2026 (round 2)
+- **Currency**: switched everything SGD→**PHP** (company, both pricelists incl. Default); **SGD deactivated**.
+- **Apps removed**: **To-do** (project_todo) uninstalled. **Discuss** menu hidden (the `mail` module is a core
+  framework dependency of CRM/Sales/HR/Website, so it cannot be uninstalled without removing them — its app
+  menu is deactivated instead).
+- **POS upgraded**: two configs — *Restaurant & Room Service* and *Dive Shop & Retail*. Restaurant has a
+  **floor plan**: 4 floors (Open-Air Dining, Beachfront Deck, Bar Lounge, Pool Deck) with **23 laid-out tables**.
+- **Inventory tracking**: F&B/bar/retail/Nitrox set **storable** (17 products) with initial on-hand stock; POS sales decrement stock.
+- **Automations**: **7 scheduled actions** (dynamic pricing, dive daily briefing, overbooking guard, post-stay
+  review, low-stock reorder, cert renewals, win-back) + **1 automated rule** (welcome message on booking confirmation).
+- **Branding/media**: real **room photos** from the website set on room products; **company logo** set (logo-color).
+- Restaurant, hotel (rooms) and dive center are all represented with products, images, stock, POS and pages.
+
+## Report site (GitHub Pages) — round 2
+- Header controls (search/theme/install) moved into the **toggleable hamburger sidebar**; top bar shows the
+  **Casa Escondida white logo**. Mobile sidebar slides in as an overlay. PDF button removed (earlier). 
+- Diagrams made responsive (Daily automation flow scrolls/scales on mobile). Full **PWA** (installable, offline).
