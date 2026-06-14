@@ -63,3 +63,20 @@ maintenance, project, calendar, contacts, **website, website_sale**, mail.
 - Header controls (search/theme/install) moved into the **toggleable hamburger sidebar**; top bar shows the
   **Casa Escondida white logo**. Mobile sidebar slides in as an overlay. PDF button removed (earlier). 
 - Diagrams made responsive (Daily automation flow scrolls/scales on mobile). Full **PWA** (installable, offline).
+
+## Update — 14 Jun 2026 (round 3)
+- **Report §16 → BPMN 2.0**: rebuilt Department Workflows as bpmn.io-style swimlane diagrams (9 processes:
+  reservation, check-in, F&B order-to-cash, housekeeping, dive dispatch, courses, gear servicing, retail,
+  checkout) via a dependency-free SVG renderer. Interview pain points surfaced explicitly.
+- **Daily automation flow** replaced with a clean step-pipeline (was a cramped Mermaid).
+- **Header**: controls in the hamburger sidebar; Casa Escondida white logo; responsive diagrams.
+- **New pages**: `odoo-sales.html` (comprehensive Odoo sales page — "Challenges in Hotel Operations" →
+  solution → modules → AI → ROI → packages → CTA) and `odoo-demo-guide.html` (9-step demo walkthrough with
+  talking points + the pain each step removes). Both PWA-cached and linked from the report.
+- **Odoo demo completeness** (edu-escondida.odoo.com):
+  - POS session **closed** (sales day posted → reporting/receipts/journal entries populated; 31 posted moves).
+  - **Kitchen Display** configured (`pos.prep.display` "Casa Escondida Kitchen", stages To-prepare/Ready/Completed)
+    + a **2nd open session with 6 live in-progress orders → 6 kitchen tickets (17 lines)**.
+  - **Calendar** populated with 18 dive-trip events (was empty).
+  - Pictures verified: 42/42 products imaged (real room photos), employees have avatars, company logo set.
+  - Every app now has demo data (Website, Sales, CRM, POS, Accounting, Inventory, HR, Maintenance, Project, Calendar).
