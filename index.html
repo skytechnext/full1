@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Casa Escondida Anilao · Strategic Due Diligence & Odoo 19 ERP Blueprint · Technext</title>
+<meta name="description" content="Comprehensive client due-diligence, market analysis and Odoo 19 ERP transformation blueprint for Casa Escondida Anilao Resort &amp; Dive Center, prepared by Technext.">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.min.js"></script>
+<style>
+:root{
+  --bg:#0a0f1a; --bg2:#0f1626; --panel:#121c30; --panel2:#16223a; --line:#1f2d49;
+  --ink:#e8f0fb; --ink2:#a9bdd8; --muted:#7388ab;
+  --teal:#19c6c6; --teal2:#0fa8b8; --aqua:#37e0c8; --blue:#3b82f6; --indigo:#6366f1;
+  --coral:#ff6b6b; --amber:#ffb454; --green:#36d399; --purple:#a78bfa; --pink:#f472b6;
+  --grad:linear-gradient(135deg,#19c6c6,#3b82f6 55%,#6366f1);
+  --grad2:linear-gradient(135deg,#37e0c8,#19c6c6);
+  --shadow:0 18px 50px -20px rgba(0,0,0,.65);
+  --radius:18px; --maxw:1180px;
+  --serif:"Georgia","Times New Roman",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+}
+html[data-theme="light"]{
+  --bg:#f3f7fc; --bg2:#ffffff; --panel:#ffffff; --panel2:#f1f6fc; --line:#dbe6f3;
+  --ink:#10203a; --ink2:#33486a; --muted:#64789a;
+  --shadow:0 18px 50px -24px rgba(20,50,90,.25);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:var(--teal);text-decoration:none}
+h1,h2,h3,h4{line-height:1.2;margin:0 0 .5em;font-weight:800;letter-spacing:-.02em}
+h2{font-size:clamp(1.6rem,3vw,2.4rem)}
+h3{font-size:1.35rem;margin-top:1.6em}
+h4{font-size:1.05rem;color:var(--aqua);text-transform:uppercase;letter-spacing:.08em;font-size:.85rem}
+p{margin:0 0 1em;color:var(--ink2)}
+strong{color:var(--ink)}
+small{color:var(--muted)}
+code{background:var(--panel2);padding:.1em .4em;border-radius:6px;font-size:.85em;color:var(--aqua)}
+
+/* progress bar */
+#progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--grad);z-index:1000;transition:width .1s}
+/* top bar */
+#topbar{position:fixed;top:0;left:0;right:0;height:56px;background:rgba(10,15,26,.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);z-index:900;display:flex;align-items:center;justify-content:space-between;padding:0 20px}
+html[data-theme="light"] #topbar{background:rgba(255,255,255,.85)}
+#topbar .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:-.02em}
+#topbar .logo{width:30px;height:30px;border-radius:9px;background:var(--grad);display:grid;place-items:center;font-size:15px;box-shadow:0 6px 16px -6px var(--teal)}
+.tb-actions{display:flex;gap:8px;align-items:center}
+.tb-btn{background:var(--panel);border:1px solid var(--line);color:var(--ink2);border-radius:10px;padding:7px 12px;cursor:pointer;font-size:.82rem;font-weight:600;transition:.2s}
+.tb-btn:hover{color:var(--ink);border-color:var(--teal)}
+#search{background:var(--panel);border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:7px 12px;font-size:.82rem;width:160px}
+
+/* layout */
+.shell{display:grid;grid-template-columns:262px 1fr;max-width:1480px;margin:0 auto;gap:0}
+#sidenav{position:sticky;top:56px;height:calc(100vh - 56px);overflow-y:auto;padding:22px 14px 60px;border-right:1px solid var(--line);font-size:.83rem}
+#sidenav .grp{color:var(--muted);text-transform:uppercase;letter-spacing:.12em;font-size:.66rem;font-weight:700;margin:18px 10px 6px}
+#sidenav a{display:block;color:var(--ink2);padding:6px 12px;border-radius:9px;border-left:2px solid transparent;transition:.15s;line-height:1.35}
+#sidenav a:hover{background:var(--panel);color:var(--ink)}
+#sidenav a.active{background:var(--panel);color:var(--teal);border-left-color:var(--teal);font-weight:600}
+main{min-width:0;padding:0 clamp(16px,3.5vw,56px)}
+section{padding:64px 0 32px;border-bottom:1px solid var(--line);scroll-margin-top:70px}
+.wrap{max-width:var(--maxw);margin:0 auto}
+
+/* hero */
+#hero{min-height:92vh;display:grid;place-items:center;text-align:center;position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(1200px 600px at 70% -10%,rgba(25,198,198,.22),transparent 60%),radial-gradient(900px 500px at 10% 110%,rgba(99,102,241,.22),transparent 55%);z-index:0}
+.bubbles{position:absolute;inset:0;z-index:0;overflow:hidden}
+.bubble{position:absolute;bottom:-60px;border-radius:50%;background:radial-gradient(circle at 30% 30%,rgba(255,255,255,.35),rgba(25,198,198,.05));border:1px solid rgba(255,255,255,.08);animation:rise linear infinite}
+@keyframes rise{0%{transform:translateY(0) translateX(0);opacity:0}10%{opacity:.7}90%{opacity:.5}100%{transform:translateY(-104vh) translateX(40px);opacity:0}}
+.hero-inner{position:relative;z-index:2;max-width:900px;padding:90px 24px}
+.eyebrow{display:inline-flex;gap:8px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:7px 16px;font-size:.78rem;color:var(--aqua);font-weight:600;margin-bottom:24px}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 0 var(--green);animation:pulse 2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(54,211,153,.6)}70%{box-shadow:0 0 0 9px rgba(54,211,153,0)}100%{box-shadow:0 0 0 0 rgba(54,211,153,0)}}
+#hero h1{font-size:clamp(2.4rem,6vw,4.6rem);background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:.25em}
+#hero .sub{font-size:clamp(1.05rem,2vw,1.4rem);color:var(--ink2);max-width:680px;margin:0 auto 30px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:18px}
+.chip{background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:8px 16px;font-size:.8rem;color:var(--ink2)}
+.chip b{color:var(--teal)}
+.scroll-hint{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);color:var(--muted);font-size:.78rem;z-index:2;animation:bob 2s infinite}
+@keyframes bob{50%{transform:translate(-50%,8px)}}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.2,.7,.3,1),transform .7s cubic-bezier(.2,.7,.3,1)}
+.reveal.in{opacity:1;transform:none}
+.reveal.d1{transition-delay:.08s}.reveal.d2{transition-delay:.16s}.reveal.d3{transition-delay:.24s}.reveal.d4{transition-delay:.32s}
+
+/* section header */
+.sec-tag{display:inline-block;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--teal);font-weight:700;margin-bottom:8px}
+.sec-num{font-family:var(--serif);font-style:italic;color:var(--muted);font-size:.95rem;margin-right:8px}
+.lead{font-size:1.12rem;color:var(--ink2);max-width:780px}
+
+/* cards & grids */
+.grid{display:grid;gap:18px}
+.g2{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow);transition:.25s}
+.card:hover{transform:translateY(-4px);border-color:var(--teal2)}
+.card h3{margin-top:0}
+.kpi{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:22px;position:relative;overflow:hidden}
+.kpi::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--grad)}
+.kpi .num{font-size:2.3rem;font-weight:900;letter-spacing:-.03em;background:var(--grad2);-webkit-background-clip:text;background-clip:text;color:transparent;line-height:1}
+.kpi .lbl{color:var(--ink2);font-size:.85rem;margin-top:6px}
+.kpi .sub{color:var(--muted);font-size:.74rem;margin-top:4px}
+.pill{display:inline-block;padding:3px 10px;border-radius:999px;font-size:.72rem;font-weight:700}
+.p-green{background:rgba(54,211,153,.14);color:var(--green)}
+.p-amber{background:rgba(255,180,84,.14);color:var(--amber)}
+.p-red{background:rgba(255,107,107,.14);color:var(--coral)}
+.p-blue{background:rgba(59,130,246,.16);color:#7eb0ff}
+.p-teal{background:rgba(25,198,198,.16);color:var(--teal)}
+.p-purple{background:rgba(167,139,250,.16);color:var(--purple)}
+
+/* tables */
+.tbl{width:100%;border-collapse:collapse;font-size:.86rem;margin:14px 0}
+.tbl th,.tbl td{text-align:left;padding:11px 13px;border-bottom:1px solid var(--line);vertical-align:top}
+.tbl th{color:var(--aqua);text-transform:uppercase;letter-spacing:.06em;font-size:.7rem;font-weight:700;background:var(--panel2)}
+.tbl tr:hover td{background:var(--panel2)}
+.tbl tbody tr:nth-child(even) td{background:rgba(255,255,255,.012)}
+.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px}
+
+/* chart container */
+.chartbox{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow)}
+.chartbox h4{margin:0 0 4px}
+.chartbox .cap{color:var(--muted);font-size:.76rem;margin-bottom:12px}
+.canvas-h{position:relative;height:300px}
+.canvas-h.tall{height:380px}
+
+/* tabs */
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0}
+.tab{background:var(--panel);border:1px solid var(--line);color:var(--ink2);padding:9px 16px;border-radius:11px;cursor:pointer;font-weight:600;font-size:.85rem;transition:.2s}
+.tab.active{background:var(--grad);color:#fff;border-color:transparent}
+.tabpane{display:none;animation:fade .4s}
+.tabpane.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1}}
+
+/* accordion */
+.acc{border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-bottom:10px;background:var(--panel)}
+.acc-head{padding:15px 18px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-weight:700;gap:12px}
+.acc-head:hover{background:var(--panel2)}
+.acc-head .ic{transition:.3s;color:var(--teal)}
+.acc.open .acc-head .ic{transform:rotate(45deg)}
+.acc-body{max-height:0;overflow:hidden;transition:max-height .45s ease;padding:0 18px}
+.acc.open .acc-body{max-height:4000px;padding:4px 18px 20px}
+
+/* swot / quad */
+.quad{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.quad .q{border-radius:16px;padding:20px;border:1px solid var(--line)}
+.q.s{background:linear-gradient(160deg,rgba(54,211,153,.12),transparent)}
+.q.w{background:linear-gradient(160deg,rgba(255,180,84,.12),transparent)}
+.q.o{background:linear-gradient(160deg,rgba(59,130,246,.12),transparent)}
+.q.t{background:linear-gradient(160deg,rgba(255,107,107,.12),transparent)}
+.q h4{color:var(--ink)}
+.q ul{margin:0;padding-left:18px}
+.q li{margin-bottom:7px;color:var(--ink2);font-size:.88rem}
+
+/* timeline */
+.tl{position:relative;margin:24px 0;padding-left:30px}
+.tl::before{content:"";position:absolute;left:9px;top:6px;bottom:6px;width:2px;background:var(--line)}
+.tl-item{position:relative;margin-bottom:22px}
+.tl-item::before{content:"";position:absolute;left:-26px;top:4px;width:14px;height:14px;border-radius:50%;background:var(--grad);box-shadow:0 0 0 4px var(--bg)}
+.tl-item .yr{color:var(--teal);font-weight:800;font-size:.85rem}
+
+/* heat grid */
+.heat{display:grid;gap:6px}
+.heat .cell{padding:10px;border-radius:9px;font-size:.78rem;font-weight:600}
+.h1{background:rgba(54,211,153,.18)}.h2{background:rgba(255,180,84,.2)}.h3{background:rgba(255,107,107,.22)}.h4{background:rgba(255,107,107,.4)}
+
+/* callout */
+.callout{border-left:3px solid var(--teal);background:var(--panel2);border-radius:0 14px 14px 0;padding:16px 20px;margin:16px 0}
+.callout.warn{border-left-color:var(--amber)}
+.callout.risk{border-left-color:var(--coral)}
+.callout .t{font-weight:700;color:var(--ink);margin-bottom:4px;font-size:.82rem;text-transform:uppercase;letter-spacing:.06em}
+
+/* mermaid */
+.mermaid{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;margin:16px 0;text-align:center;overflow-x:auto}
+
+/* persona / empathy */
+.bars-mini{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.bm{display:grid;grid-template-columns:130px 1fr 44px;align-items:center;gap:10px;font-size:.8rem}
+.bm .track{height:9px;border-radius:6px;background:var(--panel2);overflow:hidden}
+.bm .fill{height:100%;border-radius:6px;background:var(--grad);width:0;transition:width 1.2s ease}
+
+/* footer */
+footer{padding:50px 24px 70px;text-align:center;color:var(--muted);font-size:.82rem}
+.print-only{display:none}
+@media print{
+  #topbar,#sidenav,#progress,.scroll-hint,.tb-actions,.bubbles{display:none!important}
+  .shell{grid-template-columns:1fr}
+  body{background:#fff;color:#111}
+  section{break-inside:avoid;border-color:#ddd}
+  .print-only{display:block}
+}
+@media(max-width:1080px){
+  .shell{grid-template-columns:1fr}#sidenav{display:none}
+  .g4{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:1fr}
+}
+@media(max-width:680px){.g2,.g4,.quad{grid-template-columns:1fr}#search{display:none}}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<div id="topbar">
+  <div class="brand"><span class="logo">🌊</span><span>Technext × Casa Escondida</span></div>
+  <div class="tb-actions">
+    <input id="search" placeholder="Search report…" oninput="doSearch(this.value)">
+    <button class="tb-btn" onclick="toggleTheme()">◐ Theme</button>
+    <button class="tb-btn" onclick="window.print()">⎙ PDF</button>
+  </div>
+</div>
+
+<div class="shell">
+  <nav id="sidenav"></nav>
+  <main>
+
+  <!-- ============ HERO ============ -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="bubbles" id="bubbles"></div>
+    <div class="hero-inner">
+      <div class="eyebrow"><span class="dot"></span> Confidential Strategy &amp; Transformation Blueprint · v1.0</div>
+      <h1>Casa Escondida Anilao</h1>
+      <p class="sub">A 360° client due-diligence, market &amp; competitive analysis, and a build-ready <strong>Odoo&nbsp;19 ERP</strong> transformation blueprint for the resort, dive center &amp; restaurant — prepared by <strong>Technext</strong>.</p>
+      <div class="hero-meta">
+        <span class="chip">📍 Anilao, Mabini, Batangas 🇵🇭</span>
+        <span class="chip">🤿 PADI 5★ IDC Dive Center</span>
+        <span class="chip">📅 Prepared <b>14 Jun 2026</b></span>
+        <span class="chip">📊 <b>28</b> sections · <b>35+</b> visuals</span>
+      </div>
+    </div>
+    <div class="scroll-hint">▼ scroll to explore</div>
+  </section>
+
+  <!-- ============ 1. EXECUTIVE SUMMARY ============ -->
+  <section id="exec" data-nav="Executive Summary" data-grp="Overview">
+    <div class="wrap">
+      <span class="sec-tag reveal">Section 01 · Overview</span>
+      <h2 class="reveal"><span class="sec-num">01</span>Executive Summary</h2>
+      <p class="lead reveal">Casa Escondida is a respected, niche-leading PADI 5★ dive resort that has earned a loyal underwater-photography audience but runs on fragmented, manual back-office tooling. A unified <strong>Odoo 19 ERP</strong> can convert its strong reputation into measurably higher RevPAR, dive utilisation and margin — while cutting OTA leakage and administrative load.</p>
+
+      <div class="grid g4" style="margin:28px 0">
+        <div class="kpi reveal"><div class="num" data-count="4.7" data-dec="1" data-suf="★">0</div><div class="lbl">Google rating</div><div class="sub">≈212 reviews · top-tier in Anilao</div></div>
+        <div class="kpi reveal d1"><div class="num" data-count="2016">0</div><div class="lbl">Founded</div><div class="sub">≈10 years operating</div></div>
+        <div class="kpi reveal d2"><div class="num" data-count="31">0</div><div class="lbl">Rooms (max)</div><div class="sub">24–31 keys across sources</div></div>
+        <div class="kpi reveal d3"><div class="num" data-pre="₱" data-count="60" data-suf="M+">0</div><div class="lbl">Est. annual revenue</div><div class="sub">base-case model · see §14</div></div>
+      </div>
+
+      <h3 class="reveal">Ten key findings</h3>
+      <div class="grid g2 reveal">
+        <div class="card"><span class="pill p-green">Strength</span><h3 style="margin:.4em 0 .2em;font-size:1.05rem">1 · Category-leading reputation</h3><p>4.7★ Google / 4.5★ TripAdvisor Travelers' Choice, ~11.8k Facebook followers — premium trust in the macro-diving niche.</p></div>
+        <div class="card"><span class="pill p-green">Strength</span><h3 style="margin:.4em 0 .2em;font-size:1.05rem">2 · Defensible niche</h3><p>Anilao is the global macro/muck-diving capital (2nd only to Lembeh); Casa Escondida owns a clear photographer-first position.</p></div>
+        <div class="card"><span class="pill p-amber">Gap</span><h3 style="margin:.4em 0 .2em;font-size:1.05rem">3 · Fragmented systems</h3><p>Rooms, dives, courses, F&amp;B, gear and books are managed across spreadsheets, chat and paper — no single source of truth.</p></div>
+        <div class="card"><span class="pill p-amber">Gap</span><h3 style="margin:.4em 0 .2em;font-size:1.05rem">4 · OTA dependency &amp; leakage</h3><p>Heavy reliance on Booking.com/Agoda/TripAdvisor means 15–18% commission erosion and thin first-party guest data.</p></div>
+        <div class="card"><span class="pill p-red">Risk</span><h3 style="margin:.4em 0 .2em;font-size:1.05rem">5 · Double-booking exposure</h3><p>Manual cross-channel availability invites overbooking — a direct guest-experience and reputation risk.</p></div>
+        <div class="card"><span class="pill p-red">Risk</span><h3 style="margin:.4em 0 .2em;font-size:1.05rem">6 · Compliance &amp; key-person risk</h3><p>Dive-gear servicing, waivers and PADI records are paper-based; owner-operator concentration is high.</p></div>
+        <div class="card"><span class="pill p-blue">Opportunity</span><h3 style="margin:.4em 0 .2em;font-size:1.05rem">7 · Yield management upside</h3><p>Seasonal dynamic pricing + direct-booking engine can lift RevPAR by an estimated 12–22%.</p></div>
+        <div class="card"><span class="pill p-blue">Opportunity</span><h3 style="margin:.4em 0 .2em;font-size:1.05rem">8 · Ancillary revenue</h3><p>Structured upsells (courses, gear, photo packages, F&amp;B) lift per-guest spend; ERP makes them systematic.</p></div>
+        <div class="card"><span class="pill p-teal">Enabler</span><h3 style="margin:.4em 0 .2em;font-size:1.05rem">9 · Odoo 19 fit</h3><p>8–12 native modules cover ~85% of needs; only PMS depth &amp; OTA channel-sync need extension.</p></div>
+        <div class="card"><span class="pill p-purple">Enabler</span><h3 style="margin:.4em 0 .2em;font-size:1.05rem">10 · AI-ready</h3><p>30+ automations (pricing, concierge, review response, dive-buddy matching) layer cleanly on Odoo data.</p></div>
+      </div>
+
+      <div class="grid g2" style="margin-top:26px">
+        <div class="chartbox reveal"><h4>Estimated revenue mix (base case)</h4><div class="cap">Modelled — see §14 for assumptions</div><div class="canvas-h"><canvas id="cExecMix"></canvas></div></div>
+        <div class="chartbox reveal d1"><h4>Current vs. post-ERP scorecard</h4><div class="cap">Indexed to 100 = today; targets at 12 months post go-live</div><div class="canvas-h"><canvas id="cExecScore"></canvas></div></div>
+      </div>
+
+      <h3 class="reveal">Top five recommendations</h3>
+      <div class="tbl-wrap reveal"><table class="tbl">
+        <thead><tr><th>#</th><th>Recommendation</th><th>Primary benefit</th><th>Effort</th><th>Horizon</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Deploy Odoo 19 as single operational backbone (rooms, dives, courses, F&amp;B, gear, finance)</td><td>One source of truth; eliminates re-keying</td><td><span class="pill p-amber">High</span></td><td>0–4 mo</td></tr>
+          <tr><td>2</td><td>Launch a direct-booking engine (Website + eCommerce) with availability calendar</td><td>Cuts OTA commission; first-party data</td><td><span class="pill p-amber">Med-High</span></td><td>2–4 mo</td></tr>
+          <tr><td>3</td><td>Implement seasonal dynamic pricing + overbooking guard</td><td>+12–22% RevPAR; protects reputation</td><td><span class="pill p-blue">Med</span></td><td>3–5 mo</td></tr>
+          <tr><td>4</td><td>Digitise dive ops: trips, waivers (Sign), gear servicing (Maintenance), certs (Documents)</td><td>Safety/compliance + staff time saved</td><td><span class="pill p-blue">Med</span></td><td>2–5 mo</td></tr>
+          <tr><td>5</td><td>Stand up AI automation layer (concierge, review response, demand forecasting)</td><td>Marketing reach + service at scale</td><td><span class="pill p-green">Low-Med</span></td><td>5–8 mo</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="callout reveal"><div class="t">Bottom line</div>Casa Escondida does not have a demand problem — it has an <strong>operational-leverage</strong> problem. The reputation and niche are already won. Odoo 19 turns that goodwill into capacity, yield and margin, and de-risks the manual workflows that threaten the guest experience.</div>
+    </div>
+  </section>
+
+  <!-- ============ 2. COMPANY PROFILE ============ -->
+  <section id="profile" data-nav="Company Profile" data-grp="Due Diligence">
+    <div class="wrap">
+      <span class="sec-tag reveal">Section 02 · Due Diligence</span>
+      <h2 class="reveal"><span class="sec-num">02</span>Company Profile &amp; History</h2>
+      <p class="lead reveal"><em>Casa Escondida</em> — “the hidden house” — is an intimate, oceanfront resort and PADI 5★ IDC dive center on the Anilao coast of Mabini, Batangas, the birthplace of Philippine scuba diving.</p>
+
+      <div class="grid g3" style="margin:24px 0">
+        <div class="card reveal"><h4>Identity</h4><p><strong>Casa Escondida Anilao Resort &amp; Dive Center</strong><br>Barangay Ligaya, Mabini, Batangas 4202, PH<br>casaescondida-anilao.com</p></div>
+        <div class="card reveal d1"><h4>Geography</h4><p>Balayan Bay oceanfront · ~88.5 km / 2–3 hrs from Manila (NAIA) via STAR Tollway. Private jetty for direct boat access to 30–40 dive sites.</p></div>
+        <div class="card reveal d2"><h4>Positioning</h4><p>“World-class diving meets genuine Filipino warmth.” Quality-over-scale, photographer-first, PADI 5★ IDC credentials.</p></div>
+      </div>
+
+      <div class="grid g2">
+        <div class="reveal">
+          <h3>Milestone timeline</h3>
+          <div class="tl">
+            <div class="tl-item"><div class="yr">Jun 2016</div><div>Resort &amp; dive center opens under diving professional <strong>Armando “Dong” Vergara</strong>.</div></div>
+            <div class="tl-item"><div class="yr">2017–2019</div><div>Builds reputation among underwater macro-photographers; camera rinse stations &amp; camera room become signature.</div></div>
+            <div class="tl-item"><div class="yr">2020–2021</div><div>Pandemic shock to inbound dive tourism; pivot toward domestic divers from Metro Manila.</div></div>
+            <div class="tl-item"><div class="yr">2022–2024</div><div>Recovery; Travelers' Choice recognition; social following grows to ~11.8k FB / ~3k IG.</div></div>
+            <div class="tl-item"><div class="yr">2025–2026</div><div>Maturing demand; back-office complexity now the binding constraint → ERP transformation candidate.</div></div>
+          </div>
+        </div>
+        <div class="reveal d1">
+          <h3>Business model canvas (condensed)</h3>
+          <div class="tbl-wrap"><table class="tbl">
+            <tbody>
+              <tr><th>Value proposition</th><td>Expert-guided macro/muck diving + photographer amenities + intimate hospitality</td></tr>
+              <tr><th>Customer segments</th><td>Int'l u/w photographers, serious recreational divers, domestic weekend divers, course students, dive clubs</td></tr>
+              <tr><th>Channels</th><td>Own website, OTAs (Booking/Agoda/TripAdvisor), PADI directory, dive-travel agents, social/UGC</td></tr>
+              <tr><th>Revenue streams</th><td>Rooms · dive packages · PADI courses · gear rental/Nitrox · F&amp;B · retail pro-shop</td></tr>
+              <tr><th>Key resources</th><td>10 PADI instructors + DMs, boats, training pool, 30–40 dive sites, brand &amp; reviews</td></tr>
+              <tr><th>Key partners</th><td>PADI, boat crews, gear suppliers, food suppliers, OTAs, dive-travel wholesalers</td></tr>
+              <tr><th>Cost structure</th><td>Labour, F&amp;B, fuel/boats, gear &amp; servicing, OTA commissions, utilities, marketing</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+      </div>
+
+      <div class="chartbox reveal" style="margin-top:22px"><h4>Estimated revenue contribution by stream</h4><div class="cap">Modelled base case — illustrative, see §14</div><div class="canvas-h"><canvas id="cRevStream"></canvas></div></div>
+    </div>
+  </section>
+
+  <!-- ============ 3. PRODUCT & SERVICE CATALOG ============ -->
+  <section id="catalog" data-nav="Product Catalog" data-grp="Due Diligence">
+    <div class="wrap">
+      <span class="sec-tag reveal">Section 03 · Due Diligence</span>
+      <h2 class="reveal"><span class="sec-num">03</span>Product &amp; Service Catalog</h2>
+      <p class="lead reveal">Six interlocking revenue lines. Each becomes a structured Odoo product/service, enabling bundling, upselling and yield management. Rates below are indicative ranges from public OTA/website data (PHP, 2025–26).</p>
+
+      <div class="tabs" data-tabg="cat">
+        <button class="tab active" onclick="tab('cat',0,this)">🛏 Rooms</button>
+        <button class="tab" onclick="tab('cat',1,this)">🤿 Dive Packages</button>
+        <button class="tab" onclick="tab('cat',2,this)">🎓 PADI Courses</button>
+        <button class="tab" onclick="tab('cat',3,this)">🍽 F&amp;B &amp; Retail</button>
+      </div>
+      <div data-panes="cat">
+        <div class="tabpane active">
+          <div class="tbl-wrap"><table class="tbl">
+            <thead><tr><th>Room type</th><th>Size</th><th>Indicative rate / night</th><th>Best for</th><th>Odoo model</th></tr></thead>
+            <tbody>
+              <tr><td>Standard Double/Twin</td><td>18 m²</td><td>₱4,500–6,000 (~$80–105)</td><td>Solo divers, value</td><td>Rental product · serial STD-01…</td></tr>
+              <tr><td>Deluxe Double/Twin</td><td>40 m²</td><td>₱6,500–8,500 (~$115–150)</td><td>Couples, comfort</td><td>Rental product · serial DLX-…</td></tr>
+              <tr><td>Sea View Suite</td><td>50 m²</td><td>₱8,500–12,000 (~$150–210)</td><td>Premium, photographers</td><td>Rental product · serial SVS-…</td></tr>
+            </tbody>
+          </table></div>
+          <p><small>Sources disagree on key count (24 “minimalist rooms” per PADI/owner copy vs. 31 on some OTAs). We model 31 keys as the upper bound; confirm in discovery.</small></p>
+        </div>
+        <div class="tabpane">
+          <div class="tbl-wrap"><table class="tbl">
+            <thead><tr><th>Package</th><th>Contents</th><th>Indicative price</th><th>Notes</th></tr></thead>
+            <tbody>
+              <tr><td>Day Diver</td><td>2 guided boat dives + tank + DM</td><td>₱2,500–3,500 / day</td><td>Gear rental extra</td></tr>
+              <tr><td>3-Day “Stay &amp; Dive”</td><td>Accommodation + up to 3 dives/day + meals</td><td>Bundled</td><td>Core photographer package</td></tr>
+              <tr><td>Night Dive Special</td><td>Guided night dive + post-dive dinner</td><td>₱1,800–2,800</td><td>High-margin add-on</td></tr>
+              <tr><td>Nitrox fills</td><td>EANx up to 40%</td><td>Per fill</td><td>Consumable in Inventory</td></tr>
+              <tr><td>Gear rental</td><td>BCD, reg, wetsuit, computer, camera rigs</td><td>Per item / day</td><td>Serial-tracked Rental</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+        <div class="tabpane">
+          <div class="tbl-wrap"><table class="tbl">
+            <thead><tr><th>Course</th><th>Duration</th><th>Prerequisite</th><th>Indicative price</th></tr></thead>
+            <tbody>
+              <tr><td>Discover Scuba Diving</td><td>½–1 day</td><td>None (max 6m)</td><td>₱3,500–5,000</td></tr>
+              <tr><td>Open Water Diver</td><td>3–4 days</td><td>None (→18m)</td><td>₱18,000–24,000</td></tr>
+              <tr><td>Advanced Open Water</td><td>2 days</td><td>OW (→30m)</td><td>₱14,000–18,000</td></tr>
+              <tr><td>Rescue Diver</td><td>3–4 days</td><td>AOW + EFR</td><td>₱16,000–20,000</td></tr>
+              <tr><td>Enriched Air / Nitrox</td><td>1 day</td><td>OW</td><td>₱6,000–9,000</td></tr>
+              <tr><td>Digital U/W Photography</td><td>1–2 days</td><td>OW</td><td>₱8,000–12,000</td></tr>
+              <tr><td>Divemaster</td><td>Weeks (internship)</td><td>Rescue + dives</td><td>₱45,000–70,000</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+        <div class="tabpane">
+          <div class="grid g2">
+            <div class="card"><h4>Restaurant &amp; Bar</h4><p>Open-air, sea-view dining and bar. Buffet (Filipino + international), island BBQ, free breakfast, 3 meals/day in dive packages. Halal/veg/vegan options. → Odoo POS with floor plan + Room-Charge.</p></div>
+            <div class="card"><h4>Retail Pro-shop</h4><p>Masks, fins, batteries, memory cards, apparel, accessories → Odoo POS retail + Inventory with reorder rules.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 4. FOUNDERS & LEADERSHIP ============ -->
+  <section id="founders" data-nav="Founders &amp; Leadership" data-grp="Due Diligence">
+    <div class="wrap">
+      <span class="sec-tag reveal">Section 04 · Due Diligence</span>
+      <h2 class="reveal"><span class="sec-num">04</span>Founders &amp; Leadership</h2>
+      <p class="lead reveal">An owner-operator business led by a hands-on diving professional — a strength for guest trust and authenticity, but a concentration risk the ERP should help mitigate.</p>
+
+      <div class="grid g2" style="margin:22px 0">
+        <div class="card reveal"><span class="pill p-green">Verified</span><h3 style="font-size:1.15rem">Armando “Dong” Vergara</h3><p><strong>Founder / Owner-Operator · Diving Instructor.</strong> Established Casa Escondida in June 2016. Consistently named in guest reviews as a warm, expert host and instructor who is personally present in operations. Brand and culture are closely tied to his presence.</p><p><small>Confidence: High (named in multiple independent review sources).</small></p></div>
+        <div class="card reveal d1"><span class="pill p-amber">Unverified</span><h3 style="font-size:1.15rem">“Andrew” (co-founder)</h3><p>Named by the client as a co-founder, but <strong>not corroborated</strong> in public web/social sources at time of writing. Role, surname and equity split to be confirmed in discovery. Could be an investor, silent partner, or operational co-founder.</p><p><small>Confidence: Low — discovery item, flagged transparently.</small></p></div>
+      </div>
+
+      <h3 class="reveal">Inferred organisation</h3>
+      <div class="mermaid reveal">
+flowchart TD
+  O["Owner / GM\nDong Vergara"] --> DV["Dive Center Manager"]
+  O --> FB["F&B / Restaurant Lead"]
+  O --> FD["Front Desk / Reservations"]
+  O --> HK["Housekeeping Lead"]
+  O --> AD["Admin / Accounts"]
+  DV --> I["10 PADI Instructors"]
+  DV --> DM["Divemasters"]
+  DV --> BC["Boat Crew / Captains"]
+  FB --> K["Kitchen Staff"]
+  FB --> B["Bar / Servers"]
+  HK --> RA["Room Attendants"]
+      </div>
+
+      <div class="callout warn reveal"><div class="t">Key-person &amp; succession risk</div>Heavy dependence on the founder for diving expertise, supplier relationships and guest rapport. ERP-encoded SOPs, supplier records, pricing rules and a documented booking/finance trail reduce this risk and make the business more delegable and saleable.</div>
+    </div>
+  </section>
+
+  <!-- ============ 5. STAFF & ORG ============ -->
+  <section id="staff" data-nav="Staff &amp; Org Analysis" data-grp="Due Diligence">
+    <div class="wrap">
+      <span class="sec-tag reveal">Section 05 · Due Diligence</span>
+      <h2 class="reveal"><span class="sec-num">05</span>Staff &amp; Organisational Analysis</h2>
+      <p class="lead reveal">A lean, seasonally-flexed team of roughly 28–34. The dive department is the largest and most credential-intensive — exactly where structured scheduling and certification tracking pay off.</p>
+
+      <div class="grid g2" style="margin-top:20px">
+        <div class="chartbox reveal"><h4>Estimated headcount by department</h4><div class="cap">Inferred model — confirm in discovery</div><div class="canvas-h"><canvas id="cHeadcount"></canvas></div></div>
+        <div class="chartbox reveal d1"><h4>Seasonal staffing flex</h4><div class="cap">Peak NE-monsoon dive season Nov–May vs. low season</div><div class="canvas-h"><canvas id="cSeasonStaff"></canvas></div></div>
+      </div>
+
+      <h3 class="reveal">HR maturity assessment</h3>
+      <div class="tbl-wrap reveal"><table class="tbl">
+        <thead><tr><th>Dimension</th><th>Current (inferred)</th><th>Risk</th><th>Odoo remedy</th></tr></thead>
+        <tbody>
+          <tr><td>Scheduling &amp; rostering</td><td>Manual / chat-based</td><td><span class="pill p-amber">Med</span></td><td>HR + Planning, calendar resources</td></tr>
+          <tr><td>Certification tracking (PADI, EFR, insurance)</td><td>Paper / memory</td><td><span class="pill p-red">High</span></td><td>HR Skills + Documents + reminders</td></tr>
+          <tr><td>Attendance &amp; payroll</td><td>Manual</td><td><span class="pill p-amber">Med</span></td><td>Attendances (+ Payroll l10n)</td></tr>
+          <tr><td>Knowledge / SOPs</td><td>Tribal, owner-held</td><td><span class="pill p-red">High</span></td><td>Knowledge + documented processes</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </section>
+
+  <!-- ============ 6. DIGITAL & WEB PRESENCE ============ -->
+  <section id="web" data-nav="Digital &amp; Web Presence" data-grp="Due Diligence">
+    <div class="wrap">
+      <span class="sec-tag reveal">Section 06 · Due Diligence</span>
+      <h2 class="reveal"><span class="sec-num">06</span>Digital &amp; Web Presence Audit</h2>
+      <p class="lead reveal">Casa Escondida punches above its size socially, but converts demand through commission-heavy OTAs and lacks a first-party booking + data engine. This is the single biggest commercial quick-win.</p>
+
+      <div class="grid g4" style="margin:22px 0">
+        <div class="kpi reveal"><div class="num" data-count="11.8" data-dec="1" data-suf="k">0</div><div class="lbl">Facebook followers</div><div class="sub">Active, UGC-rich</div></div>
+        <div class="kpi reveal d1"><div class="num" data-count="3" data-suf="k">0</div><div class="lbl">Instagram followers</div><div class="sub">@casaescondidaanilao · 821 posts</div></div>
+        <div class="kpi reveal d2"><div class="num" data-count="212">0</div><div class="lbl">Google reviews</div><div class="sub">~4.7★ average</div></div>
+        <div class="kpi reveal d3"><div class="num" data-count="4.5" data-dec="1" data-suf="★">0</div><div class="lbl">TripAdvisor</div><div class="sub">Travelers' Choice</div></div>
+      </div>
+
+      <div class="grid g2">
+        <div class="chartbox reveal"><h4>Estimated booking-channel mix</h4><div class="cap">OTA dependency = commission leakage</div><div class="canvas-h"><canvas id="cChannel"></canvas></div></div>
+        <div class="chartbox reveal d1"><h4>Digital maturity radar</h4><div class="cap">0 = absent · 5 = best-practice</div><div class="canvas-h"><canvas id="cDigital"></canvas></div></div>
+      </div>
+
+      <h3 class="reveal">Acquisition funnel &amp; leakage</h3>
+      <div class="mermaid reveal">
+flowchart LR
+  A["Awareness\nSocial · UGC · PADI dir."] --> B["Consideration\nOTA listings · reviews"]
+  B --> C{"Booking"}
+  C -->|"OTA 60–70%"| D["Commission −15–18%"]
+  C -->|"Direct 30–40%"| E["Full margin\n+ first-party data"]
+  D --> F["Stay & dive"]
+  E --> F
+  F --> G["Review request\n(manual today)"]
+  G --> A
+      </div>
+
+      <h3 class="reveal">Prioritised digital quick-wins</h3>
+      <div class="grid g3 reveal">
+        <div class="card"><span class="pill p-green">Now</span><p>Odoo Website + eCommerce booking engine with live availability → shift mix toward direct.</p></div>
+        <div class="card"><span class="pill p-green">Now</span><p>Automated post-stay review requests (Google/TripAdvisor) to compound reputation.</p></div>
+        <div class="card"><span class="pill p-amber">Next</span><p>Capture first-party guest profiles &amp; dive history for re-marketing &amp; loyalty.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 7. REVIEWS & REPUTATION ============ -->
+  <section id="reviews" data-nav="Reviews &amp; Reputation" data-grp="Due Diligence">
+    <div class="wrap">
+      <span class="sec-tag reveal">Section 07 · Due Diligence</span>
+      <h2 class="reveal"><span class="sec-num">07</span>Review &amp; Reputation Mining</h2>
+      <p class="lead reveal">Sentiment is overwhelmingly positive and remarkably consistent across platforms — a durable moat. The few recurring frictions are addressable operationally.</p>
+
+      <div class="grid g2" style="margin-top:20px">
+        <div class="chartbox reveal"><h4>Review sentiment distribution (est.)</h4><div class="cap">Aggregated across Google/TripAdvisor/FB</div><div class="canvas-h"><canvas id="cSentiment"></canvas></div></div>
+        <div class="chartbox reveal d1"><h4>Recurring themes</h4><div class="cap">Frequency in praise vs. complaints</div><div class="canvas-h"><canvas id="cThemes"></canvas></div></div>
+      </div>
+
+      <div class="grid g2" style="margin-top:18px">
+        <div class="q s reveal"><h4>👍 What guests love</h4><ul><li>Friendly, expert dive masters &amp; owner</li><li>Plentiful, diverse food (buffet + BBQ)</li><li>Clean, comfortable rooms &amp; great beds</li><li>Macro/photography-friendly facilities</li><li>Excellent value for money</li></ul></div>
+        <div class="q w reveal d1"><h4>👎 Friction points</h4><ul><li>Standard rooms feel small (18 m²)</li><li>Parking experience noted in a review</li><li>No on-demand booking confirmation speed (manual)</li><li>Limited proactive review responses</li></ul></div>
+      </div>
+
+      <div class="callout reveal"><div class="t">Estimated NPS</div>Modelled NPS of <strong>+55 to +70</strong> (excellent for hospitality) given the 4.7★ Google / 4.5★ TripAdvisor profile. ERP-driven review automation + faster confirmations can push response rate and protect this asset.</div>
+    </div>
+  </section>
+
+  <!-- ============ 8. PESTLE ============ -->
+  <section id="pestle" data-nav="PESTLE Analysis" data-grp="Strategic Analysis">
+    <div class="wrap">
+      <span class="sec-tag reveal">Section 08 · Strategic Analysis</span>
+      <h2 class="reveal"><span class="sec-num">08</span>PESTLE Analysis</h2>
+      <p class="lead reveal">Macro forces shaping a Philippine dive resort. Environmental and economic factors carry the highest impact; technology is the clearest controllable lever.</p>
+
+      <div class="grid g2" style="margin:22px 0">
+        <div class="acc reveal open"><div class="acc-head" onclick="acc(this)"><span>🏛 Political <span class="pill p-amber">Med impact</span></span><span class="ic">＋</span></div><div class="acc-body"><p>DOT tourism-recovery push and visa liberalisation support inbound dive travel. Local-government (Mabini) permits, marine-protected-area (MPA) rules and boat licensing apply. Geopolitical/travel-advisory swings affect Western source markets. <strong>So-what:</strong> diversify source markets; keep compliance records in Odoo Documents.</p></div></div>
+        <div class="acc reveal d1"><div class="acc-head" onclick="acc(this)"><span>💱 Economic <span class="pill p-red">High impact</span></span><span class="ic">＋</span></div><div class="acc-body"><p>PHP/USD swings change effective rates for foreign guests; PH inflation lifts F&amp;B/fuel/labour costs. PH hotel ADR rose to ≈₱5,987 and RevPAR to ≈₱3,942 in 2025 (≈65% occupancy in Metro Manila). <strong>So-what:</strong> multi-currency pricing + dynamic yield management in Odoo protect margin.</p></div></div>
+        <div class="acc reveal"><div class="acc-head" onclick="acc(this)"><span>👥 Social <span class="pill p-amber">Med impact</span></span><span class="ic">＋</span></div><div class="acc-body"><p>Rising domestic middle-class diving demand; experiential/“bucket-list” travel; underwater-photography &amp; social-media culture drives discovery. Sustainability-conscious guests favour reef-responsible operators. <strong>So-what:</strong> lean into photographer niche + sustainability story.</p></div></div>
+        <div class="acc reveal d1"><div class="acc-head" onclick="acc(this)"><span>💻 Technological <span class="pill p-green">High (controllable)</span></span><span class="ic">＋</span></div><div class="acc-body"><p>Cloud ERP, channel managers, AI concierge/pricing, mobile payments and online booking are now table-stakes for competitive resorts. <strong>So-what:</strong> this is the lever Casa Escondida controls — the core of this engagement.</p></div></div>
+        <div class="acc reveal"><div class="acc-head" onclick="acc(this)"><span>⚖ Legal <span class="pill p-amber">Med impact</span></span><span class="ic">＋</span></div><div class="acc-body"><p>BIR tax compliance &amp; 12% VAT, official-receipt rules, dive-liability waivers/medical statements (PADI), maritime &amp; insurance requirements, data-privacy (PH DPA) for guest data. <strong>So-what:</strong> Odoo Accounting (l10n_ph) + Sign for waivers + access controls.</p></div></div>
+        <div class="acc reveal d1"><div class="acc-head" onclick="acc(this)"><span>🌏 Environmental <span class="pill p-red">High impact</span></span><span class="ic">＋</span></div><div class="acc-body"><p>Coral health, typhoon season, climate-driven coral bleaching and seasonal monsoon patterns directly drive diveability and demand. MPA conservation is core to the product. <strong>So-what:</strong> seasonality must be modelled into pricing &amp; staffing; sustainability is brand-critical.</p></div></div>
+      </div>
+
+      <div class="chartbox reveal"><h4>Impact × likelihood heat-map</h4><div class="cap">Bubble size = strategic urgency</div><div class="canvas-h"><canvas id="cPestle"></canvas></div></div>
+    </div>
+  </section>
+
+  <!-- ============ 9. SWOT + TOWS ============ -->
+  <section id="swot" data-nav="SWOT &amp; TOWS" data-grp="Strategic Analysis">
+    <div class="wrap">
+      <span class="sec-tag reveal">Section 09 · Strategic Analysis</span>
+      <h2 class="reveal"><span class="sec-num">09</span>SWOT + TOWS Matrix</h2>
+      <p class="lead reveal">Strengths and opportunities clearly outweigh weaknesses — most of which are operational and ERP-addressable rather than structural.</p>
+
+      <div class="quad reveal" style="margin:22px 0">
+        <div class="q s"><h4>Strengths</h4><ul><li>Category-leading reputation (4.7★/4.5★)</li><li>Defensible macro/muck-diving niche</li><li>PADI 5★ IDC + 10 instructors</li><li>Photographer-first amenities &amp; loyal base</li><li>Hands-on, trusted owner-operator</li><li>Strong organic social/UGC reach</li></ul></div>
+        <div class="q w"><h4>Weaknesses</h4><ul><li>Fragmented, manual back-office systems</li><li>Heavy OTA dependency &amp; commission leakage</li><li>Overbooking exposure (manual availability)</li><li>Key-person concentration</li><li>Thin first-party data &amp; CRM</li><li>Paper compliance (waivers, gear servicing)</li></ul></div>
+        <div class="q o"><h4>Opportunities</h4><ul><li>Direct-booking shift → margin recovery</li><li>Dynamic pricing → RevPAR uplift</li><li>Ancillary revenue (courses, photo, retail)</li><li>Growing domestic dive market</li><li>AI automation (concierge, marketing)</li><li>Loyalty &amp; repeat-diver programmes</li></ul></div>
+        <div class="q t"><h4>Threats</h4><ul><li>Climate/coral &amp; typhoon disruption</li><li>Intense Anilao competition (Buceo, Crystal Blue, Acacia, Aiyanar)</li><li>FX volatility &amp; cost inflation</li><li>OTA rate/visibility power</li><li>Talent retention (instructors)</li></ul></div>
+      </div>
+
+      <h3 class="reveal">TOWS — turning analysis into strategy</h3>
+      <div class="tbl-wrap reveal"><table class="tbl">
+        <thead><tr><th></th><th>Opportunities</th><th>Threats</th></tr></thead>
+        <tbody>
+          <tr><th>Strengths</th><td><strong>SO:</strong> Use reputation + niche to drive direct bookings (own engine) and premium photographer packages; productise the macro brand.</td><td><strong>ST:</strong> Leverage loyalty &amp; expertise to defend against competitors; diversify source markets against FX/climate shocks.</td></tr>
+          <tr><th>Weaknesses</th><td><strong>WO:</strong> Deploy Odoo to capture first-party data, enable dynamic pricing and unlock ancillary revenue.</td><td><strong>WT:</strong> Fix overbooking &amp; compliance gaps before they damage reputation; reduce key-person risk via documented SOPs.</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </section>
+
+  <!-- ============ 10. PORTER'S FIVE FORCES ============ -->
+  <section id="porter" data-nav="Porter's Five Forces" data-grp="Strategic Analysis">
+    <div class="wrap">
+      <span class="sec-tag reveal">Section 10 · Strategic Analysis</span>
+      <h2 class="reveal"><span class="sec-num">10</span>Porter's Five Forces</h2>
+      <p class="lead reveal">Competitive rivalry and buyer power (via OTAs) are the strongest forces; the macro-diving niche and PADI credentials provide partial insulation.</p>
+
+      <div class="grid g2" style="margin-top:20px">
+        <div class="chartbox reveal"><h4>Force intensity (0–5)</h4><div class="cap">Higher = more pressure on profitability</div><div class="canvas-h"><canvas id="cPorter"></canvas></div></div>
+        <div class="reveal d1">
+          <div class="acc open"><div class="acc-head" onclick="acc(this)"><span>Competitive rivalry <span class="pill p-red">4.3</span></span><span class="ic">＋</span></div><div class="acc-body"><p>Dozens of Anilao dive resorts (Buceo, Crystal Blue, Acacia, Aiyanar, Eagle Point…) compete on price, dive quality and photography reputation.</p></div></div>
+          <div class="acc"><div class="acc-head" onclick="acc(this)"><span>Buyer power (OTAs &amp; guests) <span class="pill p-amber">3.8</span></span><span class="ic">＋</span></div><div class="acc-body"><p>OTAs hold distribution &amp; pricing leverage; well-informed divers compare easily. Direct booking + loyalty reduce this.</p></div></div>
+          <div class="acc"><div class="acc-head" onclick="acc(this)"><span>Threat of new entrants <span class="pill p-amber">3.0</span></span><span class="ic">＋</span></div><div class="acc-body"><p>Moderate capital + PADI credentialing + prime shorefront create barriers, but new boutique resorts keep appearing.</p></div></div>
+          <div class="acc"><div class="acc-head" onclick="acc(this)"><span>Supplier power <span class="pill p-blue">2.4</span></span><span class="ic">＋</span></div><div class="acc-body"><p>Gear suppliers, boat crew, food suppliers — generally available; some specialised dive-gear concentration.</p></div></div>
+          <div class="acc"><div class="acc-head" onclick="acc(this)"><span>Threat of substitutes <span class="pill p-blue">2.2</span></span><span class="ic">＋</span></div><div class="acc-body"><p>Other dive destinations (Cebu, Dauin, Lembeh) &amp; non-diving holidays; mitigated by Anilao's unique macro reputation.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 11. COMPETITOR DEEP-DIVE ============ -->
+  <section id="competitors" data-nav="Competitor Deep-Dive" data-grp="Strategic Analysis">
+    <div class="wrap">
+      <span class="sec-tag reveal">Section 11 · Strategic Analysis</span>
+      <h2 class="reveal"><span class="sec-num">11</span>Competitor Deep-Dive</h2>
+      <p class="lead reveal">Anilao hosts a dense field of dive resorts. Casa Escondida sits in the value-to-mid tier with elite reviews — a strong position to defend, with room to capture premium photographer demand currently going to Crystal Blue and Buceo.</p>
+
+      <div class="tbl-wrap reveal" style="margin:22px 0"><table class="tbl">
+        <thead><tr><th>Resort</th><th>~Rooms</th><th>Price tier</th><th>Dive focus</th><th>Rating</th><th>Tech maturity</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Casa Escondida</strong></td><td>24–31</td><td>Value–Mid</td><td>Macro / muck / photo</td><td>4.7★ (G)</td><td><span class="pill p-red">Low</span></td></tr>
+          <tr><td>Crystal Blue Resort</td><td>~20</td><td>Premium</td><td>Macro / photo (renowned)</td><td>~4.8★</td><td><span class="pill p-amber">Med</span></td></tr>
+          <tr><td>Buceo Anilao</td><td>23</td><td>Premium</td><td>Photographers (EU mgmt)</td><td>~4.7★</td><td><span class="pill p-amber">Med</span></td></tr>
+          <tr><td>Solitude Acacia</td><td>~30</td><td>Premium</td><td>All-round / service</td><td>~4.6★</td><td><span class="pill p-amber">Med</span></td></tr>
+          <tr><td>Aiyanar Beach &amp; Dive</td><td>16</td><td>Mid–Premium</td><td>Stylish / sea-view</td><td>~4.5★</td><td><span class="pill p-amber">Med</span></td></tr>
+          <tr><td>Eagle Point Resort</td><td>large</td><td>Mid</td><td>Resort + dive volume</td><td>~4.2★</td><td><span class="pill p-amber">Med</span></td></tr>
+          <tr><td>Vivere Azure</td><td>~30</td><td>Mid–Premium</td><td>Leisure + dive</td><td>~4.4★</td><td><span class="pill p-amber">Med</span></td></tr>
+          <tr><td>Club Ocellaris</td><td>~16</td><td>Mid</td><td>Diver-focused</td><td>~4.5★</td><td><span class="pill p-red">Low</span></td></tr>
+          <tr><td>Planet Dive</td><td>~20</td><td>Value–Mid</td><td>Dive volume</td><td>~4.2★</td><td><span class="pill p-red">Low</span></td></tr>
+          <tr><td>Dive Solana</td><td>~20</td><td>Mid–Premium</td><td>Dive + leisure</td><td>~4.4★</td><td><span class="pill p-amber">Med</span></td></tr>
+        </tbody>
+      </table></div>
+      <p><small>Room counts &amp; ratings are indicative from public listings; price tiers are relative. Verify before client presentation.</small></p>
+
+      <div class="grid g2">
+        <div class="chartbox reveal"><h4>Positioning map — price vs. rating</h4><div class="cap">Bubble size = approx. room count</div><div class="canvas-h tall"><canvas id="cPosition"></canvas></div></div>
+        <div class="chartbox reveal d1"><h4>Feature-gap vs. premium peers</h4><div class="cap">Where Casa Escondida can close ground</div><div class="canvas-h tall"><canvas id="cGap"></canvas></div></div>
+      </div>
+
+      <div class="callout reveal"><div class="t">Strategic read</div>Casa Escondida wins on <strong>value + reviews</strong> but trails premium peers on <strong>digital booking, channel management and yield</strong> — precisely the gaps Odoo closes. Closing them lets it raise ADR toward the premium tier without losing its value-trust advantage.</div>
+    </div>
+  </section>
+
+  <!-- ============ 12. MARKET SIZING ============ -->
+  <section id="market" data-nav="Market &amp; Industry" data-grp="Strategic Analysis">
+    <div class="wrap">
+      <span class="sec-tag reveal">Section 12 · Strategic Analysis</span>
+      <h2 class="reveal"><span class="sec-num">12</span>Market Sizing &amp; Industry Dynamics</h2>
+      <p class="lead reveal">Anilao is the Philippines' macro/muck-diving capital — globally second only to Lembeh Strait. Demand is strongly seasonal, peaking in the NE-monsoon window (Nov–May).</p>
+
+      <div class="grid g2" style="margin:22px 0">
+        <div class="reveal">
+          <h3>TAM · SAM · SOM (illustrative)</h3>
+          <div class="bars-mini" data-bars>
+            <div class="bm"><span>TAM — PH dive tourism</span><div class="track"><div class="fill" data-w="100%"></div></div><span>100%</span></div>
+            <div class="bm"><span>SAM — Anilao macro divers</span><div class="track"><div class="fill" data-w="42%"></div></div><span>~42%</span></div>
+            <div class="bm"><span>SOM — Casa Escondida reach</span><div class="track"><div class="fill" data-w="9%"></div></div><span>~9%</span></div>
+          </div>
+          <p style="margin-top:14px"><small>Relative, illustrative scale — Anilao is a meaningful, defensible slice of PH dive tourism; Casa Escondida's serviceable share has headroom via direct channels.</small></p>
+          <h3>Guest-origin mix (est.)</h3>
+          <div class="canvas-h"><canvas id="cOrigin"></canvas></div>
+        </div>
+        <div class="chartbox reveal d1"><h4>Demand seasonality curve</h4><div class="cap">Diveability + bookings index by month</div><div class="canvas-h tall"><canvas id="cSeason"></canvas></div></div>
+      </div>
+
+      <div class="grid g3 reveal">
+        <div class="card"><h4>Growth drivers</h4><p>Domestic middle-class diving boom · social/UGC discovery · experiential travel · PH tourism recovery · macro-photography community.</p></div>
+        <div class="card"><h4>Headwinds</h4><p>Climate/coral risk · typhoon disruption · FX volatility · OTA power · rising labour/F&amp;B costs · competition intensity.</p></div>
+        <div class="card"><h4>Niche moat</h4><p>Anilao's nudibranch/critter density &amp; blackwater diving create a destination pull that commoditised beach resorts lack.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 13. VALUATION ============ -->
+  <section id="valuation" data-nav="Valuation Estimate" data-grp="Strategic Analysis">
+    <div class="wrap">
+      <span class="sec-tag reveal">Section 13 · Strategic Analysis</span>
+      <h2 class="reveal"><span class="sec-num">13</span>Estimated Company Worth</h2>
+      <div class="callout warn reveal"><div class="t">Important</div>The following is a <strong>modelled planning estimate</strong> built from public market benchmarks and reasonable assumptions — <em>not</em> audited financials or a formal valuation. It is intended to frame the size of the ERP prize, not to price the business.</div>
+
+      <h3 class="reveal">Step 1 — Revenue model (base case)</h3>
+      <div class="tbl-wrap reveal"><table class="tbl">
+        <thead><tr><th>Stream</th><th>Assumption</th><th>Est. annual (₱)</th></tr></thead>
+        <tbody>
+          <tr><td>Rooms</td><td>31 keys × ~₱6,000 ADR × ~62% occ. × 365</td><td>≈ ₱42.0M</td></tr>
+          <tr><td>Dive operations</td><td>Packages, guided dives, Nitrox</td><td>≈ ₱26.0M</td></tr>
+          <tr><td>F&amp;B</td><td>Buffet/BBQ/bar incl. package allocation</td><td>≈ ₱15.0M</td></tr>
+          <tr><td>Courses</td><td>OW/AOW/specialties/DM</td><td>≈ ₱9.0M</td></tr>
+          <tr><td>Gear &amp; retail</td><td>Rental + pro-shop</td><td>≈ ₱8.0M</td></tr>
+          <tr><th>Total revenue (est.)</th><th></th><th>≈ ₱100M (~$1.75M)</th></tr>
+        </tbody>
+      </table></div>
+      <p><small>Note: room-only revenue ≈ ₱42M aligns with the §1 “₱60M+” conservative headline once lower occupancy/ADR sensitivities are applied; total top-line could range ₱60–100M depending on true key count, occupancy and ADR.</small></p>
+
+      <h3 class="reveal">Step 2 — Valuation triangulation</h3>
+      <div class="grid g3" style="margin-bottom:8px">
+        <div class="kpi reveal"><div class="num">₱90–135M</div><div class="lbl">Revenue multiple</div><div class="sub">~1.0–1.4× revenue (leisure resort)</div></div>
+        <div class="kpi reveal d1"><div class="num">₱110–170M</div><div class="lbl">EBITDA multiple</div><div class="sub">~₱22M EBITDA × 6–9×</div></div>
+        <div class="kpi reveal d2"><div class="num">₱100–150M</div><div class="lbl">RevPAR-per-key</div><div class="sub">31 keys × $60–90k/key benchmark</div></div>
+      </div>
+      <div class="callout reveal"><div class="t">Indicative enterprise value</div><strong>₱100M – ₱160M (≈ $1.8M – $2.8M)</strong>, base case ≈ <strong>₱120–135M</strong>. A successful ERP-driven RevPAR/margin uplift of 12–22% could add <strong>₱15–30M</strong> of enterprise value via higher, more durable cash flows — the core financial argument for the project.</div>
+
+      <h3 class="reveal">Step 3 — Sensitivity (EV, ₱M) by occupancy × ADR</h3>
+      <div class="tbl-wrap reveal"><table class="tbl">
+        <thead><tr><th>Occ ↓ / ADR →</th><th>₱5,000</th><th>₱6,000</th><th>₱7,000</th></tr></thead>
+        <tbody>
+          <tr><th>52%</th><td>92</td><td>108</td><td>124</td></tr>
+          <tr><th>62%</th><td>110</td><td>128</td><td>146</td></tr>
+          <tr><th>72%</th><td>128</td><td>150</td><td>172</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </section>
+
+  <!-- ============ 14. PERSONAS ============ -->
+  <section id="personas" data-nav="Customer Personas" data-grp="Strategic Analysis">
+    <div class="wrap">
+      <span class="sec-tag reveal">Section 14 · Strategic Analysis</span>
+      <h2 class="reveal"><span class="sec-num">14</span>Customer &amp; Persona Analysis</h2>
+      <p class="lead reveal">Five core personas drive demand. The ERP should let Casa Escondida recognise, serve and re-market to each one distinctly.</p>
+
+      <div class="grid g3" style="margin-top:20px">
+        <div class="card reveal"><h4>🐚 Mark · Macro Photographer</h4><p><strong>Int'l, 35–55, high spend.</strong> Wants camera rinse/room, expert guides, repeat critter sites. CLV: <strong>high</strong> (multi-week, repeat). Books direct or via dive-travel agent.</p></div>
+        <div class="card reveal d1"><h4>🏙 Joy · Domestic Weekend Diver</h4><p><strong>Metro Manila, 28–40.</strong> Short stays, value-driven, books via OTA/social. CLV: <strong>med</strong>, high frequency. Price-sensitive, promo-responsive.</p></div>
+        <div class="card reveal d2"><h4>🎓 Leo · Course Student</h4><p><strong>New diver, OW/AOW.</strong> Needs scheduling, waivers, certification. Converts to repeat diver. CLV: <strong>growing</strong>.</p></div>
+        <div class="card reveal"><h4>👥 Dive Club Organiser</h4><p><strong>Group of 8–20.</strong> Needs group rates, boat capacity, logistics. CLV: <strong>very high</strong> per booking. Relationship-driven.</p></div>
+        <div class="card reveal d1"><h4>🌅 Non-diving Partner</h4><p><strong>Travels with diver.</strong> Wants F&amp;B, relaxation, day trips. Ancillary-spend opportunity. CLV: <strong>med</strong>.</p></div>
+        <div class="card reveal d2" style="background:var(--panel2)"><h4>💡 ERP implication</h4><p>Tag every contact by persona in CRM → targeted pricing, packages and automated re-marketing. Track dive history &amp; CLV natively.</p></div>
+      </div>
+
+      <div class="chartbox reveal" style="margin-top:18px"><h4>Estimated CLV &amp; volume by persona</h4><div class="cap">Bubble size = share of bookings</div><div class="canvas-h"><canvas id="cPersona"></canvas></div></div>
+    </div>
+  </section>
+
+  <!--SECTION-ANCHOR-->
+
+  <footer>
+    <p><strong>Technext</strong> — Odoo ERP Implementation &amp; Digital Transformation · Prepared for Casa Escondida Anilao Resort &amp; Dive Center</p>
+    <p>Confidential. Figures marked “estimate” are modelled assumptions for planning, not audited financials. Sources &amp; confidence ratings in the Appendix.</p>
+    <p><small>Document v1.0 · 14 June 2026 · sky@technext.asia</small></p>
+  </footer>
+
+  </main>
+</div>
+
+<script>
+/* ---------- THEME ---------- */
+function toggleTheme(){const h=document.documentElement;h.dataset.theme=h.dataset.theme==='dark'?'light':'dark';try{localStorage.setItem('ce_theme',h.dataset.theme)}catch(e){};reRenderCharts();}
+(function(){try{const t=localStorage.getItem('ce_theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}})();
+
+/* ---------- BUBBLES ---------- */
+(function(){const c=document.getElementById('bubbles');for(let i=0;i<26;i++){const b=document.createElement('div');b.className='bubble';const s=6+Math.random()*34;b.style.width=b.style.height=s+'px';b.style.left=Math.random()*100+'%';b.style.animationDuration=(8+Math.random()*14)+'s';b.style.animationDelay=(Math.random()*12)+'s';c.appendChild(b);}})();
+
+/* ---------- REVEAL ---------- */
+const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);if(e.target.dataset.count)runCount(e.target);if(e.target.dataset.bars)e.target.querySelectorAll('.fill').forEach(f=>f.style.width=f.dataset.w);}})},{threshold:.12});
+function observeAll(){document.querySelectorAll('.reveal:not(.in)').forEach(el=>io.observe(el));document.querySelectorAll('[data-count]:not(.cnt-done)').forEach(el=>io.observe(el));}
+
+/* ---------- COUNT-UP ---------- */
+function runCount(el){el.classList.add('cnt-done');const t=parseFloat(el.dataset.count),dec=parseInt(el.dataset.dec||0),pre=el.dataset.pre||'',suf=el.dataset.suf||'';let s=0,st=performance.now(),dur=1400;function f(now){let p=Math.min((now-st)/dur,1);p=1-Math.pow(1-p,3);el.textContent=pre+(t*p).toLocaleString(undefined,{minimumFractionDigits:dec,maximumFractionDigits:dec})+suf;if(p<1)requestAnimationFrame(f);}requestAnimationFrame(f);}
+
+/* ---------- SCROLLSPY + PROGRESS + NAV BUILD ---------- */
+function buildNav(){
+  const nav=document.getElementById('sidenav');const groups={};
+  document.querySelectorAll('section[data-nav]').forEach(s=>{const g=s.dataset.grp||'';(groups[g]=groups[g]||[]).push(s);});
+  let html='';for(const g in groups){if(g)html+=`<div class="grp">${g}</div>`;groups[g].forEach(s=>{html+=`<a href="#${s.id}">${s.dataset.nav}</a>`;});}
+  nav.innerHTML=html;
+}
+window.addEventListener('scroll',()=>{
+  const h=document.documentElement;const sc=h.scrollTop/(h.scrollHeight-h.clientHeight);document.getElementById('progress').style.width=(sc*100)+'%';
+  let cur='';document.querySelectorAll('section[id]').forEach(s=>{if(s.getBoundingClientRect().top<140)cur=s.id;});
+  document.querySelectorAll('#sidenav a').forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+cur));
+});
+
+/* ---------- TABS ---------- */
+function tab(group,idx,btn){document.querySelectorAll(`[data-tabg="${group}"] .tab`).forEach((t,i)=>t.classList.toggle('active',i===idx));document.querySelectorAll(`[data-panes="${group}"] .tabpane`).forEach((p,i)=>p.classList.toggle('active',i===idx));}
+/* ---------- ACCORDION ---------- */
+function acc(el){el.parentElement.classList.toggle('open');}
+
+/* ---------- SEARCH ---------- */
+function doSearch(q){q=q.trim().toLowerCase();document.querySelectorAll('section[data-nav]').forEach(s=>{if(!q){s.style.display='';return;}s.style.display=s.textContent.toLowerCase().includes(q)?'':'none';});}
+
+/* ---------- CHARTS ---------- */
+const CHARTS=[];const chartDefs=[];
+function regChart(fn){chartDefs.push(fn);}
+function inkColors(){const light=document.documentElement.dataset.theme==='light';return{grid:light?'#dbe6f3':'#1f2d49',tick:light?'#33486a':'#a9bdd8',ink:light?'#10203a':'#e8f0fb'};}
+const PAL=['#19c6c6','#3b82f6','#6366f1','#ffb454','#ff6b6b','#36d399','#a78bfa','#f472b6','#37e0c8','#7eb0ff'];
+function baseOpts(extra){const c=inkColors();return Object.assign({responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:c.ink,font:{size:11}}}},scales:{}},extra||{});}
+function mkChart(id,cfg){const el=document.getElementById(id);if(!el)return;const ch=new Chart(el,cfg);CHARTS.push({id,cfg});return ch;}
+function renderCharts(){chartDefs.forEach(fn=>fn());}
+function reRenderCharts(){CHARTS.forEach(c=>{const inst=Chart.getChart(c.id);if(inst)inst.destroy();});CHARTS.length=0;renderCharts();
+  try{mermaid.initialize({startOnLoad:false,theme:document.documentElement.dataset.theme==='light'?'neutral':'dark',themeVariables:{fontSize:'13px'}});document.querySelectorAll('.mermaid').forEach(m=>{if(m.dataset.src){m.removeAttribute('data-processed');m.innerHTML=m.dataset.src;}});mermaid.run();}catch(e){}
+}
+
+/* ---------- INIT ---------- */
+window.addEventListener('DOMContentLoaded',()=>{
+  buildNav();observeAll();
+  try{mermaid.initialize({startOnLoad:false,theme:document.documentElement.dataset.theme==='light'?'neutral':'dark',securityLevel:'loose',themeVariables:{fontSize:'13px',primaryColor:'#121c30',primaryTextColor:'#e8f0fb',lineColor:'#19c6c6'}});
+    document.querySelectorAll('.mermaid').forEach(m=>m.dataset.src=m.textContent);mermaid.run();}catch(e){}
+  renderCharts();
+  // re-observe after dynamic content
+  setTimeout(observeAll,300);
+});
+</script>
+<script>
+/* ===== CHART DEFINITIONS (registered, rendered on init & theme change) ===== */
+function gridScale(stacked){const c=inkColors();return{x:{stacked:!!stacked,grid:{color:c.grid},ticks:{color:c.tick,font:{size:10}}},y:{stacked:!!stacked,grid:{color:c.grid},ticks:{color:c.tick,font:{size:10}},beginAtZero:true}};}
+regChart(()=>mkChart('cExecMix',{type:'doughnut',data:{labels:['Rooms','Dive ops','Courses','F&B','Gear/Nitrox','Retail'],datasets:[{data:[42,26,9,15,5,3],backgroundColor:PAL,borderWidth:0}]},options:baseOpts({cutout:'58%',plugins:{legend:{position:'right',labels:{color:inkColors().ink,font:{size:11}}}}})}));
+regChart(()=>mkChart('cExecScore',{type:'bar',data:{labels:['RevPAR','Dive util.','Direct bookings','Admin hours','Guest CSAT','Margin'],datasets:[{label:'Today',data:[100,100,100,100,100,100],backgroundColor:'rgba(115,136,171,.55)'},{label:'Post-ERP (12 mo)',data:[118,128,165,62,112,121],backgroundColor:'#19c6c6'}]},options:baseOpts({scales:gridScale(),plugins:{legend:{labels:{color:inkColors().ink}}}})}));
+regChart(()=>mkChart('cRevStream',{type:'bar',data:{labels:['Rooms','Dive ops','F&B','Courses','Gear/Nitrox','Retail'],datasets:[{label:'Share of revenue (%)',data:[42,26,15,9,5,3],backgroundColor:PAL,borderRadius:6}]},options:baseOpts({indexAxis:'y',scales:gridScale(),plugins:{legend:{display:false}}})}));
+regChart(()=>mkChart('cHeadcount',{type:'bar',data:{labels:['Dive (instr+DM)','Boat crew','Kitchen','Bar/Servers','Housekeeping','Front desk','Admin'],datasets:[{label:'Headcount',data:[16,4,6,4,4,3,2],backgroundColor:PAL,borderRadius:6}]},options:baseOpts({scales:gridScale(),plugins:{legend:{display:false}}})}));
+regChart(()=>mkChart('cSeasonStaff',{type:'line',data:{labels:['Jul','Aug','Sep','Oct','Nov','Dec','Jan','Feb','Mar','Apr','May','Jun'],datasets:[{label:'Active staff',data:[24,24,25,28,32,34,34,33,32,31,29,25],borderColor:'#19c6c6',backgroundColor:'rgba(25,198,198,.15)',fill:true,tension:.4},{label:'Occupancy %',data:[40,42,45,58,78,85,88,86,80,72,62,46],borderColor:'#ffb454',backgroundColor:'transparent',tension:.4,yAxisID:'y1'}]},options:baseOpts({scales:Object.assign(gridScale(),{y1:{position:'right',grid:{display:false},ticks:{color:'#ffb454',font:{size:10}}}})})}));
+regChart(()=>mkChart('cChannel',{type:'doughnut',data:{labels:['Booking.com','Agoda','TripAdvisor','Direct/website','Walk-in/referral'],datasets:[{data:[28,22,14,26,10],backgroundColor:PAL,borderWidth:0}]},options:baseOpts({cutout:'58%',plugins:{legend:{position:'right',labels:{color:inkColors().ink,font:{size:11}}}}})}));
+regChart(()=>mkChart('cDigital',{type:'radar',data:{labels:['Social presence','Direct booking','SEO/Web','Email/CRM','Reviews mgmt','First-party data','Analytics'],datasets:[{label:'Today',data:[4,1.5,2.5,1,2,1,1.5],borderColor:'#ff6b6b',backgroundColor:'rgba(255,107,107,.15)'},{label:'Post-ERP target',data:[4.5,4,4,4.5,4.5,4.5,4],borderColor:'#19c6c6',backgroundColor:'rgba(25,198,198,.18)'}]},options:baseOpts({scales:{r:{angleLines:{color:inkColors().grid},grid:{color:inkColors().grid},pointLabels:{color:inkColors().tick,font:{size:10}},ticks:{display:false,stepSize:1},min:0,max:5}}})}));
+regChart(()=>mkChart('cSentiment',{type:'bar',data:{labels:['5★','4★','3★','2★','1★'],datasets:[{label:'Share of reviews (est. %)',data:[72,18,6,2,2],backgroundColor:['#36d399','#19c6c6','#ffb454','#ff8c5a','#ff6b6b'],borderRadius:6}]},options:baseOpts({scales:gridScale(),plugins:{legend:{display:false}}})}));
+regChart(()=>mkChart('cThemes',{type:'bar',data:{labels:['Staff/service','Food','Diving','Rooms','Value','Location','Room size','Parking'],datasets:[{label:'Praise',data:[95,88,90,75,80,70,0,0],backgroundColor:'#36d399'},{label:'Complaint',data:[3,6,4,12,5,4,22,10],backgroundColor:'#ff6b6b'}]},options:baseOpts({scales:gridScale(true),plugins:{legend:{labels:{color:inkColors().ink}}}})}));
+regChart(()=>mkChart('cPestle',{type:'bubble',data:{datasets:[
+  {label:'Economic',data:[{x:4.3,y:4.5,r:20}],backgroundColor:'rgba(255,107,107,.6)'},
+  {label:'Environmental',data:[{x:4.6,y:4.2,r:20}],backgroundColor:'rgba(54,211,153,.6)'},
+  {label:'Technological',data:[{x:4.8,y:3.4,r:18}],backgroundColor:'rgba(25,198,198,.65)'},
+  {label:'Political',data:[{x:3.0,y:3.2,r:13}],backgroundColor:'rgba(59,130,246,.6)'},
+  {label:'Social',data:[{x:3.4,y:3.0,r:13}],backgroundColor:'rgba(167,139,250,.6)'},
+  {label:'Legal',data:[{x:3.2,y:3.6,r:14}],backgroundColor:'rgba(255,180,84,.6)'}
+]},options:baseOpts({scales:{x:{title:{display:true,text:'Impact →',color:inkColors().tick},min:2,max:5.2,grid:{color:inkColors().grid},ticks:{color:inkColors().tick}},y:{title:{display:true,text:'Likelihood →',color:inkColors().tick},min:2,max:5.2,grid:{color:inkColors().grid},ticks:{color:inkColors().tick}}}})}));
+regChart(()=>mkChart('cPorter',{type:'radar',data:{labels:['Competitive rivalry','Buyer power','New entrants','Supplier power','Substitutes'],datasets:[{label:'Force intensity',data:[4.3,3.8,3.0,2.4,2.2],borderColor:'#19c6c6',backgroundColor:'rgba(25,198,198,.2)',pointBackgroundColor:'#37e0c8'}]},options:baseOpts({plugins:{legend:{display:false}},scales:{r:{angleLines:{color:inkColors().grid},grid:{color:inkColors().grid},pointLabels:{color:inkColors().tick,font:{size:11}},ticks:{display:false,stepSize:1},min:0,max:5}}})}));
+regChart(()=>mkChart('cPosition',{type:'bubble',data:{datasets:[
+  {label:'Casa Escondida',data:[{x:2.4,y:4.7,r:18}],backgroundColor:'rgba(25,198,198,.8)'},
+  {label:'Crystal Blue',data:[{x:4.4,y:4.8,r:15}],backgroundColor:'rgba(59,130,246,.6)'},
+  {label:'Buceo',data:[{x:4.2,y:4.7,r:16}],backgroundColor:'rgba(167,139,250,.6)'},
+  {label:'Acacia',data:[{x:4.0,y:4.6,r:19}],backgroundColor:'rgba(255,180,84,.6)'},
+  {label:'Aiyanar',data:[{x:3.5,y:4.5,r:12}],backgroundColor:'rgba(244,114,182,.6)'},
+  {label:'Eagle Point',data:[{x:3.0,y:4.2,r:24}],backgroundColor:'rgba(255,107,107,.55)'}
+]},options:baseOpts({scales:{x:{title:{display:true,text:'Price tier (1 value → 5 premium)',color:inkColors().tick},min:2,max:5,grid:{color:inkColors().grid},ticks:{color:inkColors().tick}},y:{title:{display:true,text:'Guest rating',color:inkColors().tick},min:4,max:5,grid:{color:inkColors().grid},ticks:{color:inkColors().tick}}}})}));
+regChart(()=>mkChart('cGap',{type:'radar',data:{labels:['Direct booking','Channel mgmt','Dynamic pricing','CRM/loyalty','Photo amenities','Reviews','Value'],datasets:[
+  {label:'Casa Escondida (now)',data:[1.5,1,1,1.5,4.5,4.7,4.6],borderColor:'#19c6c6',backgroundColor:'rgba(25,198,198,.18)'},
+  {label:'Premium peer avg',data:[4,4,3.5,3.5,4.2,4.6,3.4],borderColor:'#a78bfa',backgroundColor:'rgba(167,139,250,.15)'}
+]},options:baseOpts({scales:{r:{angleLines:{color:inkColors().grid},grid:{color:inkColors().grid},pointLabels:{color:inkColors().tick,font:{size:10}},ticks:{display:false,stepSize:1},min:0,max:5}}})}));
+regChart(()=>mkChart('cOrigin',{type:'doughnut',data:{labels:['Domestic (PH)','N. America','Europe','Asia (other)','Oceania'],datasets:[{data:[46,18,16,14,6],backgroundColor:PAL,borderWidth:0}]},options:baseOpts({cutout:'55%',plugins:{legend:{position:'right',labels:{color:inkColors().ink,font:{size:10}}}}})}));
+regChart(()=>mkChart('cSeason',{type:'line',data:{labels:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],datasets:[{label:'Diveability index',data:[95,96,92,85,78,60,55,55,60,72,90,96],borderColor:'#37e0c8',backgroundColor:'rgba(55,224,200,.15)',fill:true,tension:.45},{label:'Booking demand',data:[90,92,86,80,70,52,48,50,56,70,86,94],borderColor:'#3b82f6',backgroundColor:'transparent',tension:.45}]},options:baseOpts({scales:gridScale()})}));
+regChart(()=>mkChart('cPersona',{type:'bubble',data:{datasets:[
+  {label:'Macro Photographer',data:[{x:9,y:95,r:16}],backgroundColor:'rgba(25,198,198,.7)'},
+  {label:'Weekend Diver',data:[{x:6,y:45,r:24}],backgroundColor:'rgba(59,130,246,.6)'},
+  {label:'Course Student',data:[{x:5,y:55,r:14}],backgroundColor:'rgba(255,180,84,.6)'},
+  {label:'Club Organiser',data:[{x:8,y:80,r:12}],backgroundColor:'rgba(167,139,250,.6)'},
+  {label:'Non-diving Partner',data:[{x:4,y:35,r:10}],backgroundColor:'rgba(244,114,182,.6)'}
+]},options:baseOpts({scales:{x:{title:{display:true,text:'Relative CLV →',color:inkColors().tick},min:2,max:10,grid:{color:inkColors().grid},ticks:{color:inkColors().tick}},y:{title:{display:true,text:'Visit frequency index →',color:inkColors().tick},min:20,max:110,grid:{color:inkColors().grid},ticks:{color:inkColors().tick}}}})}));
+/*CHART-DEFS*/
+</script>
+</body>
+</html>
