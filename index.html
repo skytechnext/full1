@@ -2291,7 +2291,7 @@ footer{padding:50px 24px 70px;text-align:center;color:var(--muted);font-size:.82
       <div class="grid g4" style="margin:28px 0">
         <div class="kpi reveal"><div class="num" data-count="4.7" data-dec="1" data-suf="★">0</div><div class="lbl">Google rating</div><div class="sub">≈212 reviews · top-tier in Anilao</div></div>
         <div class="kpi reveal d1"><div class="num" data-count="2016">0</div><div class="lbl">Founded</div><div class="sub">≈10 years operating</div></div>
-        <div class="kpi reveal d2"><div class="num" data-count="31">0</div><div class="lbl">Rooms (max)</div><div class="sub">24–31 keys across sources</div></div>
+        <div class="kpi reveal d2"><div class="num" data-count="23">0</div><div class="lbl">Rooms</div><div class="sub">verified 2026 rate card</div></div>
         <div class="kpi reveal d3"><div class="num" data-pre="₱" data-count="60" data-suf="M+">0</div><div class="lbl">Est. annual revenue</div><div class="sub">base-case model · see §14</div></div>
       </div>
 
@@ -2379,35 +2379,52 @@ footer{padding:50px 24px 70px;text-align:center;color:var(--muted);font-size:.82
     <div class="wrap">
       <span class="sec-tag reveal">Section 03 · Due Diligence</span>
       <h2 class="reveal"><span class="sec-num">03</span>Product &amp; Service Catalog</h2>
-      <p class="lead reveal">Six interlocking revenue lines. Each becomes a structured Odoo product/service, enabling bundling, upselling and yield management. Rates below are indicative ranges from public OTA/website data (PHP, 2025–26).</p>
+      <p class="lead reveal">Six interlocking revenue lines. Each becomes a structured Odoo product/service, enabling bundling, upselling and yield management. <strong>Rates below are the client's official 2026 rate cards</strong> (verified against the provided collateral): a room-only schedule (VAT inclusive) and a full-board per-person schedule for agents.</p>
+
+      <div class="callout reveal"><div class="t">Verified room inventory — 23–24 keys, only 8 with a sea view</div>The official 2026 rate card lists <strong>23 rooms: 15 Standard + 2 Deluxe + 2 White Beach Deluxe + 4 Suite</strong> (public OTAs wrongly suggested 24–31). The discovery meeting cited <strong>24</strong> (16 Standard). Either way, only the <strong>8 Deluxe/White-Beach/Suite rooms are sea-view</strong>; the 15–16 Standard rooms have <strong>no view</strong> — a key pricing/marketing fact. Modelling and the Odoo build use <strong>23 keys</strong>.</div>
 
       <div class="tabs" data-tabg="cat">
-        <button class="tab active" onclick="tab('cat',0,this)">🛏 Rooms</button>
-        <button class="tab" onclick="tab('cat',1,this)">🤿 Dive Packages</button>
-        <button class="tab" onclick="tab('cat',2,this)">🎓 PADI Courses</button>
-        <button class="tab" onclick="tab('cat',3,this)">🍽 F&amp;B &amp; Retail</button>
+        <button class="tab active" onclick="tab('cat',0,this)">🛏 Room-only (VAT incl.)</button>
+        <button class="tab" onclick="tab('cat',1,this)">🍱 Full-board (per person)</button>
+        <button class="tab" onclick="tab('cat',2,this)">🤿 Dive &amp; Day Use</button>
+        <button class="tab" onclick="tab('cat',3,this)">🎓 PADI Courses</button>
+        <button class="tab" onclick="tab('cat',4,this)">🍽 F&amp;B &amp; Retail</button>
       </div>
       <div data-panes="cat">
         <div class="tabpane active">
+          <div class="cap" style="color:var(--muted);font-size:.78rem;margin-bottom:6px">Official rates Jan–Dec 2026 · room only · VAT included</div>
           <div class="tbl-wrap"><table class="tbl">
-            <thead><tr><th>Room type</th><th>Size</th><th>Indicative rate / night</th><th>Best for</th><th>Odoo model</th></tr></thead>
+            <thead><tr><th>Room type</th><th># rooms</th><th>Size</th><th>Pax</th><th>Rate / night (₱)</th><th>Odoo model</th></tr></thead>
             <tbody>
-              <tr><td>Standard Double/Twin</td><td>18 m²</td><td>₱4,500–6,000 (~$80–105)</td><td>Solo divers, value</td><td>Rental product · serial STD-01…</td></tr>
-              <tr><td>Deluxe Double/Twin</td><td>40 m²</td><td>₱6,500–8,500 (~$115–150)</td><td>Couples, comfort</td><td>Rental product · serial DLX-…</td></tr>
-              <tr><td>Sea View Suite</td><td>50 m²</td><td>₱8,500–12,000 (~$150–210)</td><td>Premium, photographers</td><td>Rental product · serial SVS-…</td></tr>
+              <tr><td>Standard Room</td><td>15</td><td>18 m²</td><td>1 / 2</td><td>5,500 / 7,600</td><td>Rental · serial STD-01…15</td></tr>
+              <tr><td>Deluxe Room</td><td>2</td><td>40 m²</td><td>1–2 / 3–4</td><td>11,200 / 16,400</td><td>Rental · serial DLX-01…02</td></tr>
+              <tr><td>White Beach Deluxe</td><td>2</td><td>40 m²</td><td>1–2 / 3–4</td><td>11,600 / 17,200</td><td>Rental · serial WBD-01…02</td></tr>
+              <tr><td>Suite Room</td><td>4</td><td>50 m²</td><td>1–2 / 3–4</td><td>14,200 / 18,400</td><td>Rental · serial SVS-01…04</td></tr>
             </tbody>
           </table></div>
-          <p><small>Sources disagree on key count (24 “minimalist rooms” per PADI/owner copy vs. 31 on some OTAs). We model 31 keys as the upper bound; confirm in discovery.</small></p>
+          <p><small>Add-ons: Full-board meal (lunch→lunch) <strong>+₱1,500/pax</strong> · Daytrip fee <strong>₱1,500/pax</strong> (8am–5pm) · Day-use room: Standard ₱2,000 / Deluxe ₱3,000 / Suite ₱4,000. Children 0–6 free; extra person (Suite/Deluxe, max 4 pax) ₱3,000/night meals excl.; dorm ₱3,000/pax. 50% non-refundable deposit; full payment 1 month prior.</small></p>
+        </div>
+        <div class="tabpane">
+          <div class="cap" style="color:var(--muted);font-size:.78rem;margin-bottom:6px">Full-board (all meals) · per person per night · USD retail / ₱ agent rate · 5+1 FOC for agents</div>
+          <div class="tbl-wrap"><table class="tbl">
+            <thead><tr><th>Room</th><th>Quad (retail / agent)</th><th>Triple</th><th>Double</th><th>Single</th></tr></thead>
+            <tbody>
+              <tr><td>Suite (50m²)</td><td>$100 / ₱4,270</td><td>$120 / ₱4,970</td><td>$145 / ₱6,020</td><td>$180 / ₱7,420</td></tr>
+              <tr><td>Deluxe (40m²)</td><td>$95 / ₱3,920</td><td>$105 / ₱4,270</td><td>$125 / ₱4,970</td><td>$160 / ₱6,370</td></tr>
+              <tr><td>Standard (18m²)</td><td>N/A</td><td>N/A</td><td>$85 / ₱3,710</td><td>$120 / ₱4,900</td></tr>
+            </tbody>
+          </table></div>
+          <p><small>Transportation: airport↔resort↔airport van <strong>US$240 / ₱13,000 per van</strong> (max 6 pax w/ luggage, round-trip incl. driver/gas/toll/parking). Children 0–4 free; 5–9 charged 50% (room only).</small></p>
         </div>
         <div class="tabpane">
           <div class="tbl-wrap"><table class="tbl">
-            <thead><tr><th>Package</th><th>Contents</th><th>Indicative price</th><th>Notes</th></tr></thead>
+            <thead><tr><th>Service</th><th>Contents</th><th>Notes</th></tr></thead>
             <tbody>
-              <tr><td>Day Diver</td><td>2 guided boat dives + tank + DM</td><td>₱2,500–3,500 / day</td><td>Gear rental extra</td></tr>
-              <tr><td>3-Day “Stay &amp; Dive”</td><td>Accommodation + up to 3 dives/day + meals</td><td>Bundled</td><td>Core photographer package</td></tr>
-              <tr><td>Night Dive Special</td><td>Guided night dive + post-dive dinner</td><td>₱1,800–2,800</td><td>High-margin add-on</td></tr>
-              <tr><td>Nitrox fills</td><td>EANx up to 40%</td><td>Per fill</td><td>Consumable in Inventory</td></tr>
-              <tr><td>Gear rental</td><td>BCD, reg, wetsuit, computer, camera rigs</td><td>Per item / day</td><td>Serial-tracked Rental</td></tr>
+              <tr><td>Guided boat dives</td><td>2 morning + 1 afternoon (+ optional night)</td><td>Anilao Diving Park Fee ₱300/pax/boat-day applies</td></tr>
+              <tr><td>Night dive special</td><td>Guided night dive + post-dive dinner</td><td>High-margin add-on</td></tr>
+              <tr><td>Nitrox fills</td><td>EANx up to 40%</td><td>Consumable in Inventory</td></tr>
+              <tr><td>Gear rental</td><td>BCD, reg, wetsuit, computer, camera rigs</td><td>Serial-tracked Rental</td></tr>
+              <tr><td>Daytrip / facilities</td><td>Pool, facilities 8am–5pm</td><td>₱1,500/pax (meals extra); >3 hrs visitors charged full daytrip</td></tr>
             </tbody>
           </table></div>
         </div>
@@ -2440,30 +2457,37 @@ footer{padding:50px 24px 70px;text-align:center;color:var(--muted);font-size:.82
     <div class="wrap">
       <span class="sec-tag reveal">Section 04 · Due Diligence</span>
       <h2 class="reveal"><span class="sec-num">04</span>Founders &amp; Leadership</h2>
-      <p class="lead reveal">An owner-operator business led by a hands-on diving professional — a strength for guest trust and authenticity, but a concentration risk the ERP should help mitigate.</p>
+      <p class="lead reveal">A founder-led partnership with a clear split of responsibilities, confirmed in the 11 Jun 2026 discovery meeting. Two final decision-makers (Andrew &amp; Dong) plus a strong front-office manager (Ms. Eloisa). Authenticity is a strength; key-person concentration and undocumented process are the risks the ERP must mitigate.</p>
 
-      <div class="grid g2" style="margin:22px 0">
-        <div class="card reveal"><span class="pill p-green">Verified</span><h3 style="font-size:1.15rem">Armando “Dong” Vergara</h3><p><strong>Founder / Owner-Operator · Diving Instructor.</strong> Established Casa Escondida in June 2016. Consistently named in guest reviews as a warm, expert host and instructor who is personally present in operations. Brand and culture are closely tied to his presence.</p><p><small>Confidence: High (named in multiple independent review sources).</small></p></div>
-        <div class="card reveal d1"><span class="pill p-amber">Unverified</span><h3 style="font-size:1.15rem">“Andrew” (co-founder)</h3><p>Named by the client as a co-founder, but <strong>not corroborated</strong> in public web/social sources at time of writing. Role, surname and equity split to be confirmed in discovery. Could be an investor, silent partner, or operational co-founder.</p><p><small>Confidence: Low — discovery item, flagged transparently.</small></p></div>
+      <div class="grid g3" style="margin:22px 0">
+        <div class="card reveal"><span class="pill p-green">Confirmed (discovery)</span><h3 style="font-size:1.1rem">Andrew Oh</h3><p><strong>Co-founder · Final decision-maker.</strong> Singaporean businessman (also owns a telecom company, whose corporate accountant he has lent to Casa). A PADI instructor. Owns <strong>overseas guest relations, marketing, and the kitchen/restaurant</strong>. Philosophy: <em>“80% preparation, 20% execution.”</em> His <strong>#1 priority: stop cash leakage from overspending</strong> — “before you learn to earn, learn to save.”</p><p><small>Confidence: High — present in discovery; andrew.oh@spur.com.sg.</small></p></div>
+        <div class="card reveal d1"><span class="pill p-green">Confirmed (discovery)</span><h3 style="font-size:1.1rem">Dong (Armando Vergara)</h3><p><strong>Co-founder · Final decision-maker · Dive &amp; maintenance head.</strong> Runs the dive center and facility maintenance; approves petty cash; sets the policy to prioritise instructors/locals (closing Booking.com on weekends). Public sources list him as the founding diving professional behind the PADI 5★ IDC.</p><p><small>Confidence: High on role; specific PADI ratings <strong>to be confirmed</strong> — see note below.</small></p></div>
+        <div class="card reveal d2"><span class="pill p-green">Confirmed (discovery)</span><h3 style="font-size:1.1rem">Ms. Eloisa</h3><p><strong>Reservations &amp; Marketing Manager (front-office).</strong> Owns the entire booking lifecycle across email, Facebook, WhatsApp, Viber &amp; Instagram; keeps rates aligned across channels <strong>manually</strong>; handles deposits, DOT guest-arrival reports, ID storage, transfers, and relays dive schedules to the dive team. The operational linchpin of the front office.</p><p><small>Confidence: High — present in discovery (transcribed variously; one person).</small></p></div>
       </div>
 
-      <h3 class="reveal">Inferred organisation</h3>
+      <div class="callout warn reveal"><div class="t">Dong's certifications &amp; qualifications — to confirm</div>The discovery meeting did <strong>not</strong> capture Dong's specific PADI ratings (he did not attend). What is established: he is the diving professional behind a <strong>PADI 5★ Instructor Development Center</strong>, which requires at minimum a <strong>PADI IDC Staff Instructor / Master Instructor</strong>, and an IDC additionally requires a <strong>PADI Course Director</strong> on staff. Likely/holdable credentials to verify directly with Dong: <em>PADI Course Director or Master Instructor, EFR Instructor Trainer, Master Scuba Diver Trainer (MSDT), Enriched Air (Nitrox) Instructor, plus specialty-instructor ratings (Deep, Night, U/W Photography, Search &amp; Recovery)</em>. <strong>Action:</strong> obtain his PADI member number &amp; rating list for the website's IDC credibility and for HR Skills records.</p></div>
+
+      <h3 class="reveal">Organisation (confirmed in discovery)</h3>
+      <p class="reveal"><strong>36 regular (monthly-payroll) staff</strong> + 6–10 extras when fully booked. No formal department heads beyond the three principals; petty cash by “Lenny/Ellen”, approved by Dong; an in-house “accounts club” does bookkeeping (no full-time accountant).</p>
       <div class="mermaid reveal">
 flowchart TD
-  O["Owner / GM\nDong Vergara"] --> DV["Dive Center Manager"]
-  O --> FB["F&B / Restaurant Lead"]
-  O --> FD["Front Desk / Reservations"]
-  O --> HK["Housekeeping Lead"]
-  O --> AD["Admin / Accounts"]
-  DV --> I["10 PADI Instructors"]
-  DV --> DM["Divemasters"]
-  DV --> BC["Boat Crew / Captains"]
-  FB --> K["Kitchen Staff"]
-  FB --> B["Bar / Servers"]
-  HK --> RA["Room Attendants"]
+  ANDREW["Andrew Oh\nCo-founder · Overseas/Marketing/F&B"]:::p
+  DONG["Dong (Vergara)\nCo-founder · Dive & Maintenance"]:::p
+  ELO["Ms. Eloisa\nReservations & Marketing Mgr"]:::p
+  ANDREW --- DONG
+  ANDREW --> ELO
+  ANDREW --> KIT["Kitchen & Dining"]
+  ELO --> RES["Reservation Assistant"]
+  DONG --> DIVE["Dive Center · Instructors & DMs · Boat Crew"]
+  DONG --> MNT["Maintenance"]
+  ANDREW --> ADM["Admin / Accounts club · petty cash (Lenny/Ellen)"]
+  ADM --> SEC["Security"]
+  ADM --> DRV["Drivers (2 vans)"]
+  ADM --> HK["Housekeeping"]
+  classDef p fill:#19c6c6,stroke:#0fa8b8,color:#04212b;
       </div>
 
-      <div class="callout warn reveal"><div class="t">Key-person &amp; succession risk</div>Heavy dependence on the founder for diving expertise, supplier relationships and guest rapport. ERP-encoded SOPs, supplier records, pricing rules and a documented booking/finance trail reduce this risk and make the business more delegable and saleable.</div>
+      <div class="callout risk reveal"><div class="t">Key-person &amp; succession risk</div>The business runs on three people's heads and a web of group chats — Andrew (overseas/marketing/F&amp;B), Dong (dive/maintenance/approvals), Eloisa (all reservations &amp; channel rate-alignment, done manually). No full-time accountant; books were “a big mess” on expenses, commissions &amp; VAT (now being fixed by Andrew's telecom-company accountant). ERP-encoded SOPs, supplier/pricing records and an auditable booking/finance trail directly de-risk this and make the business delegable and saleable.</div>
     </div>
   </section>
 
@@ -2472,7 +2496,7 @@ flowchart TD
     <div class="wrap">
       <span class="sec-tag reveal">Section 05 · Due Diligence</span>
       <h2 class="reveal"><span class="sec-num">05</span>Staff &amp; Organisational Analysis</h2>
-      <p class="lead reveal">A lean, seasonally-flexed team of roughly 28–34. The dive department is the largest and most credential-intensive — exactly where structured scheduling and certification tracking pay off.</p>
+      <p class="lead reveal">A team of <strong>36 regular (monthly-payroll) staff plus 6–10 extras</strong> when fully booked (confirmed in discovery), across admin, maintenance, security, drivers, housekeeping, kitchen &amp; dining, and the dive center. The dive department is the most credential-intensive — exactly where structured scheduling and certification tracking pay off.</p>
 
       <div class="grid g2" style="margin-top:20px">
         <div class="chartbox reveal"><h4>Estimated headcount by department</h4><div class="cap">Inferred model — confirm in discovery</div><div class="canvas-h"><canvas id="cHeadcount"></canvas></div></div>
@@ -2497,7 +2521,7 @@ flowchart TD
     <div class="wrap">
       <span class="sec-tag reveal">Section 06 · Due Diligence</span>
       <h2 class="reveal"><span class="sec-num">06</span>Digital &amp; Web Presence Audit</h2>
-      <p class="lead reveal">Casa Escondida punches above its size socially, but converts demand through commission-heavy OTAs and lacks a first-party booking + data engine. This is the single biggest commercial quick-win.</p>
+      <p class="lead reveal">Casa Escondida punches above its size socially and is <strong>mostly direct-booked</strong> (80–90% repeat, mostly local), with Booking.com deliberately <strong>capped at ~15%</strong> and closed weekends to protect instructor/local demand. The real gap isn't OTA over-reliance — it's that <strong>every channel is handled manually</strong> by the reservations team across email, FB, WhatsApp, Viber &amp; Instagram, with no booking engine, no channel manager and no first-party data layer. That manual load is the single biggest commercial quick-win.</p>
 
       <div class="grid g4" style="margin:22px 0">
         <div class="kpi reveal"><div class="num" data-count="11.8" data-dec="1" data-suf="k">0</div><div class="lbl">Facebook followers</div><div class="sub">Active, UGC-rich</div></div>
@@ -2511,15 +2535,17 @@ flowchart TD
         <div class="chartbox reveal d1"><h4>Digital maturity radar</h4><div class="cap">0 = absent · 5 = best-practice</div><div class="canvas-h"><canvas id="cDigital"></canvas></div></div>
       </div>
 
-      <h3 class="reveal">Acquisition funnel &amp; leakage</h3>
+      <h3 class="reveal">Acquisition funnel &amp; manual-handling load</h3>
       <div class="mermaid reveal">
 flowchart LR
-  A["Awareness\nSocial · UGC · PADI dir."] --> B["Consideration\nOTA listings · reviews"]
+  A["Awareness\nSocial · UGC · PADI dir. · agents"] --> B["Enquiry\nemail/FB/WhatsApp/Viber/IG"]
   B --> C{"Booking"}
-  C -->|"OTA 60–70%"| D["Commission −15–18%"]
-  C -->|"Direct 30–40%"| E["Full margin\n+ first-party data"]
+  C -->|"Direct ~77% (manual)"| E["Full margin\nbut manual rate-align & comms"]
+  C -->|"Booking.com ~15% (capped)"| D["Commission + manual sync"]
+  C -->|"Agents ~8% (net pricing)"| H["−20% net rate"]
   D --> F["Stay & dive"]
   E --> F
+  H --> F
   F --> G["Review request\n(manual today)"]
   G --> A
       </div>
@@ -2693,21 +2719,21 @@ flowchart LR
       <div class="tbl-wrap reveal"><table class="tbl">
         <thead><tr><th>Stream</th><th>Assumption</th><th>Est. annual (₱)</th></tr></thead>
         <tbody>
-          <tr><td>Rooms</td><td>31 keys × ~₱6,000 ADR × ~62% occ. × 365</td><td>≈ ₱42.0M</td></tr>
-          <tr><td>Dive operations</td><td>Packages, guided dives, Nitrox</td><td>≈ ₱26.0M</td></tr>
-          <tr><td>F&amp;B</td><td>Buffet/BBQ/bar incl. package allocation</td><td>≈ ₱15.0M</td></tr>
-          <tr><td>Courses</td><td>OW/AOW/specialties/DM</td><td>≈ ₱9.0M</td></tr>
-          <tr><td>Gear &amp; retail</td><td>Rental + pro-shop</td><td>≈ ₱8.0M</td></tr>
-          <tr><th>Total revenue (est.)</th><th></th><th>≈ ₱100M (~$1.75M)</th></tr>
+          <tr><td>Rooms</td><td>23 keys × ~₱9,500 blended ADR × ~57% occ. × 365</td><td>≈ ₱45.5M</td></tr>
+          <tr><td>Dive operations</td><td>Packages, guided dives, Nitrox, park fees</td><td>≈ ₱24.0M</td></tr>
+          <tr><td>F&amp;B</td><td>Full-board (₱1,500/pax), buffet/BBQ/bar</td><td>≈ ₱14.0M</td></tr>
+          <tr><td>Courses</td><td>OW/AOW/specialties/DM</td><td>≈ ₱8.0M</td></tr>
+          <tr><td>Gear, retail &amp; transport</td><td>Rental + pro-shop + van transfers</td><td>≈ ₱8.0M</td></tr>
+          <tr><th>Total revenue (est.)</th><th></th><th>≈ ₱99M (~$1.75M)</th></tr>
         </tbody>
       </table></div>
-      <p><small>Note: room-only revenue ≈ ₱42M aligns with the §1 “₱60M+” conservative headline once lower occupancy/ADR sensitivities are applied; total top-line could range ₱60–100M depending on true key count, occupancy and ADR.</small></p>
+      <p><small>Note: corrected to the verified <strong>23-key</strong> inventory. Fewer keys are offset by higher per-room rates (₱5,500–18,400) than public OTA data implied; total top-line plausibly ₱70–100M depending on occupancy, board mix and dive volume.</small></p>
 
       <h3 class="reveal">Step 2 — Valuation triangulation</h3>
       <div class="grid g3" style="margin-bottom:8px">
         <div class="kpi reveal"><div class="num">₱90–135M</div><div class="lbl">Revenue multiple</div><div class="sub">~1.0–1.4× revenue (leisure resort)</div></div>
         <div class="kpi reveal d1"><div class="num">₱110–170M</div><div class="lbl">EBITDA multiple</div><div class="sub">~₱22M EBITDA × 6–9×</div></div>
-        <div class="kpi reveal d2"><div class="num">₱100–150M</div><div class="lbl">RevPAR-per-key</div><div class="sub">31 keys × $60–90k/key benchmark</div></div>
+        <div class="kpi reveal d2"><div class="num">₱95–150M</div><div class="lbl">RevPAR-per-key</div><div class="sub">23 keys × $75–115k/key benchmark</div></div>
       </div>
       <div class="callout reveal"><div class="t">Indicative enterprise value</div><strong>₱100M – ₱160M (≈ $1.8M – $2.8M)</strong>, base case ≈ <strong>₱120–135M</strong>. A successful ERP-driven RevPAR/margin uplift of 12–22% could add <strong>₱15–30M</strong> of enterprise value via higher, more durable cash flows — the core financial argument for the project.</div>
 
@@ -3303,7 +3329,7 @@ E-->F["Knowledge base update"]</div>
       <div class="tbl-wrap reveal"><table class="tbl">
         <thead><tr><th>Assumption</th><th>Basis</th><th>Confidence</th></tr></thead>
         <tbody>
-          <tr><td>31 keys, ~62% occupancy, ₱6,000 ADR</td><td>Upper-bound key count + PH benchmarks</td><td><span class="pill p-amber">Med</span></td></tr>
+          <tr><td>23 keys, ~57% occupancy, ₱9,500 blended ADR</td><td>Verified 2026 rate card + PH benchmarks</td><td><span class="pill p-green">High</span></td></tr>
           <tr><td>Revenue ≈ ₱60–100M</td><td>Stream model</td><td><span class="pill p-red">Est.</span></td></tr>
           <tr><td>EV ≈ ₱100–160M</td><td>Revenue/EBITDA/RevPAR triangulation</td><td><span class="pill p-red">Est.</span></td></tr>
           <tr><td>OTA mix ~64%</td><td>Typical for niche dive resort</td><td><span class="pill p-amber">Med</span></td></tr>
@@ -3396,9 +3422,9 @@ function gridScale(stacked){const c=inkColors();return{x:{stacked:!!stacked,grid
 regChart(()=>mkChart('cExecMix',{type:'doughnut',data:{labels:['Rooms','Dive ops','Courses','F&B','Gear/Nitrox','Retail'],datasets:[{data:[42,26,9,15,5,3],backgroundColor:PAL,borderWidth:0}]},options:baseOpts({cutout:'58%',plugins:{legend:{position:'right',labels:{color:inkColors().ink,font:{size:11}}}}})}));
 regChart(()=>mkChart('cExecScore',{type:'bar',data:{labels:['RevPAR','Dive util.','Direct bookings','Admin hours','Guest CSAT','Margin'],datasets:[{label:'Today',data:[100,100,100,100,100,100],backgroundColor:'rgba(115,136,171,.55)'},{label:'Post-ERP (12 mo)',data:[118,128,165,62,112,121],backgroundColor:'#19c6c6'}]},options:baseOpts({scales:gridScale(),plugins:{legend:{labels:{color:inkColors().ink}}}})}));
 regChart(()=>mkChart('cRevStream',{type:'bar',data:{labels:['Rooms','Dive ops','F&B','Courses','Gear/Nitrox','Retail'],datasets:[{label:'Share of revenue (%)',data:[42,26,15,9,5,3],backgroundColor:PAL,borderRadius:6}]},options:baseOpts({indexAxis:'y',scales:gridScale(),plugins:{legend:{display:false}}})}));
-regChart(()=>mkChart('cHeadcount',{type:'bar',data:{labels:['Dive (instr+DM)','Boat crew','Kitchen','Bar/Servers','Housekeeping','Front desk','Admin'],datasets:[{label:'Headcount',data:[16,4,6,4,4,3,2],backgroundColor:PAL,borderRadius:6}]},options:baseOpts({scales:gridScale(),plugins:{legend:{display:false}}})}));
+regChart(()=>mkChart('cHeadcount',{type:'bar',data:{labels:['Dive center','Kitchen & dining','Housekeeping','Admin/Reservations','Maintenance','Security','Drivers'],datasets:[{label:'Regular staff (≈36)',data:[10,7,6,5,3,3,2],backgroundColor:PAL,borderRadius:6}]},options:baseOpts({scales:gridScale(),plugins:{legend:{display:false}}})}));
 regChart(()=>mkChart('cSeasonStaff',{type:'line',data:{labels:['Jul','Aug','Sep','Oct','Nov','Dec','Jan','Feb','Mar','Apr','May','Jun'],datasets:[{label:'Active staff',data:[24,24,25,28,32,34,34,33,32,31,29,25],borderColor:'#19c6c6',backgroundColor:'rgba(25,198,198,.15)',fill:true,tension:.4},{label:'Occupancy %',data:[40,42,45,58,78,85,88,86,80,72,62,46],borderColor:'#ffb454',backgroundColor:'transparent',tension:.4,yAxisID:'y1'}]},options:baseOpts({scales:Object.assign(gridScale(),{y1:{position:'right',grid:{display:false},ticks:{color:'#ffb454',font:{size:10}}}})})}));
-regChart(()=>mkChart('cChannel',{type:'doughnut',data:{labels:['Booking.com','Agoda','TripAdvisor','Direct/website','Walk-in/referral'],datasets:[{data:[28,22,14,26,10],backgroundColor:PAL,borderWidth:0}]},options:baseOpts({cutout:'58%',plugins:{legend:{position:'right',labels:{color:inkColors().ink,font:{size:11}}}}})}));
+regChart(()=>mkChart('cChannel',{type:'doughnut',data:{labels:['Direct (local, repeat)','Direct (overseas/agents)','Booking.com (capped ~15%)','Walk-in/referral'],datasets:[{data:[55,22,15,8],backgroundColor:['#19c6c6','#3b82f6','#ffb454','#a78bfa'],borderWidth:0}]},options:baseOpts({cutout:'58%',plugins:{legend:{position:'right',labels:{color:inkColors().ink,font:{size:11}}}}})}));
 regChart(()=>mkChart('cDigital',{type:'radar',data:{labels:['Social presence','Direct booking','SEO/Web','Email/CRM','Reviews mgmt','First-party data','Analytics'],datasets:[{label:'Today',data:[4,1.5,2.5,1,2,1,1.5],borderColor:'#ff6b6b',backgroundColor:'rgba(255,107,107,.15)'},{label:'Post-ERP target',data:[4.5,4,4,4.5,4.5,4.5,4],borderColor:'#19c6c6',backgroundColor:'rgba(25,198,198,.18)'}]},options:baseOpts({scales:{r:{angleLines:{color:inkColors().grid},grid:{color:inkColors().grid},pointLabels:{color:inkColors().tick,font:{size:10}},ticks:{display:false,stepSize:1},min:0,max:5}}})}));
 regChart(()=>mkChart('cSentiment',{type:'bar',data:{labels:['5★','4★','3★','2★','1★'],datasets:[{label:'Share of reviews (est. %)',data:[72,18,6,2,2],backgroundColor:['#36d399','#19c6c6','#ffb454','#ff8c5a','#ff6b6b'],borderRadius:6}]},options:baseOpts({scales:gridScale(),plugins:{legend:{display:false}}})}));
 regChart(()=>mkChart('cThemes',{type:'bar',data:{labels:['Staff/service','Food','Diving','Rooms','Value','Location','Room size','Parking'],datasets:[{label:'Praise',data:[95,88,90,75,80,70,0,0],backgroundColor:'#36d399'},{label:'Complaint',data:[3,6,4,12,5,4,22,10],backgroundColor:'#ff6b6b'}]},options:baseOpts({scales:gridScale(true),plugins:{legend:{labels:{color:inkColors().ink}}}})}));
