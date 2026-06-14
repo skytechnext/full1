@@ -1,0 +1,41 @@
+{
+  "$schema": "internal://casa-escondida/odoo19-build/modules",
+  "version": "1.0",
+  "target": "Odoo 19 (Online or Enterprise)",
+  "company": {
+    "name": "Casa Escondida Anilao Resort & Dive Center",
+    "country": "Philippines",
+    "currency": "PHP",
+    "extra_currencies": ["USD", "EUR"],
+    "vat_rate": 0.12,
+    "localization": "l10n_ph",
+    "timezone": "Asia/Manila"
+  },
+  "install_order": [
+    {"seq": 1, "tech_name": "account", "app": "Accounting", "with": ["l10n_ph"], "why": "Legal/finance backbone: PHP, 12% VAT, official receipts. Must exist before any transaction.", "maps_to": "All revenue & cost"},
+    {"seq": 2, "tech_name": "sale_management", "app": "Sales", "why": "Order spine for rooms, dive packages, courses, gear.", "maps_to": "Quotations, sale orders, invoicing"},
+    {"seq": 3, "tech_name": "sale_renting", "app": "Rental", "why": "Reservation engine for rooms (no native PMS) and scuba gear; date-ranged availability + pricing.", "maps_to": "31 rooms as serial units, gear rental"},
+    {"seq": 4, "tech_name": "stock", "app": "Inventory", "why": "Serial/lot-tracked gear, F&B ingredients, retail, consumables (air/Nitrox).", "maps_to": "Stock, gear serials, reorder"},
+    {"seq": 5, "tech_name": "point_of_sale", "app": "Point of Sale", "with": ["pos_restaurant"], "why": "Restaurant + bar (floors/tables), retail, charge-to-room.", "maps_to": "F&B, bar, retail"},
+    {"seq": 6, "tech_name": "crm", "app": "CRM", "why": "Lead pipeline, persona segmentation, group/dive-club bookings, nurturing.", "maps_to": "Leads, opportunities"},
+    {"seq": 7, "tech_name": "appointment", "app": "Calendar / Appointments", "why": "Dive-trip scheduling, instructor/boat resources, online dive booking.", "maps_to": "Dive ops"},
+    {"seq": 8, "tech_name": "project", "app": "Project", "why": "Multi-day courses, DM training, group dive logistics, certification milestones.", "maps_to": "Courses, ops projects"},
+    {"seq": 9, "tech_name": "maintenance", "app": "Maintenance", "why": "Regulated gear servicing, compressor/Nitrox, boats, facilities (PADI 5* compliance).", "maps_to": "Equipment compliance"},
+    {"seq": 10, "tech_name": "hr", "app": "Employees", "with": ["hr_attendance", "hr_skills"], "why": "Instructors/DMs/kitchen/housekeeping/front-desk; certifications as skills; rosters.", "maps_to": "People"},
+    {"seq": 11, "tech_name": "website_sale", "app": "Website + eCommerce", "why": "Direct booking engine (rooms, packages, courses) to cut OTA commission.", "maps_to": "Distribution"},
+    {"seq": 12, "tech_name": "event", "app": "Events", "why": "Course cohorts and dive expeditions with registration/attendees.", "maps_to": "Courses, expeditions"}
+  ],
+  "recommended_addons": [
+    {"tech_name": "sign", "app": "Sign", "why": "Digital dive-medical statement + liability release (PADI requirement). High value."},
+    {"tech_name": "documents", "app": "Documents", "why": "Store C-cards, dive logs, waivers, supplier docs."},
+    {"tech_name": "knowledge", "app": "Knowledge", "why": "Document SOPs; reduce key-person risk."},
+    {"tech_name": "marketing_automation", "app": "Marketing Automation", "why": "Repeat-diver campaigns, review requests, win-back."},
+    {"tech_name": "mass_mailing", "app": "Email Marketing", "why": "Newsletters, segmented offers."}
+  ],
+  "gaps": [
+    {"gap": "No native PMS", "severity": "high", "resolution": "Use Rental as reservation engine (rooms = serial-tracked rentable units) + Studio fields on sale.order. Upgrade path: OCA 'hotel' modules (verify v19 port) or custom room.reservation Gantt for room-status board / night audit."},
+    {"gap": "No native OTA channel manager", "severity": "high", "resolution": "Third-party channel-manager connector or custom integration. For demo: simulate via x_channel field + overbooking-guard scheduled action."},
+    {"gap": "No housekeeping board", "severity": "low", "resolution": "Studio kanban on a simple housekeeping model, or OCA hotel_housekeeping."},
+    {"gap": "No dive-log/cert domain model", "severity": "medium", "resolution": "Model via Project + Documents + HR Skills; optional small custom dive.log model for fidelity."}
+  ]
+}

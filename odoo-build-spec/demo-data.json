@@ -1,0 +1,88 @@
+{
+  "$schema": "internal://casa-escondida/odoo19-build/demo-data",
+  "version": "1.0",
+  "objective": "Populate Odoo 19 extensively so the system looks alive and demoable. Transactional window: 2025-12-01 to 2026-05-31 (peak NE-monsoon dive season).",
+  "currency": "PHP",
+  "realism_rules": [
+    "Seasonality: more dives & higher occupancy Nov-May; taper Jun-Oct.",
+    "Repeat divers: ~25% of customers have 2+ stays.",
+    "OTA orders carry a commission line (15-18%).",
+    "Photographer guests book Sea View suites + multi-day dive packages.",
+    "Some bookings include non-diving partners with F&B-only spend."
+  ],
+
+  "master_data": {
+    "res.currency": 3,
+    "account.tax": 4,
+    "account.journal": 6,
+    "product.pricelist": 2,
+    "room_types": 3,
+    "room_serials": 31,
+    "dive_trip_products": 6,
+    "dive_sites": 35,
+    "course_products": 7,
+    "gear_rental_products": 12,
+    "gear_serial_units": 100,
+    "fnb_menu_items": 60,
+    "retail_products": 40,
+    "consumables": 8,
+    "employees": 30,
+    "customers": 150,
+    "ota_partners": 3,
+    "agencies": 5,
+    "vendors": 20,
+    "maintenance_equipment": 30,
+    "pos_floors": 3,
+    "pos_tables": 20
+  },
+
+  "transactional_data": {
+    "room_reservations_rental_orders": 200,
+    "dive_trip_bookings": 300,
+    "course_cohorts_or_registrations": 40,
+    "gear_rental_orders": 150,
+    "pos_orders": 2000,
+    "customer_invoices": 400,
+    "vendor_bills": 120,
+    "payments": "match invoices/bills (~80% paid, ~20% open for realistic AR/AP)",
+    "certifications_issued": 35,
+    "dive_logs_documents": 100,
+    "maintenance_requests": 40,
+    "crm_leads": 80,
+    "crm_opportunities": 50
+  },
+
+  "customer_personas_distribution": {
+    "macro_photographer_intl": 0.18,
+    "domestic_weekend_diver": 0.40,
+    "course_student": 0.18,
+    "dive_club_member": 0.14,
+    "non_diving_partner": 0.10
+  },
+
+  "sample_employees": [
+    {"name": "Armando 'Dong' Vergara", "dept": "Admin", "role": "Owner/GM/Instructor"},
+    {"name": "Instructor x10", "dept": "Dive (Instructors)", "skills": ["PADI OWSI", "EFR Instructor"]},
+    {"name": "Divemaster x6", "dept": "Divemasters"},
+    {"name": "Boat crew x4", "dept": "Boat Crew"},
+    {"name": "Kitchen x6", "dept": "Kitchen"},
+    {"name": "Bar/Servers x4", "dept": "Bar/Servers"},
+    {"name": "Housekeeping x4", "dept": "Housekeeping"},
+    {"name": "Front desk x3", "dept": "Front Desk"}
+  ],
+
+  "naming_conventions": {
+    "rooms": "STD-NN / DLX-NN / SVS-NN",
+    "products": "ROOM-* / DIVE-* / COURSE-* / GEAR-* / CONS-* / FNB-* / RETAIL-*",
+    "sale_orders": "client_order_ref = CE-<channel>-<seq> for idempotent matching",
+    "customers": "email as natural key where available, else name+phone"
+  },
+
+  "dashboards_to_configure": [
+    "CRM pipeline by persona/source",
+    "Sales & POS revenue dashboards",
+    "Occupancy & RevPAR (from Rental orders)",
+    "Dive utilisation (appointments vs capacity)",
+    "Accounting: P&L, AR/AP aging, VAT report"
+  ]
+}
