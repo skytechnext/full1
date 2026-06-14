@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Casa Escondida — Staff Guide to Odoo (by role)</title>
+<style>
+:root{--bg:#0a0f1a;--panel:#121c30;--panel2:#16223a;--line:#1f2d49;--ink:#e8f0fb;--ink2:#a9bdd8;--muted:#7388ab;--teal:#19c6c6;--aqua:#37e0c8;--green:#36d399;--amber:#ffb454;--grad:linear-gradient(135deg,#19c6c6,#3b82f6 55%,#6366f1);--sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.65}
+header{padding:46px 24px;text-align:center;background:radial-gradient(800px 400px at 70% -20%,rgba(25,198,198,.18),transparent)}
+header h1{font-size:clamp(1.6rem,4vw,2.6rem);margin:0 0 8px;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+header p{color:var(--ink2);max-width:760px;margin:6px auto}.home{color:var(--teal);text-decoration:none}
+.wrap{max-width:1000px;margin:0 auto;padding:20px}
+nav.toc{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:18px 0}
+nav.toc a{background:var(--panel);border:1px solid var(--line);color:var(--ink2);padding:7px 13px;border-radius:9px;font-size:.82rem;text-decoration:none}
+nav.toc a:hover{color:var(--teal);border-color:var(--teal)}
+section{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:24px;margin:18px 0}
+h2{font-size:1.4rem;margin:0 0 4px;color:var(--aqua)}.who{color:var(--muted);font-size:.85rem;margin-bottom:14px}
+h3{margin:18px 0 6px;font-size:1.05rem;color:var(--teal)}
+ol,ul{margin:6px 0;padding-left:22px}li{margin-bottom:6px;color:var(--ink2)}
+kbd{background:var(--panel2);border:1px solid var(--line);border-radius:6px;padding:1px 7px;font-size:.82em;color:var(--aqua)}
+.step{counter-reset:none}
+.tip{border-left:3px solid var(--green);background:var(--panel2);padding:10px 14px;border-radius:0 10px 10px 0;margin:10px 0;font-size:.88rem}
+.warn{border-left:3px solid var(--amber);background:var(--panel2);padding:10px 14px;border-radius:0 10px 10px 0;margin:10px 0;font-size:.88rem}
+table{width:100%;border-collapse:collapse;font-size:.86rem;margin:10px 0}th,td{text-align:left;padding:9px 11px;border-bottom:1px solid var(--line)}th{color:var(--aqua);font-size:.72rem;text-transform:uppercase}
+footer{text-align:center;color:var(--muted);font-size:.8rem;padding:40px 20px}
+@media print{nav.toc{display:none}body{background:#fff;color:#000}section{break-inside:avoid}}
+</style></head>
+<body>
+<header>
+  <h1>Staff Guide to Odoo — by Role</h1>
+  <p>Casa Escondida Anilao · Practical, step-by-step daily guides for every team. Keep this open on the shared device. Phase 1 = POS + Inventory; more modules follow.</p>
+  <p><a class="home" href="index.html">← Back to main report</a> · <a class="home" href="stakeholder-questions.html">Discovery questions →</a></p>
+</header>
+<div class="wrap">
+<nav class="toc">
+  <a href="#login">Getting started</a><a href="#reservations">Reservations / Front Desk</a><a href="#dive">Dive Center</a>
+  <a href="#pos">Kitchen, Bar & POS</a><a href="#housekeeping">Housekeeping</a><a href="#inventory">Inventory / Stores</a>
+  <a href="#accounts">Accounts</a><a href="#manager">Manager / Owner</a><a href="#golden">Golden rules</a>
+</nav>
+
+<section id="login">
+  <h2>Getting started (everyone)</h2>
+  <div class="who">First-day basics for the shared POS/office devices.</div>
+  <ol>
+    <li>Open the browser and go to <kbd>edu-escondida.odoo.com</kbd> (or the office bookmark).</li>
+    <li>Log in with your <strong>department account</strong> (shared logins per department — not personal). Ask your manager for the password.</li>
+    <li>Top-left grid <kbd>⋮⋮⋮</kbd> switches between apps (Reservations, POS, Inventory, etc.). You only see the apps for your role.</li>
+    <li>Always <strong>log the action in Odoo</strong> instead of paper or group chat — if it's not in Odoo, it didn't happen and the money isn't counted.</li>
+  </ol>
+  <div class="tip">The whole point of the new system: <strong>one place</strong> for bookings, dives, food, stock and money — so nothing gets lost on paper or in chats.</div>
+</section>
+
+<section id="reservations">
+  <h2>Reservations &amp; Front Desk</h2>
+  <div class="who">For Ms. Eloisa's team. Replaces manual rate-aligning and scattered messages.</div>
+  <h3>Take a booking</h3>
+  <ol>
+    <li>App: <kbd>Reservations / Sales</kbd> → <kbd>New</kbd>.</li>
+    <li>Search or create the guest (name, email, phone, country, DOB). Tag the <strong>persona</strong> (local / overseas / agent / event) and <strong>channel</strong> (Website / Booking.com / Walk-in / Agent).</li>
+    <li>Add the <strong>room</strong> for the date range — Odoo shows only rooms that are free, so you can't double-book.</li>
+    <li>Add dive package, meals (full board +₱1,500/pax), transfers (van) and any extras as lines.</li>
+    <li>The price comes from the <strong>Rate Manager</strong>; apply guest discount if eligible (repeat ≤10%, agent 20%, instructor 10%).</li>
+    <li>Send the quote → take the <strong>50% deposit</strong> → status becomes Confirmed and the room is blocked.</li>
+  </ol>
+  <h3>Check-in / Check-out</h3>
+  <ol>
+    <li>Check-in: open the booking, capture ID/passport (upload), confirm requests (diet, birthday, transfer).</li>
+    <li>During stay, all charges (dives, bar, food) flow onto the guest's <strong>one folio</strong> automatically.</li>
+    <li>Check-out: open folio → review → choose <strong>group or individual billing</strong> → generate the <strong>VAT official receipt</strong> → take payment (cash/card/GCash/bank) → mark room for housekeeping.</li>
+  </ol>
+  <div class="warn">Cancellations: rebook allowed if ≥7 days before; no-show forfeits the 50% deposit; medical/emergency = rebook with no forfeiture. Record the reason in the booking.</div>
+  <div class="tip">Booking.com bookings appear automatically (via the channel manager) — no more manual copying. Just confirm and proceed.</div>
+</section>
+
+<section id="dive">
+  <h2>Dive Center</h2>
+  <div class="who">For Dong's team. Replaces the whiteboard + group chat.</div>
+  <h3>Daily brief &amp; manifest</h3>
+  <ol>
+    <li>Each morning, read the <strong>AI Daily Brief</strong> in the group (weather, tides, boats, guides, gear, park fee). React <kbd>✅</kbd> to confirm your assignment.</li>
+    <li>App: <kbd>Dive / Calendar</kbd> → today's trips show boat, guide and guests. Open a trip to see the <strong>digital manifest</strong>.</li>
+    <li>Before the dive: confirm tanks/Nitrox, gear and that each guest has a signed <strong>waiver/medical</strong> (e-sign) and recorded certification level.</li>
+  </ol>
+  <h3>During &amp; after the dive</h3>
+  <ol>
+    <li>Record gear rentals and extra tanks on the trip (tap the items) — this bills the guest's folio automatically.</li>
+    <li>After the dive, mark it complete and log notes / guest dive log.</li>
+    <li>If gear is damaged: open <kbd>Maintenance</kbd> → <kbd>New Request</kbd> on that item — it's automatically blocked from rental until serviced.</li>
+  </ol>
+  <div class="warn">Dives must be arranged <strong>≥2 days ahead</strong> so boats are available. If a guest isn't on the manifest, they don't dive — confirm with reservations first.</div>
+</section>
+
+<section id="pos">
+  <h2>Kitchen, Bar &amp; POS</h2>
+  <div class="who">Phase 1 priority. Replaces paper chits — every sale is captured.</div>
+  <h3>Take an order (Restaurant)</h3>
+  <ol>
+    <li>App: <kbd>Point of Sale</kbd> → open your session (start cash float).</li>
+    <li>Pick the table on the floor plan → add menu items → send to kitchen (kitchen ticket prints/shows).</li>
+    <li>Payment: choose <strong>Charge to Room</strong> (posts to the guest folio) or Cash / Card / GCash.</li>
+    <li>For walk-ins / Booking.com guests without a folio, settle immediately at the POS.</li>
+  </ol>
+  <h3>Bar &amp; retail</h3>
+  <ol>
+    <li>Use the Bar zone for drinks; stock decreases automatically as you sell.</li>
+    <li>Dive-shop retail uses the retail POS; low-stock items trigger a reorder.</li>
+  </ol>
+  <div class="tip">No more lost paper slips = no more lost revenue. If it's punched into POS, it's billed and counted.</div>
+  <div class="warn">Always close your POS session at end of shift so sales post to accounting and the cash count matches.</div>
+</section>
+
+<section id="housekeeping">
+  <h2>Housekeeping</h2>
+  <ol>
+    <li>App: <kbd>Housekeeping / Tasks</kbd> → see rooms needing cleaning (auto-created at checkout).</li>
+    <li>Update status: <strong>Dirty → Cleaning → Ready</strong>. Front desk sees readiness live — speeds up early check-ins.</li>
+    <li>Report any maintenance issue from the room task (photo + note) → goes to maintenance automatically.</li>
+    <li>Record linen/amenity usage so stock stays accurate.</li>
+  </ol>
+</section>
+
+<section id="inventory">
+  <h2>Inventory / Stores</h2>
+  <div class="who">Phase 1 priority (POS ↔ Inventory ↔ reports).</div>
+  <ol>
+    <li>App: <kbd>Inventory</kbd>. Every POS/kitchen/bar/dive sale reduces stock automatically (e.g. 10 soft drinks → sell 5 → 5 left).</li>
+    <li>Keep the <strong>20-pack minimum</strong> rule: items below minimum auto-create a purchase request (RFQ).</li>
+    <li>Receive deliveries against the purchase order so cost and stock update together (FIFO).</li>
+    <li>Do periodic counts via <kbd>Physical Inventory</kbd>; investigate any variance (leakage control).</li>
+    <li>Dive-side consumables: O2, chlorine, tanks, compressor diesel — track here too.</li>
+  </ol>
+</section>
+
+<section id="accounts">
+  <h2>Accounts</h2>
+  <div class="who">For the accounts club + corporate accountant. Fixes the VAT/commission/expense issues.</div>
+  <ol>
+    <li>Sales, POS and bookings auto-create <strong>VAT (12%) invoices / official receipts</strong> — no manual typing.</li>
+    <li>Reconcile bank, card, GCash and <strong>Booking.com payouts</strong> (arrive 8–9 days later) against invoices.</li>
+    <li>Record vendor bills against purchase orders; pay suppliers; track AP.</li>
+    <li>Agents are <strong>net-priced</strong> (e.g. retail $100 → agent pays $80) — record the net rate received; no commission payable to track.</li>
+    <li>Petty cash: enter expenses (Lenny/Ellen) → Dong approves in Odoo.</li>
+    <li>Month-end: run P&amp;L, balance sheet, VAT report and trial balance from <kbd>Accounting → Reporting</kbd>.</li>
+  </ol>
+  <div class="warn">The POS must be <strong>BIR-registered</strong> and issue compliant official receipts (the old one lapsed). Confirm accreditation before go-live.</div>
+</section>
+
+<section id="manager">
+  <h2>Manager / Owner (Andrew, Dong, Eloisa)</h2>
+  <ol>
+    <li><strong>Dashboards:</strong> occupancy, RevPAR, dive utilisation, F&amp;B sales, cash position — live, no waiting for reports.</li>
+    <li><strong>Rate Manager:</strong> set base rates and toggle weekend/season/occupancy/sea-view/LOS modifiers; one save updates website, Booking.com and POS.</li>
+    <li><strong>Approvals:</strong> discounts, refunds, petty cash and purchases route to you for one-tap approval.</li>
+    <li><strong>Cash-leakage watch:</strong> variance alerts (stock counts, voids, comps) land in your inbox — Andrew's #1 priority.</li>
+    <li><strong>Marketing:</strong> review CRM segments and automated campaigns (reviews, win-back, overseas/Chinese-language).</li>
+  </ol>
+</section>
+
+<section id="golden">
+  <h2>Golden rules (print &amp; pin)</h2>
+  <table>
+    <tr><th>#</th><th>Rule</th></tr>
+    <tr><td>1</td><td>If it's not in Odoo, it didn't happen — log every sale, dive, charge and expense.</td></tr>
+    <tr><td>2</td><td>Charge to the right guest folio every time (ask for room/name).</td></tr>
+    <tr><td>3</td><td>Confirm dive assignments with ✅ — no guest left un-attended.</td></tr>
+    <tr><td>4</td><td>Close your POS session at end of shift; cash must match.</td></tr>
+    <tr><td>5</td><td>Never give a discount/refund above your limit without approval.</td></tr>
+    <tr><td>6</td><td>Report broken gear/rooms immediately in Odoo, not the group chat.</td></tr>
+    <tr><td>7</td><td>Keep stock counts honest — variance is watched.</td></tr>
+  </table>
+  <div class="tip">Stuck? Ask your department champion first, then log a Helpdesk ticket. During hypercare (first 4–6 weeks) the Technext team is on-call.</div>
+</section>
+
+</div>
+<footer>Technext · Casa Escondida Anilao staff training. Screens may differ slightly after configuration; your champion has the latest.</footer>
+</body></html>

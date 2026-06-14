@@ -1,41 +1,54 @@
 {
   "$schema": "internal://casa-escondida/odoo19-build/modules",
-  "version": "1.0",
-  "target": "Odoo 19 (Online or Enterprise)",
+  "version": "2.0",
+  "target": "Odoo 19 (Online) — instance: edu-escondida.odoo.com",
   "company": {
     "name": "Casa Escondida Anilao Resort & Dive Center",
     "country": "Philippines",
     "currency": "PHP",
-    "extra_currencies": ["USD", "EUR"],
+    "extra_currencies": ["USD"],
     "vat_rate": 0.12,
     "localization": "l10n_ph",
-    "timezone": "Asia/Manila"
+    "timezone": "Asia/Manila",
+    "rooms": 23,
+    "notes": "Quote/accept in PHP (was USD). Flat annual pricing today; introduce variable pricing (owner Decision 2)."
+  },
+  "rollout_phases": {
+    "phase_1": ["point_of_sale", "stock", "account"],
+    "phase_1_goal": "POS + Inventory linked to financial reports (sell 5 of 10 -> 5 left -> GL). Owner-confirmed priority.",
+    "phase_2": ["hotel PMS (Webkul)", "qloapps_channel_manager", "sale_management", "website"],
+    "phase_3": ["crm", "appointment", "project", "maintenance", "hr", "event", "marketing_automation", "AI chatbot + dive-briefing"]
   },
   "install_order": [
-    {"seq": 1, "tech_name": "account", "app": "Accounting", "with": ["l10n_ph"], "why": "Legal/finance backbone: PHP, 12% VAT, official receipts. Must exist before any transaction.", "maps_to": "All revenue & cost"},
-    {"seq": 2, "tech_name": "sale_management", "app": "Sales", "why": "Order spine for rooms, dive packages, courses, gear.", "maps_to": "Quotations, sale orders, invoicing"},
-    {"seq": 3, "tech_name": "sale_renting", "app": "Rental", "why": "Reservation engine for rooms (no native PMS) and scuba gear; date-ranged availability + pricing.", "maps_to": "31 rooms as serial units, gear rental"},
-    {"seq": 4, "tech_name": "stock", "app": "Inventory", "why": "Serial/lot-tracked gear, F&B ingredients, retail, consumables (air/Nitrox).", "maps_to": "Stock, gear serials, reorder"},
-    {"seq": 5, "tech_name": "point_of_sale", "app": "Point of Sale", "with": ["pos_restaurant"], "why": "Restaurant + bar (floors/tables), retail, charge-to-room.", "maps_to": "F&B, bar, retail"},
-    {"seq": 6, "tech_name": "crm", "app": "CRM", "why": "Lead pipeline, persona segmentation, group/dive-club bookings, nurturing.", "maps_to": "Leads, opportunities"},
-    {"seq": 7, "tech_name": "appointment", "app": "Calendar / Appointments", "why": "Dive-trip scheduling, instructor/boat resources, online dive booking.", "maps_to": "Dive ops"},
-    {"seq": 8, "tech_name": "project", "app": "Project", "why": "Multi-day courses, DM training, group dive logistics, certification milestones.", "maps_to": "Courses, ops projects"},
-    {"seq": 9, "tech_name": "maintenance", "app": "Maintenance", "why": "Regulated gear servicing, compressor/Nitrox, boats, facilities (PADI 5* compliance).", "maps_to": "Equipment compliance"},
-    {"seq": 10, "tech_name": "hr", "app": "Employees", "with": ["hr_attendance", "hr_skills"], "why": "Instructors/DMs/kitchen/housekeeping/front-desk; certifications as skills; rosters.", "maps_to": "People"},
-    {"seq": 11, "tech_name": "website_sale", "app": "Website + eCommerce", "why": "Direct booking engine (rooms, packages, courses) to cut OTA commission.", "maps_to": "Distribution"},
-    {"seq": 12, "tech_name": "event", "app": "Events", "why": "Course cohorts and dive expeditions with registration/attendees.", "maps_to": "Courses, expeditions"}
+    {"seq": 1, "tech_name": "account", "app": "Accounting", "with": ["l10n_ph"], "phase": 1, "why": "Legal/finance backbone: PHP, 12% VAT, BIR-compliant official receipts. Fixes the expense/commission/VAT 'mess' noted in discovery.", "maps_to": "All revenue & cost"},
+    {"seq": 2, "tech_name": "point_of_sale", "app": "Point of Sale", "with": ["pos_restaurant"], "phase": 1, "why": "PHASE 1. Restaurant + bar + dive-shop retail; charge-to-room; ends paper-chit revenue leakage. MUST be BIR-registered (old POS lapsed).", "maps_to": "F&B, bar, retail, dive-shop"},
+    {"seq": 3, "tech_name": "stock", "app": "Inventory", "phase": 1, "why": "PHASE 1. Real-time stock<->sales<->GL; 20-pack min rule; FIFO; serial-tracked gear; O2/Nitrox/diesel consumables.", "maps_to": "Stock, gear serials, reorder"},
+    {"seq": 4, "tech_name": "sale_management", "app": "Sales", "phase": 2, "why": "Order spine for room+dive+meal packages, agent net-priced quotations.", "maps_to": "Quotations, sale orders, invoicing"},
+    {"seq": 5, "tech_name": "hotel", "app": "Webkul Hotel/PMS (paid)", "source": "Webkul QloApps Hotel Management / Odoo Hotel module", "phase": 2, "why": "Proper PMS (room types, reservations, room-status board, night audit) — replaces the Rental workaround per client instruction.", "maps_to": "23 rooms, reservations"},
+    {"seq": 6, "tech_name": "hotel_qloapps_channel_manager", "app": "QloApps Channel Manager Connector", "source": "https://apps.odoo.com/apps/modules/19.0/hotel_qloapps_channel_manager (req. active QloApps Channel Manager subscription)", "phase": 2, "why": "Two-way OTA sync (Booking.com) so Eloisa stops aligning rates manually; auto-imports reservations; supports the weekend-allotment policy.", "maps_to": "OTA distribution"},
+    {"seq": 7, "tech_name": "website", "app": "Website + eCommerce", "phase": 2, "why": "Direct booking engine; per-entity pages (resort / restaurant / dive center); Simplified + Traditional Chinese.", "maps_to": "Distribution"},
+    {"seq": 8, "tech_name": "crm", "app": "CRM", "phase": 3, "why": "Lead pipeline from chatbot (FB/WhatsApp/Viber), persona segmentation, agents/events, nurturing.", "maps_to": "Leads, opportunities"},
+    {"seq": 9, "tech_name": "appointment", "app": "Calendar / Appointments", "phase": 3, "why": "Dive-trip scheduling (>=2 days lead), boat/instructor resources, daily manifest.", "maps_to": "Dive ops"},
+    {"seq": 10, "tech_name": "project", "app": "Project", "phase": 3, "why": "Multi-day courses, DM training, certification milestones.", "maps_to": "Courses"},
+    {"seq": 11, "tech_name": "maintenance", "app": "Maintenance", "phase": 3, "why": "Gear servicing, compressors (diesel), boats, facilities; auto-block damaged gear.", "maps_to": "Equipment compliance"},
+    {"seq": 12, "tech_name": "hr", "app": "Employees", "with": ["hr_attendance", "hr_skills"], "phase": 3, "why": "36 regular staff + extras; instructor PADI ratings as skills with renewal reminders.", "maps_to": "People"},
+    {"seq": 13, "tech_name": "event", "app": "Events", "phase": 3, "why": "Course cohorts + the new event-planning service (weddings/corporate, owner Decision 3).", "maps_to": "Courses, events"}
   ],
   "recommended_addons": [
-    {"tech_name": "sign", "app": "Sign", "why": "Digital dive-medical statement + liability release (PADI requirement). High value."},
-    {"tech_name": "documents", "app": "Documents", "why": "Store C-cards, dive logs, waivers, supplier docs."},
-    {"tech_name": "knowledge", "app": "Knowledge", "why": "Document SOPs; reduce key-person risk."},
-    {"tech_name": "marketing_automation", "app": "Marketing Automation", "why": "Repeat-diver campaigns, review requests, win-back."},
-    {"tech_name": "mass_mailing", "app": "Email Marketing", "why": "Newsletters, segmented offers."}
+    {"tech_name": "sign", "app": "Sign", "why": "Digital dive medical statement + liability release (NOT collected today per discovery — compliance gap). High value."},
+    {"tech_name": "documents", "app": "Documents", "why": "Store C-cards, dive logs, waivers, passports/IDs (the 'GC' folder), supplier docs."},
+    {"tech_name": "knowledge", "app": "Knowledge", "why": "Document SOPs; reduce key-person risk (Andrew/Dong/Eloisa)."},
+    {"tech_name": "marketing_automation", "app": "Marketing Automation", "why": "Repeat-guest (80-90%) campaigns, review requests, overseas/Chinese-language win-back."},
+    {"tech_name": "mass_mailing", "app": "Email Marketing", "why": "Newsletters, segmented offers."},
+    {"tech_name": "whatsapp", "app": "WhatsApp", "why": "WhatsApp is a primary guest channel; integrate with chatbot + comms."}
   ],
+  "devices": {"pos_units": 3, "shared_logins": true, "per_department": true, "waterproof": false, "note": "Dive shop needs POS more than dining. Start with 3, scale to 5."},
   "gaps": [
-    {"gap": "No native PMS", "severity": "high", "resolution": "Use Rental as reservation engine (rooms = serial-tracked rentable units) + Studio fields on sale.order. Upgrade path: OCA 'hotel' modules (verify v19 port) or custom room.reservation Gantt for room-status board / night audit."},
-    {"gap": "No native OTA channel manager", "severity": "high", "resolution": "Third-party channel-manager connector or custom integration. For demo: simulate via x_channel field + overbooking-guard scheduled action."},
-    {"gap": "No housekeeping board", "severity": "low", "resolution": "Studio kanban on a simple housekeeping model, or OCA hotel_housekeeping."},
-    {"gap": "No dive-log/cert domain model", "severity": "medium", "resolution": "Model via Project + Documents + HR Skills; optional small custom dive.log model for fidelity."}
+    {"gap": "Native PMS depth", "severity": "resolved", "resolution": "Client-chosen Webkul Hotel/PMS (paid) provides room-status board + night audit instead of the Rental workaround."},
+    {"gap": "OTA channel manager", "severity": "resolved", "resolution": "QloApps Channel Manager + hotel_qloapps_channel_manager (free Odoo connector, requires active QloApps subscription) gives two-way Booking.com sync. Replaces Eloisa's manual rate alignment."},
+    {"gap": "BIR-accredited POS", "severity": "high", "resolution": "Old POS was BIR-accredited but lapsed; current internal POS is NOT. New Odoo POS must be BIR-registered and issue compliant official receipts BEFORE go-live."},
+    {"gap": "Dive waivers / cert tracking", "severity": "medium", "resolution": "Not done today. Add Sign (waiver/medical) + Documents (C-cards/logs) + HR Skills (instructor ratings)."},
+    {"gap": "Dynamic pricing", "severity": "medium", "resolution": "Flat annual rates today. Add pricelists + price rules + nightly dynamic-pricing scheduled action ('Rate Manager') with min/max guardrails (owner Decision 2)."},
+    {"gap": "Multi-language", "severity": "medium", "resolution": "Website + chatbot in English + Simplified + Traditional Chinese; correct Chinese brand name (from Andrew)."}
   ]
 }

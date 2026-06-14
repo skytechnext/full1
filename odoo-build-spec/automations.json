@@ -19,6 +19,8 @@
   ],
 
   "ai_agent_automations": [
+    {"id": "AI00", "name": "Omni-channel AI concierge (FB/WhatsApp/Viber/IG/Web)", "io": "inbound message on any channel -> auto-translate (EN/Simplified+Traditional Chinese) -> answer FAQ -> capture lead -> log to Odoo CRM for next-day staff approval", "impact": "high", "effort": "high", "approval": "info auto; bookings/quotes queued for staff approval next day", "note": "Directly from discovery: Andrew to provide chatbot FAQs; replaces manual multi-channel handling by reservations."},
+    {"id": "AI0D", "name": "Dive Shop Daily Briefing", "io": "06:30 cron -> pull tides+marine weather+local advisories + read Odoo roster/gear/maintenance -> AI composes brief + safety flags -> post to FB/WhatsApp/Viber group -> collect ✅ confirmations -> log back to Odoo", "impact": "high", "effort": "med", "approval": "auto-post; go/no-go confirmed by dive lead", "note": "Fixes the discovery #1 pain: broken, unaccountable group-chat dive comms."},
     {"id": "AI01", "name": "AI guest concierge chatbot", "io": "web/FB message -> create crm.lead / quotation via MCP", "impact": "high", "effort": "high", "approval": "auto for info, human for quotes over threshold"},
     {"id": "AI02", "name": "Dynamic rate recommendation", "io": "reads bookings/occupancy/season -> proposes pricelist updates", "impact": "high", "effort": "high", "approval": "human write-back"},
     {"id": "AI03", "name": "AI review-response drafting", "io": "new review -> drafts reply from booking + sentiment context", "impact": "med", "effort": "med", "approval": "human send"},
