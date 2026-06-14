@@ -2132,6 +2132,20 @@ body.nav-collapsed .shell{grid-template-columns:1fr}
 .mermaid{overflow-x:auto;-webkit-overflow-scrolling:touch}
 .mermaid svg{max-width:100%;height:auto;display:block;margin:0 auto}
 @media(max-width:760px){.mermaid svg{min-width:560px}}
+/* BPMN swimlane canvas (bpmn.io style, light) */
+.bpmn{background:#fbfdff;border:1px solid var(--line);border-radius:14px;padding:6px;margin:14px 0;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.bpmn svg{display:block;width:100%;min-width:720px;height:auto}
+.bpmn-legend{display:flex;gap:16px;flex-wrap:wrap;font-size:.74rem;color:var(--muted);margin:6px 2px 0}
+.bpmn-legend b{color:var(--ink2)}
+/* horizontal step pipeline (replaces cramped flowcharts) */
+.pipeline{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0}
+.pstep{flex:1;min-width:130px;position:relative;background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:14px 14px 14px 16px}
+.pstep::before{content:"";position:absolute;left:0;top:10px;bottom:10px;width:3px;border-radius:3px;background:var(--grad)}
+.pstep .pn{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--grad);color:#04212b;font-weight:800;font-size:.72rem;margin-bottom:6px}
+.pstep .pt{font-weight:700;color:var(--ink);font-size:.9rem}
+.pstep .pd{color:var(--ink2);font-size:.78rem;margin-top:2px}
+.pstep:not(:last-child)::after{content:"→";position:absolute;right:-9px;top:50%;transform:translateY(-50%);color:var(--teal);font-weight:800;z-index:2}
+@media(max-width:680px){.pstep:not(:last-child)::after{display:none}}
 #scrim{position:fixed;inset:56px 0 0 0;background:rgba(0,0,0,.5);z-index:840;opacity:0;pointer-events:none;transition:opacity .3s}
 body.nav-open #scrim{opacity:1;pointer-events:auto}
 section{padding:64px 0 32px;border-bottom:1px solid var(--line);scroll-margin-top:70px}
@@ -2848,106 +2862,64 @@ flowchart LR
     <div class="wrap">
       <span class="sec-tag reveal">Section 16 · Operations</span>
       <h2 class="reveal"><span class="sec-num">16</span>Department Workflows — As-Is → To-Be</h2>
-      <p class="lead reveal">Fourteen departmental workflows re-engineered on Odoo 19. Each card shows today's manual process, its pain points, the future-state flow, and the enabling Odoo modules.</p>
+      <p class="lead reveal">The core operations re-engineered as <strong>BPMN 2.0 swimlane processes</strong> (pools &amp; lanes, events, tasks, gateways). Each shows the future-state flow on Odoo plus the as-is reality and the pain points raised in the discovery interview. Expand each process below.</p>
 
-      <div class="acc reveal open"><div class="acc-head" onclick="acc(this)"><span>1 · Front Desk &amp; Reservations</span><span class="ic">＋</span></div><div class="acc-body">
-        <p><strong>As-is:</strong> enquiries arrive by OTA, FB Messenger, email, phone; availability checked in a spreadsheet; confirmation typed manually. <strong>Pains:</strong> slow replies, overbooking risk, no unified guest record.</p>
-        <p><strong>To-be:</strong> all channels flow into CRM → quotation/Sale Order → Rental reserves the room serial → auto-confirmation → folio opens. <span class="pill p-teal">Sales · Rental · CRM · Website</span></p>
-        <div class="mermaid">flowchart LR
-A["Enquiry (OTA/FB/email)"]-->B["CRM lead"]-->C["Quotation / Sale Order"]-->D["Rental reserves room serial"]-->E["Auto-confirm + folio"]-->F["Check-in"]</div>
+      <div class="callout risk reveal"><div class="t">Pain points stated in the discovery interview (11 Jun 2026)</div>
+        <ul style="margin:.3em 0 0;padding-left:18px">
+          <li><strong>“Cash leaked from over-spending… that one is my number one.”</strong> (Andrew) — no real cost/inventory control; budget tracked on gut feel.</li>
+          <li><strong>Paper order slips → lost revenue:</strong> “if they lost the paper… the revenue is not realized”; charges land on the wrong guest; billing 50 guests is slow.</li>
+          <li><strong>Broken, unaccountable communication:</strong> dive/kitchen run on group chats &amp; a whiteboard — a guest was once told he could dive, “the dive shop forgot, nobody attended him.”</li>
+          <li><strong>Everything manual:</strong> rates aligned by hand across Booking.com/FB/WhatsApp/Viber/IG; translations done personally by Andrew; only automation today is a Facebook auto-reply.</li>
+          <li><strong>Bookkeeping “a big mess”:</strong> expenses, agent commissions and VAT poorly recorded; current POS is <em>not</em> BIR-accredited (the old one lapsed); no full-time accountant.</li>
+          <li><strong>Overbooking exposure:</strong> Booking.com allotment managed manually; weekends closed by hand to protect instructors.</li>
+        </ul>
+      </div>
+
+      <div class="bpmn-legend reveal"><span>⬤ <b>Start/End event</b></span><span>▭ <b>Task</b></span><span>◇ <b>Gateway (decision)</b></span><span>│ lanes = who does it</span></div>
+
+      <div class="acc reveal open"><div class="acc-head" onclick="acc(this)"><span>🛎 Reservation &amp; booking</span><span class="ic">＋</span></div><div class="acc-body">
+        <p><strong>As-is:</strong> enquiries on email/FB/WhatsApp/Viber/IG; availability &amp; rates aligned by hand; confirmation typed manually. <strong>Interview pain:</strong> manual rate alignment + overbooking risk. <strong>To-be:</strong> omnichannel → CRM → quote → 50% deposit → PMS blocks the room → auto-confirm. <span class="pill p-teal">Website · CRM · Sales · PMS</span></p>
+        <div class="bpmn" data-bpmn="reservation"></div>
       </div></div>
 
-      <div class="acc reveal"><div class="acc-head" onclick="acc(this)"><span>2 · Housekeeping</span><span class="ic">＋</span></div><div class="acc-body">
-        <p><strong>As-is:</strong> verbal/paper room-status; no link to checkouts. <strong>Pains:</strong> rooms cleaned out of order, no audit trail.</p>
-        <p><strong>To-be:</strong> checkout triggers a cleaning task; attendants update status on mobile; front desk sees live readiness. <span class="pill p-teal">Project/FSM · Studio kanban</span></p>
-        <div class="mermaid">flowchart LR
-A["Checkout posted"]-->B["Cleaning task auto-created"]-->C["Attendant updates on mobile"]-->D["Room = ready"]-->E["Available in Rental"]</div>
+      <div class="acc reveal"><div class="acc-head" onclick="acc(this)"><span>🔑 Check-in &amp; room access</span><span class="ic">＋</span></div><div class="acc-body">
+        <p><strong>As-is:</strong> ID/passport captured on paper into a “GC” folder; room readiness unclear. <strong>To-be:</strong> verify booking, assign a Ready room, open the folio, issue access. <span class="pill p-teal">PMS · Housekeeping · Documents</span></p>
+        <div class="bpmn" data-bpmn="checkin"></div>
       </div></div>
 
-      <div class="acc reveal"><div class="acc-head" onclick="acc(this)"><span>3 · Dive Operations</span><span class="ic">＋</span></div><div class="acc-body">
-        <p><strong>As-is:</strong> dive sign-ups on a whiteboard; instructor/boat assigned manually; paper manifest. <strong>Pains:</strong> capacity clashes, no digital manifest, weak records.</p>
-        <p><strong>To-be:</strong> guests book dives (appointment) → capacity-aware assignment of boat + guide → digital manifest → dive logged → billed to folio. <span class="pill p-teal">Calendar/Appointments · Sales · POS</span></p>
-        <div class="mermaid">flowchart LR
-A["Dive booking"]-->B["Boat + guide assigned (capacity check)"]-->C["Digital manifest"]-->D["Dive completed + logged"]-->E["Charge to folio"]</div>
+      <div class="acc reveal"><div class="acc-head" onclick="acc(this)"><span>🍽 F&amp;B order-to-cash (fire order)</span><span class="ic">＋</span></div><div class="acc-body">
+        <p><strong>As-is:</strong> paper chits to the kitchen, reconciled later → leakage &amp; wrong-guest charges. <strong>Interview pain:</strong> “if they lost the paper… revenue is not realized.” <strong>To-be:</strong> POS order → kitchen display → serve → charge-to-room or settle; stock decrements live. <span class="pill p-teal">POS (Restaurant) · Kitchen Display · Inventory · Accounting</span></p>
+        <div class="bpmn" data-bpmn="fnb"></div>
       </div></div>
 
-      <div class="acc reveal"><div class="acc-head" onclick="acc(this)"><span>4 · Boat / Trip Dispatch</span><span class="ic">＋</span></div><div class="acc-body">
-        <p><strong>As-is:</strong> boat schedule on paper; fuel &amp; crew tracked informally. <strong>Pains:</strong> idle/overbooked boats, no cost visibility.</p>
-        <p><strong>To-be:</strong> boats as schedulable resources; trips grouped for efficiency; fuel/maintenance costed. <span class="pill p-teal">Calendar resources · Maintenance · Analytic accounting</span></p>
-        <div class="mermaid">flowchart LR
-A["Dive bookings"]-->B["Group into boat trips"]-->C["Assign boat + crew"]-->D["Dispatch"]-->E["Log fuel/cost"]</div>
+      <div class="acc reveal"><div class="acc-head" onclick="acc(this)"><span>🧹 Housekeeping cycle</span><span class="ic">＋</span></div><div class="acc-body">
+        <p><strong>As-is:</strong> verbal/paper room status, no link to checkout. <strong>To-be:</strong> checkout auto-creates a cleaning task; attendant updates on mobile; room flips to sellable. <span class="pill p-teal">Field Service / Tasks · PMS</span></p>
+        <div class="bpmn" data-bpmn="housekeeping"></div>
       </div></div>
 
-      <div class="acc reveal"><div class="acc-head" onclick="acc(this)"><span>5 · Courses &amp; Certification</span><span class="ic">＋</span></div><div class="acc-body">
-        <p><strong>As-is:</strong> course sign-ups manual; waivers on paper; certs tracked in instructor's memory. <strong>Pains:</strong> compliance gaps, lost paperwork.</p>
-        <p><strong>To-be:</strong> course sold → Event/Project cohort → digital waiver gate (Sign) → sessions scheduled → certification recorded in Documents. <span class="pill p-teal">Events · Project · Sign · Documents</span></p>
-        <div class="mermaid">flowchart LR
-A["Course purchase"]-->B["Event/Project cohort"]-->C["Sign waiver/medical"]-->D["Sessions scheduled"]-->E["Cert issued + stored"]</div>
+      <div class="acc reveal"><div class="acc-head" onclick="acc(this)"><span>🤿 Dive trip dispatch &amp; manifest</span><span class="ic">＋</span></div><div class="acc-body">
+        <p><strong>As-is:</strong> whiteboard + group chat, no confirmation loop. <strong>Interview pain:</strong> a guest went un-attended because the hand-off failed. <strong>To-be:</strong> capacity-checked boat/guide assignment → digital manifest + e-waiver → ✅ confirmation → logged &amp; billed. <span class="pill p-teal">Appointments · Sign · Maintenance · POS</span></p>
+        <div class="bpmn" data-bpmn="dive"></div>
       </div></div>
 
-      <div class="acc reveal"><div class="acc-head" onclick="acc(this)"><span>6 · Equipment &amp; Gear Servicing</span><span class="ic">＋</span></div><div class="acc-body">
-        <p><strong>As-is:</strong> gear tracked informally; servicing by memory. <strong>Pains:</strong> safety/compliance risk, unavailable gear, no history.</p>
-        <p><strong>To-be:</strong> each reg/BCD/camera serial-tracked &amp; linked to a Maintenance equipment record with preventive service plans; damaged gear auto-blocked from rental. <span class="pill p-teal">Inventory (serials) · Maintenance · Rental</span></p>
-        <div class="mermaid">flowchart LR
-A["Gear returned"]-->B{"Damaged?"}-->|Yes|C["Maintenance request → blocked"]-->D["Repaired/serviced"]-->E["Back in rentable pool"]
-B-->|No|E</div>
+      <div class="acc reveal"><div class="acc-head" onclick="acc(this)"><span>🎓 Course enrolment &amp; certification</span><span class="ic">＋</span></div><div class="acc-body">
+        <p><strong>As-is:</strong> manual sign-ups; waivers on paper; certs in the instructor's memory. <strong>To-be:</strong> purchase → cohort → e-waiver gate → sessions → skills → cert stored. <span class="pill p-teal">Events · Project · Sign · Documents</span></p>
+        <div class="bpmn" data-bpmn="courses"></div>
       </div></div>
 
-      <div class="acc reveal"><div class="acc-head" onclick="acc(this)"><span>7 · Restaurant</span><span class="ic">＋</span></div><div class="acc-body">
-        <p><strong>As-is:</strong> orders on paper chits; room charges reconciled later. <strong>Pains:</strong> errors, slow billing, weak stock control.</p>
-        <p><strong>To-be:</strong> POS with floor/table plan; kitchen tickets; charge-to-room posts to folio; ingredients decrement Inventory. <span class="pill p-teal">POS (Restaurant) · Inventory · Accounting</span></p>
-        <div class="mermaid">flowchart LR
-A["Order at table"]-->B["Kitchen ticket"]-->C["Serve"]-->D{"Payment"}-->|Room charge|E["Posts to folio"]
-D-->|Cash/card|F["POS settle"]</div>
+      <div class="acc reveal"><div class="acc-head" onclick="acc(this)"><span>🛠 Gear servicing &amp; compliance</span><span class="ic">＋</span></div><div class="acc-body">
+        <p><strong>As-is:</strong> gear &amp; servicing tracked by memory — a safety/compliance risk. <strong>To-be:</strong> serial-tracked gear; damaged/due items raise a maintenance request that auto-blocks rental until serviced. <span class="pill p-teal">Inventory (serials) · Maintenance</span></p>
+        <div class="bpmn" data-bpmn="gear"></div>
       </div></div>
 
-      <div class="acc reveal"><div class="acc-head" onclick="acc(this)"><span>8 · Bar</span><span class="ic">＋</span></div><div class="acc-body">
-        <p><strong>As-is:</strong> manual tabs. <strong>Pains:</strong> leakage, untracked stock.</p>
-        <p><strong>To-be:</strong> second POS zone; beverage stock tracked; happy-hour pricing rules; room-charge enabled. <span class="pill p-teal">POS · Inventory · Pricelists</span></p>
-        <div class="mermaid">flowchart LR
-A["Bar order"]-->B["POS (bar zone)"]-->C["Stock decrement"]-->D["Settle / room charge"]</div>
+      <div class="acc reveal"><div class="acc-head" onclick="acc(this)"><span>🛍 Retail / shop sale</span><span class="ic">＋</span></div><div class="acc-body">
+        <p><strong>As-is:</strong> ad-hoc sales, manual counts, stockouts. <strong>To-be:</strong> POS sale → live stock → auto-RFQ below minimum → receipt. <span class="pill p-teal">POS (Retail) · Inventory · Purchase</span></p>
+        <div class="bpmn" data-bpmn="retail"></div>
       </div></div>
 
-      <div class="acc reveal"><div class="acc-head" onclick="acc(this)"><span>9 · Retail Pro-shop</span><span class="ic">＋</span></div><div class="acc-body">
-        <p><strong>As-is:</strong> ad-hoc sales, manual stock counts. <strong>Pains:</strong> stockouts, no reorder discipline.</p>
-        <p><strong>To-be:</strong> retail POS; reorder rules; supplier links; margin reporting. <span class="pill p-teal">POS (Retail) · Inventory · Purchase</span></p>
-        <div class="mermaid">flowchart LR
-A["Retail sale"]-->B["POS"]-->C["Stock −1"]-->D{"Below min?"}-->|Yes|E["Auto reorder (RFQ)"]</div>
-      </div></div>
-
-      <div class="acc reveal"><div class="acc-head" onclick="acc(this)"><span>10 · Procurement &amp; Inventory</span><span class="ic">＋</span></div><div class="acc-body">
-        <p><strong>As-is:</strong> purchasing by phone/chat; no formal stock. <strong>Pains:</strong> over/under-stock, no cost control.</p>
-        <p><strong>To-be:</strong> reorder rules trigger RFQs → POs → receipts → vendor bills; full traceability. <span class="pill p-teal">Purchase · Inventory · Accounting</span></p>
-        <div class="mermaid">flowchart LR
-A["Reorder trigger"]-->B["RFQ"]-->C["Purchase Order"]-->D["Receive goods"]-->E["Vendor bill + payment"]</div>
-      </div></div>
-
-      <div class="acc reveal"><div class="acc-head" onclick="acc(this)"><span>11 · Finance &amp; Accounting</span><span class="ic">＋</span></div><div class="acc-body">
-        <p><strong>As-is:</strong> manual invoicing, spreadsheet books, slow OTA reconciliation. <strong>Pains:</strong> compliance risk, no live P&amp;L.</p>
-        <p><strong>To-be:</strong> every order auto-invoices with 12% VAT &amp; official receipts; bank + OTA reconciliation; real-time P&amp;L. <span class="pill p-teal">Accounting (l10n_ph)</span></p>
-        <div class="mermaid">flowchart LR
-A["Sale/POS order"]-->B["Auto invoice (VAT 12%)"]-->C["Payment"]-->D["Bank/OTA reconcile"]-->E["Live P&L + reports"]</div>
-      </div></div>
-
-      <div class="acc reveal"><div class="acc-head" onclick="acc(this)"><span>12 · HR &amp; Payroll</span><span class="ic">＋</span></div><div class="acc-body">
-        <p><strong>As-is:</strong> manual rosters, attendance, certs in heads. <strong>Pains:</strong> compliance, scheduling clashes.</p>
-        <p><strong>To-be:</strong> employee records, skills/certs with renewal reminders, attendance, rostering, payroll. <span class="pill p-teal">HR · Attendances · (Payroll)</span></p>
-        <div class="mermaid">flowchart LR
-A["Employee + skills/certs"]-->B["Roster + attendance"]-->C["Cert renewal alerts"]-->D["Payroll"]</div>
-      </div></div>
-
-      <div class="acc reveal"><div class="acc-head" onclick="acc(this)"><span>13 · Marketing &amp; CRM</span><span class="ic">＋</span></div><div class="acc-body">
-        <p><strong>As-is:</strong> social posts ad-hoc; no segmentation or re-marketing. <strong>Pains:</strong> no repeat-driver engine, weak data.</p>
-        <p><strong>To-be:</strong> guest segmentation by persona; automated post-stay review + return-offer campaigns; lead nurturing. <span class="pill p-teal">CRM · Email Marketing · Marketing Automation</span></p>
-        <div class="mermaid">flowchart LR
-A["Guest profile + dive history"]-->B["Segment by persona"]-->C["Automated campaigns"]-->D["Repeat booking / review"]</div>
-      </div></div>
-
-      <div class="acc reveal"><div class="acc-head" onclick="acc(this)"><span>14 · Maintenance &amp; Facilities</span><span class="ic">＋</span></div><div class="acc-body">
-        <p><strong>As-is:</strong> reactive fixes (AC, pool, compressor, generator). <strong>Pains:</strong> downtime, compressor/Nitrox compliance risk.</p>
-        <p><strong>To-be:</strong> preventive maintenance plans + corrective requests on all critical equipment; compliance trail. <span class="pill p-teal">Maintenance</span></p>
-        <div class="mermaid">flowchart LR
-A["Equipment register"]-->B["Preventive plan / issue report"]-->C["Maintenance request"]-->D["Service + log"]-->E["Compliance record"]</div>
+      <div class="acc reveal"><div class="acc-head" onclick="acc(this)"><span>🧾 Checkout &amp; consolidated billing</span><span class="ic">＋</span></div><div class="acc-body">
+        <p><strong>As-is:</strong> manual consolidation of room+dive+bar; books “a big mess” on VAT/commissions; POS not BIR-accredited. <strong>To-be:</strong> one folio → group/individual VAT official receipt → payment → auto-reconcile OTA/agent payouts → review request. <span class="pill p-teal">Accounting (l10n_ph) · CRM</span></p>
+        <div class="bpmn" data-bpmn="checkout"></div>
       </div></div>
     </div>
   </section>
@@ -3407,13 +3379,15 @@ E-->F["Knowledge base update"]</div>
             </tbody>
           </table></div>
           <h3>Daily automation flow</h3>
-          <div class="mermaid">flowchart LR
-T["06:30 trigger"]-->P["Pull tides+weather+news"]
-P-->O["Read Odoo roster, gear, maintenance"]
-O-->AI["AI composes briefing + safety flags"]
-AI-->G["Post to FB/WhatsApp/Viber group"]
-G-->C{"Go/no-go & confirmations"}
-C-->L["Log decisions back to Odoo"]</div>
+          <div class="pipeline">
+            <div class="pstep"><span class="pn">1</span><div class="pt">06:30 trigger</div><div class="pd">Scheduled action fires</div></div>
+            <div class="pstep"><span class="pn">2</span><div class="pt">Pull external data</div><div class="pd">Tides · marine weather · advisories</div></div>
+            <div class="pstep"><span class="pn">3</span><div class="pt">Read Odoo</div><div class="pd">Roster · gear · maintenance</div></div>
+            <div class="pstep"><span class="pn">4</span><div class="pt">AI composes brief</div><div class="pd">Plan + safety flags</div></div>
+            <div class="pstep"><span class="pn">5</span><div class="pt">Post to group</div><div class="pd">FB · WhatsApp · Viber</div></div>
+            <div class="pstep"><span class="pn">6</span><div class="pt">Confirm ✅</div><div class="pd">Go/no-go + crew accept</div></div>
+            <div class="pstep"><span class="pn">7</span><div class="pt">Log to Odoo</div><div class="pd">Decisions recorded</div></div>
+          </div>
         </div>
         <div class="reveal d1">
           <h3>Sample 06:30 briefing</h3>
@@ -3611,7 +3585,7 @@ C-->L["Log decisions back to Odoo"]</div>
   <!--SECTION-ANCHOR-->
 
   <footer>
-    <p style="margin-bottom:14px"><strong>Companion documents:</strong> <a href="stakeholder-questions.html">Stakeholder Discovery Question Bank</a> · <a href="staff-guides.html">Staff Guide to Odoo (by role)</a></p>
+    <p style="margin-bottom:14px"><strong>Companion documents:</strong> <a href="odoo-sales.html">Odoo Sales Page</a> · <a href="odoo-demo-guide.html">Odoo Demo Walkthrough</a> · <a href="stakeholder-questions.html">Stakeholder Question Bank</a> · <a href="staff-guides.html">Staff Guide to Odoo</a></p>
     <p><strong>Technext</strong> — Odoo ERP Implementation &amp; Digital Transformation · Prepared for Casa Escondida Anilao Resort &amp; Dive Center</p>
     <p>Confidential. Figures marked “estimate” are modelled assumptions for planning, not audited financials. Sources &amp; confidence ratings in the Appendix.</p>
     <p><small>Document v1.0 · 14 June 2026 · sky@technext.asia</small></p>
@@ -3765,6 +3739,102 @@ window.addEventListener('beforeinstallprompt',(e)=>{e.preventDefault();_deferred
 function pwaInstall(){if(_deferredPrompt){_deferredPrompt.prompt();_deferredPrompt.userChoice.finally(()=>{_deferredPrompt=null;const b=document.getElementById('installBtn');if(b)b.style.display='none';});}}
 window.addEventListener('appinstalled',()=>{const b=document.getElementById('installBtn');if(b)b.style.display='none';});
 if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{});});}
+</script>
+<script>
+/* ===== BPMN swimlane renderer (bpmn.io-style, dependency-free SVG) ===== */
+const BP={LH:104,CW:200,PADL:158,PADT:8};
+const BPMN={
+ reservation:{lanes:["Guest","Booking engine","Odoo (CRM·PMS)"],nodes:[
+   {id:"a",lane:0,col:0,t:"start",l:"Search dates"},{id:"b",lane:0,col:1,t:"task",l:"Select room & rate"},
+   {id:"c",lane:1,col:2,t:"task",l:"Check availability"},{id:"d",lane:1,col:3,t:"gw",l:"Available?"},
+   {id:"e",lane:1,col:4,t:"end",l:"Offer alternatives"},{id:"f",lane:0,col:5,t:"task",l:"Pay 50% deposit"},
+   {id:"g",lane:2,col:5,t:"task",l:"Create reservation"},{id:"h",lane:2,col:6,t:"task",l:"Block room & confirm"},
+   {id:"i",lane:0,col:7,t:"end",l:"Booked"}],
+   flows:[["a","b"],["b","c"],["c","d"],["d","e","No"],["d","f","Yes"],["f","g"],["g","h"],["h","i"]]},
+ checkin:{lanes:["Guest","Front desk","Odoo (PMS)"],nodes:[
+   {id:"a",lane:0,col:0,t:"start",l:"Arrive"},{id:"b",lane:1,col:1,t:"task",l:"Verify booking & ID"},
+   {id:"c",lane:1,col:2,t:"task",l:"Assign clean room"},{id:"d",lane:2,col:3,t:"task",l:"Open guest folio"},
+   {id:"e",lane:0,col:4,t:"task",l:"Room access / key"},{id:"f",lane:0,col:5,t:"end",l:"Checked in"}],
+   flows:[["a","b"],["b","c"],["c","d"],["d","e"],["e","f"]]},
+ fnb:{lanes:["Guest","Server / POS","Kitchen (KDS)","Odoo"],nodes:[
+   {id:"a",lane:0,col:0,t:"start",l:"Order at table"},{id:"b",lane:1,col:1,t:"task",l:"Punch POS order"},
+   {id:"c",lane:2,col:2,t:"task",l:"Fire / prepare"},{id:"d",lane:1,col:3,t:"task",l:"Serve"},
+   {id:"e",lane:1,col:4,t:"gw",l:"Payment?"},{id:"f",lane:3,col:5,t:"task",l:"Charge to room folio"},
+   {id:"g",lane:1,col:5,t:"end",l:"POS settle (cash/card)"}],
+   flows:[["a","b"],["b","c"],["c","d"],["d","e"],["e","f","Room"],["e","g","Now"]]},
+ housekeeping:{lanes:["Front desk / Odoo","Housekeeping"],nodes:[
+   {id:"a",lane:0,col:0,t:"start",l:"Checkout posted"},{id:"b",lane:0,col:1,t:"task",l:"Auto-create cleaning task"},
+   {id:"c",lane:1,col:2,t:"task",l:"Clean room (mobile)"},{id:"d",lane:1,col:3,t:"task",l:"Mark room Ready"},
+   {id:"e",lane:0,col:4,t:"end",l:"Available to sell"}],
+   flows:[["a","b"],["b","c"],["c","d"],["d","e"]]},
+ dive:{lanes:["Guest","Dive center","Odoo"],nodes:[
+   {id:"a",lane:0,col:0,t:"start",l:"Book dive (≥2 days)"},{id:"b",lane:2,col:1,t:"task",l:"Capacity check"},
+   {id:"c",lane:1,col:2,t:"task",l:"Assign boat + guide"},{id:"d",lane:1,col:3,t:"task",l:"Manifest + e-waiver"},
+   {id:"e",lane:0,col:4,t:"gw",l:"Confirm ✅?"},{id:"f",lane:1,col:5,t:"task",l:"Dispatch & dive"},
+   {id:"g",lane:2,col:6,t:"end",l:"Log dive + charge folio"}],
+   flows:[["a","b"],["b","c"],["c","d"],["d","e"],["e","f","Yes"],["f","g"]]},
+ courses:{lanes:["Student","Dive center","Odoo"],nodes:[
+   {id:"a",lane:0,col:0,t:"start",l:"Buy course"},{id:"b",lane:2,col:1,t:"task",l:"Create cohort"},
+   {id:"c",lane:0,col:2,t:"task",l:"Sign waiver / medical"},{id:"d",lane:1,col:3,t:"task",l:"Run sessions"},
+   {id:"e",lane:1,col:4,t:"task",l:"Assess skills"},{id:"f",lane:2,col:5,t:"end",l:"Issue cert (Documents)"}],
+   flows:[["a","b"],["b","c"],["c","d"],["d","e"],["e","f"]]},
+ gear:{lanes:["Dive center","Odoo (Maintenance)"],nodes:[
+   {id:"a",lane:0,col:0,t:"start",l:"Gear returned"},{id:"b",lane:0,col:1,t:"gw",l:"Damaged / due?"},
+   {id:"c",lane:1,col:2,t:"task",l:"Maintenance request (blocks gear)"},{id:"d",lane:0,col:3,t:"task",l:"Service / repair"},
+   {id:"e",lane:0,col:4,t:"end",l:"Back in rentable pool"}],
+   flows:[["a","b"],["b","c","Yes"],["c","d"],["d","e"],["b","e","No"]]},
+ retail:{lanes:["Customer","Shop POS","Odoo"],nodes:[
+   {id:"a",lane:0,col:0,t:"start",l:"Pick item"},{id:"b",lane:1,col:1,t:"task",l:"Scan / POS"},
+   {id:"c",lane:2,col:2,t:"task",l:"Stock −1"},{id:"d",lane:2,col:3,t:"gw",l:"Below min?"},
+   {id:"e",lane:2,col:4,t:"task",l:"Auto RFQ"},{id:"f",lane:1,col:4,t:"end",l:"Receipt issued"}],
+   flows:[["a","b"],["b","c"],["c","d"],["d","e","Yes"],["d","f","No"]]},
+ checkout:{lanes:["Guest","Front desk","Odoo (Accounting)"],nodes:[
+   {id:"a",lane:0,col:0,t:"start",l:"Request checkout"},{id:"b",lane:2,col:1,t:"task",l:"Consolidate folio"},
+   {id:"c",lane:1,col:2,t:"gw",l:"Group/individual?"},{id:"d",lane:1,col:3,t:"task",l:"Issue VAT OR"},
+   {id:"e",lane:0,col:4,t:"task",l:"Pay (cash/card/GCash)"},{id:"f",lane:2,col:5,t:"task",l:"Reconcile payouts"},
+   {id:"g",lane:0,col:6,t:"end",l:"Checked out + review req."}],
+   flows:[["a","b"],["b","c"],["c","d"],["d","e"],["e","f"],["f","g"]]}
+};
+function bpHalf(t){return t==="task"?[66,26]:t==="gw"?[26,26]:[18,18];}
+function bpWrap(l){if(l.length<=15)return [l];const w=l.split(" ");let a="",b="";w.forEach(x=>{if((a+" "+x).trim().length<=15&&b==="")a=(a+" "+x).trim();else b=(b+" "+x).trim();});return b?[a,b]:[a];}
+function renderBPMN(el){
+ const d=BPMN[el.dataset.bpmn]; if(!d||el.dataset.done)return; el.dataset.done=1;
+ const cols=Math.max(...d.nodes.map(n=>n.col))+1;
+ const W=BP.PADL+cols*BP.CW+30, H=BP.PADT*2+d.lanes.length*BP.LH;
+ const G={}; d.nodes.forEach(n=>{G[n.id]={...n,cx:BP.PADL+70+n.col*BP.CW,cy:BP.PADT+n.lane*BP.LH+BP.LH/2};});
+ let s=`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,Segoe UI,Roboto,sans-serif">`;
+ s+=`<defs><marker id="ah" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 z" fill="#5b6b82"/></marker></defs>`;
+ // pool + lanes
+ s+=`<rect x="1" y="${BP.PADT}" width="${W-2}" height="${H-BP.PADT*2}" fill="none" stroke="#b7c6da"/>`;
+ s+=`<rect x="1" y="${BP.PADT}" width="26" height="${H-BP.PADT*2}" fill="#eef3f9" stroke="#b7c6da"/>`;
+ s+=`<text x="14" y="${BP.PADT+(H-BP.PADT*2)/2}" fill="#33486a" font-size="12" font-weight="700" text-anchor="middle" transform="rotate(-90 14 ${BP.PADT+(H-BP.PADT*2)/2})">${d.title||""}</text>`;
+ d.lanes.forEach((ln,i)=>{const y=BP.PADT+i*BP.LH;
+   s+=`<rect x="27" y="${y}" width="${BP.PADL-27}" height="${BP.LH}" fill="#f6f9fc" stroke="#cdd9e8"/>`;
+   s+=`<rect x="${BP.PADL}" y="${y}" width="${W-BP.PADL-1}" height="${BP.LH}" fill="${i%2?'#fcfdff':'#ffffff'}" stroke="#e4ebf4"/>`;
+   bpWrap(ln).forEach((t,k,arr)=>{s+=`<text x="${(27+BP.PADL)/2}" y="${y+BP.LH/2+4+(k-(arr.length-1)/2)*13}" fill="#33486a" font-size="11.5" font-weight="600" text-anchor="middle">${t}</text>`;});
+ });
+ // flows
+ d.flows.forEach(([from,to,lbl])=>{const A=G[from],B=G[to];const[aw]=bpHalf(A.t),[bw]=bpHalf(B.t);
+   let pts;const ax=A.cx+aw,ay=A.cy,bx=B.cx-bw,by=B.cy;
+   if(Math.abs(ay-by)<2){pts=`${ax},${ay} ${bx},${by}`;}
+   else if(bx>ax){const mx=ax+Math.max(28,(bx-ax)/2);pts=`${ax},${ay} ${mx},${ay} ${mx},${by} ${bx},${by}`;}
+   else{const[ ,ah]=bpHalf(A.t),[ ,bh2]=bpHalf(B.t);const dy=by>ay?ah:-ah;pts=`${A.cx},${A.cy+dy} ${A.cx},${(ay+by)/2} ${bx},${(ay+by)/2} ${bx},${by}`;}
+   s+=`<polyline points="${pts}" fill="none" stroke="#5b6b82" stroke-width="1.6" marker-end="url(#ah)"/>`;
+   if(lbl){const p=pts.split(" ")[0].split(",");s+=`<text x="${+p[0]+10}" y="${+p[1]-5}" fill="#5b6b82" font-size="10.5" font-weight="700">${lbl}</text>`;}
+ });
+ // nodes
+ d.nodes.forEach(n=>{const N=G[n.id];const lines=bpWrap(n.l);
+   if(n.t==="task"){s+=`<rect x="${N.cx-66}" y="${N.cy-26}" width="132" height="52" rx="9" fill="#ffffff" stroke="#7d93b0" stroke-width="1.4"/>`;
+     lines.forEach((t,k,a)=>s+=`<text x="${N.cx}" y="${N.cy+4+(k-(a.length-1)/2)*13}" fill="#1f2d49" font-size="11.5" text-anchor="middle">${t}</text>`);}
+   else if(n.t==="gw"){s+=`<path d="M${N.cx-24},${N.cy} L${N.cx},${N.cy-24} L${N.cx+24},${N.cy} L${N.cx},${N.cy+24} z" fill="#fff7e6" stroke="#e0a93b" stroke-width="1.4"/><text x="${N.cx}" y="${N.cy+5}" fill="#b9821f" font-size="15" font-weight="800" text-anchor="middle">+</text>`;
+     lines.forEach((t,k,a)=>s+=`<text x="${N.cx}" y="${N.cy+38+(k)*12}" fill="#33486a" font-size="10.5" font-weight="600" text-anchor="middle">${t}</text>`);}
+   else{const end=n.t==="end";s+=`<circle cx="${N.cx}" cy="${N.cy}" r="17" fill="${end?'#eafaf3':'#eef6ff'}" stroke="${end?'#1f9d63':'#3b82f6'}" stroke-width="${end?3:1.8}"/>`;
+     lines.forEach((t,k,a)=>s+=`<text x="${N.cx}" y="${N.cy+34+(k)*12}" fill="#33486a" font-size="10.5" font-weight="600" text-anchor="middle">${t}</text>`);}
+ });
+ s+="</svg>";el.innerHTML=s;
+}
+function renderAllBPMN(){document.querySelectorAll('.bpmn[data-bpmn]').forEach(renderBPMN);}
+window.addEventListener('DOMContentLoaded',()=>{setTimeout(renderAllBPMN,60);});
 </script>
 </body>
 </html>

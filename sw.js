@@ -5,6 +5,8 @@ const CORE = [
   'index.html',
   'stakeholder-questions.html',
   'staff-guides.html',
+  'odoo-sales.html',
+  'odoo-demo-guide.html',
   'manifest.webmanifest',
   'icon-192.png',
   'icon-512.png'
