@@ -8,6 +8,7 @@ const CORE = [
   'odoo-sales.html',
   'odoo-demo-guide.html',
   'growth-opportunities.html',
+  'owner-faq.html',
   'manifest.webmanifest',
   'icon-192.png',
   'icon-512.png'
