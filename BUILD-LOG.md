@@ -116,3 +116,17 @@ Generated demo data across the whole Hotel app (it's Studio-built on rental/plan
 - **Leaves** (`resource.calendar.leaves`): 3 room maintenance closures.
 - **Occupancy / Availability** (`x_availability`): computed from the above.
 - Verified in-browser: Schedule + House Keeping Tasks render with **no errors**.
+
+## Update — 15 Jun 2026 (round 7) — Report polish + hotel booking website
+- **Owner's Business Decisions split into 3 visual sections**: *Pricing Strategy (D1+D2)*, *Listings &
+  Events (D3)*, *Photo/Video Referral (D4)* — each with feature cards, Today→To-be comparisons, a referral
+  loop pipeline, and the impact-vs-effort chart. New sidebar nav entries.
+- **Mobile responsiveness fixed**: BPMN/Mermaid SVGs + tables were forcing 224px horizontal overflow in
+  single-column grids; added `min-width:0` to grid items & scroll-containers → **0px overflow at 390px**, no errors.
+- **Reframed "Odoo implementation" as LIVE/implemented** (hero subtitle + appendix status) since the Odoo is built.
+- **Hotel booking website**: published the 3 room offers (Standard/Deluxe/Suite) as rentable, website-bookable
+  products. Verified `/shop` + room pages: per-night pricing (₱5,995/night), Beds/Breakfast/Guests options,
+  **Rental-Period date picker + Book** button, real room photo, "Rooms" nav menu. Set the website header logo.
+- **Demo-data audit (all apps well-filled)**: 23 rooms, 27 reservations, 16 room orders, 23 housekeeping
+  tasks, 61 sale orders, 30 CRM, 42 POS, 28 posted moves, 37 employees, 14 maintenance equip, 18 calendar,
+  42 published web products. Verified report renders desktop + mobile with no errors.
