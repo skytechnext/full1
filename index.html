@@ -2117,6 +2117,7 @@ html[data-theme="light"] #topbar{background:rgba(255,255,255,.85)}
 #sidenav a{display:block;color:var(--ink2);padding:6px 12px;border-radius:9px;border-left:2px solid transparent;transition:.15s;line-height:1.35}
 #sidenav a:hover{background:var(--panel);color:var(--ink)}
 #sidenav a.active{background:var(--panel);color:var(--teal);border-left-color:var(--teal);font-weight:600}
+#sidenav a.nav-ext{color:var(--aqua)}#sidenav a.nav-ext:hover{border-left-color:var(--aqua)}
 main{min-width:0;padding:0 clamp(16px,3.5vw,56px)}
 .navtoggle{padding:5px 11px;font-size:1.05rem;line-height:1}
 .brandlogo{height:30px;width:auto;display:block}
@@ -3616,6 +3617,14 @@ function buildNav(){
   document.querySelectorAll('section[data-nav]').forEach(s=>{const g=s.dataset.grp||'';(groups[g]=groups[g]||[]).push(s);});
   let html='<div class="nav-controls"><input id="search" placeholder="Search report…" oninput="doSearch(this.value)"><div class="nav-btnrow"><button class="tb-btn" onclick="toggleTheme()">◐ Theme</button><button class="tb-btn" id="installBtn" style="display:none" onclick="pwaInstall()">⬇ Install</button></div></div>';
   for(const g in groups){if(g)html+=`<div class="grp">${g}</div>`;groups[g].forEach(s=>{html+=`<a href="#${s.id}">${s.dataset.nav}</a>`;});}
+  html+='<div class="grp">Tools &amp; Documents</div>'+
+    '<a href="profit-estimator.html" class="nav-ext">📊 Profit Estimator</a>'+
+    '<a href="owner-faq.html" class="nav-ext">💬 Owner Q&amp;A</a>'+
+    '<a href="growth-opportunities.html" class="nav-ext">🚀 Growth Opportunities</a>'+
+    '<a href="odoo-sales.html" class="nav-ext">⚓ Odoo Platform</a>'+
+    '<a href="odoo-demo-guide.html" class="nav-ext">🧭 Demo Walkthrough</a>'+
+    '<a href="staff-guides.html" class="nav-ext">🛎 Staff Guides</a>'+
+    '<a href="stakeholder-questions.html" class="nav-ext">📋 Discovery Questions</a>';
   nav.innerHTML=html;
 }
 window.addEventListener('scroll',()=>{
