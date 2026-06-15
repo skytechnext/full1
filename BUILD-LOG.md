@@ -102,3 +102,17 @@ maintenance, project, calendar, contacts, **website, website_sale**, mail.
   app's working config: `calendar_id` = Rental 24/7, `default_role_id`/`role_ids` (Standard/Deluxe/Deluxe
   Suite), tz, `x_has_room_offer_role`. Now **23 rooms** (Standard 101–115, Deluxe 201–204, Suite 301–304)
   with **18 reservations** this week. Verified: Schedule renders and **hover works with no errors**.
+
+## Update — 15 Jun 2026 (round 6) — Hotel module demo data for EVERY section
+Generated demo data across the whole Hotel app (it's Studio-built on rental/planning/project/resource):
+- **Offers** (`product.template`, x_is_a_room_offer): Standard / Deluxe / Deluxe Suite, with per-night
+  pricing set (₱5,500 / ₱11,200 / ₱14,200) via `product.pricing`.
+- **Schedule** (`planning.slot`, role.x_is_a_room_offer): 18 reservations across the week.
+- **Orders** (`sale.order`, x_order_involves_room): 16 rental room orders (9 confirmed) with guests & dates.
+- **House Keeping → Tasks** (`project.task` in the House Keeping project): 23 tasks (one per room) with
+  Occupancy (Vacant/Occupied/Stayover/Due-Out) + Cleaning (Stayover/Checkout) status + assignees.
+- **House Keeping → Board** (`resource.resource`): 23 rooms.
+- **Resources**: 23 rooms (x_is_stay_resource) with roles + Rental-24/7 calendar.
+- **Leaves** (`resource.calendar.leaves`): 3 room maintenance closures.
+- **Occupancy / Availability** (`x_availability`): computed from the above.
+- Verified in-browser: Schedule + House Keeping Tasks render with **no errors**.
