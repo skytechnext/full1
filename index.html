@@ -2135,6 +2135,11 @@ body.nav-collapsed .shell{grid-template-columns:1fr}
 /* BPMN swimlane canvas (bpmn.io style, light) */
 .bpmn{background:#fbfdff;border:1px solid var(--line);border-radius:14px;padding:6px;margin:14px 0;overflow-x:auto;-webkit-overflow-scrolling:touch}
 .bpmn svg{display:block;width:100%;min-width:720px;height:auto}
+/* mobile overflow fix: allow grid items & scroll-containers to shrink below content width */
+.grid>*{min-width:0}
+.bpmn,.mermaid,.tbl-wrap,.chartbox,.canvas-h{min-width:0;max-width:100%}
+.bpmn,.mermaid,.tbl-wrap{overflow-x:auto}
+@media(max-width:680px){.bpmn svg{min-width:640px}.mermaid svg{min-width:520px}}
 .bpmn-legend{display:flex;gap:16px;flex-wrap:wrap;font-size:.74rem;color:var(--muted);margin:6px 2px 0}
 .bpmn-legend b{color:var(--ink2)}
 /* horizontal step pipeline (replaces cramped flowcharts) */
@@ -2307,7 +2312,7 @@ footer{padding:50px 24px 70px;text-align:center;color:var(--muted);font-size:.82
     <div class="hero-inner">
       <div class="eyebrow"><span class="dot"></span> Confidential Strategy &amp; Transformation Blueprint · v1.0</div>
       <h1>Casa Escondida Anilao</h1>
-      <p class="sub">A 360° client due-diligence, market &amp; competitive analysis, and a build-ready <strong>Odoo&nbsp;19 ERP</strong> transformation blueprint for the resort, dive center &amp; restaurant — prepared by <strong>Technext</strong>.</p>
+      <p class="sub">A 360° client due-diligence, market &amp; competitive analysis, and a <strong>live, fully-implemented Odoo&nbsp;19 ERP</strong> for the resort, hotel, dive center &amp; restaurant — built &amp; running, by <strong>Technext</strong>.</p>
       <div class="hero-meta">
         <span class="chip">📍 Anilao, Mabini, Batangas 🇵🇭</span>
         <span class="chip">🤿 PADI 5★ IDC Dive Center</span>
@@ -3296,22 +3301,38 @@ E-->F["Knowledge base update"]</div>
     </div>
   </section>
 
-  <!-- ============ OWNER'S STRATEGIC BUSINESS DECISIONS ============ -->
-  <section id="owner-decisions" data-nav="Owner's Business Decisions" data-grp="Growth &amp; Strategy">
+  <!-- ============ DECISIONS 1&2 · PRICING STRATEGY ============ -->
+  <section id="dec-pricing" data-nav="Pricing Strategy (D1·D2)" data-grp="Growth &amp; Strategy">
     <div class="wrap">
-      <span class="sec-tag reveal">Section · Growth &amp; Strategy</span>
-      <h2 class="reveal">Owner's Strategic Business Decisions</h2>
-      <p class="lead reveal">Four growth levers the owners are weighing. Each is assessed for profit impact, effort and risk — and mapped to exactly how the Odoo + AI platform enables it. These align with Andrew's stated priority: protect cash first, then grow.</p>
+      <span class="sec-tag reveal">Growth &amp; Strategy · Decisions 1 &amp; 2</span>
+      <h2 class="reveal">Pricing Strategy — Raise &amp; Vary the Rates</h2>
+      <p class="lead reveal">The fastest margin lever. Casa Escondida runs <strong>one flat rate all year</strong> with no early-bird or last-minute structure. Introduce demand-based pricing a manager can change in seconds, then reposition upward and fill with marketing — protecting cash first, exactly as Andrew wants.</p>
 
-      <div class="grid g2" style="margin:22px 0">
-        <div class="card reveal"><span class="pill p-blue">Decision 1</span><h3 style="font-size:1.12rem">Raise prices, then fill with strong marketing</h3><p>Increase rates to lift profit per booking, then drive occupancy with a real marketing engine. Rates are today <strong>flat all year</strong> with no early-bird/last-minute structure — leaving margin on the table, especially the 8 scarce sea-view rooms in peak Jan–Jun.</p><p><strong>Enabled by:</strong> Odoo pricelists + value repositioning; email/social marketing automation; first-party data targeting. <strong>Risk:</strong> local price-elasticity — mitigate by segmenting (premium for sea-view/overseas, value for standard/weekday).</p></div>
-        <div class="card reveal d1"><span class="pill p-blue">Decision 2</span><h3 style="font-size:1.12rem">Variable / dynamic pricing system</h3><p>Move from one flat annual rate to <strong>demand-based pricing</strong> a manager can change in seconds: weekday/weekend, season, occupancy, lead-time, sea-view premium, length-of-stay, channel.</p><p><strong>Enabled by:</strong> Odoo <em>pricelists + price rules</em> + a nightly <em>dynamic-pricing scheduled action</em> with min/max guardrails and a one-screen “Rate Manager”. <strong>Impact:</strong> +12–22% RevPAR; prices the weekend-instructor priority instead of closing channels.</p></div>
-        <div class="card reveal d2"><span class="pill p-blue">Decision 3</span><h3 style="font-size:1.12rem">Separate Google/search listings + event planning</h3><p>Create <strong>distinct Google Business Profiles &amp; maps/search listings</strong> for (a) the resort, (b) the <strong>restaurant</strong>, and (c) the <strong>dive center</strong> — multiplying combined visibility, reviews and map pins. Add a packaged <strong>event-planning service</strong> (they already host weddings &amp; corporate events).</p><p><strong>Enabled by:</strong> 3 GBP listings + local SEO; Odoo Events + CRM for event leads/quotes; Website pages per entity. <strong>Impact:</strong> more discovery at ~zero marginal cost + new high-ticket revenue.</p></div>
-        <div class="card reveal"><span class="pill p-blue">Decision 4</span><h3 style="font-size:1.12rem">Photo &amp; video upsell → referral engine</h3><p>Sell guest <strong>photo &amp; video</strong> packages. Guests share with friends → <strong>free word-of-mouth/referral</strong>, and Casa builds a library of authentic UGC for its own channels.</p><p><strong>Enabled by:</strong> Odoo product + POS upsell; Documents/Drive gallery with branded share link + referral code; AI auto-tagging &amp; highlight reels. <strong>Impact:</strong> ancillary margin + a compounding acquisition loop.</p></div>
+      <div class="grid g2 reveal" style="margin:24px 0">
+        <div class="card" style="background:linear-gradient(160deg,rgba(59,130,246,.12),transparent)">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:6px"><span style="font-size:1.8rem">💹</span><span class="pill p-blue">Decision 1</span></div>
+          <h3 style="margin:.2em 0">Raise prices, then fill with marketing</h3>
+          <div class="bars-mini" style="margin:12px 0">
+            <div style="display:grid;grid-template-columns:60px 1fr;gap:8px;font-size:.85rem;align-items:start"><span style="color:var(--coral);font-weight:700">Today</span><span>Flat rate all year · no early-bird/last-minute · 8 scarce sea-view rooms under-priced in peak Jan–Jun.</span></div>
+            <div style="display:grid;grid-template-columns:60px 1fr;gap:8px;font-size:.85rem;align-items:start;margin-top:8px"><span style="color:var(--green);font-weight:700">To-be</span><span>Segmented uplift (premium sea-view/overseas, value standard/weekday) + a real marketing engine to drive occupancy.</span></div>
+          </div>
+          <p style="font-size:.85rem"><strong>Enabled by:</strong> Odoo pricelists + value repositioning; email/social marketing automation; first-party data targeting. <strong>Risk:</strong> local price-elasticity — mitigate by segmenting.</p>
+          <span class="pill p-green">↑ profit per booking</span>
+        </div>
+        <div class="card" style="background:linear-gradient(160deg,rgba(25,198,198,.12),transparent)">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:6px"><span style="font-size:1.8rem">🎚️</span><span class="pill p-teal">Decision 2</span></div>
+          <h3 style="margin:.2em 0">Variable / dynamic pricing system</h3>
+          <div class="bars-mini" style="margin:12px 0">
+            <div style="display:grid;grid-template-columns:60px 1fr;gap:8px;font-size:.85rem;align-items:start"><span style="color:var(--coral);font-weight:700">Today</span><span>One flat annual rate, aligned by hand across every channel.</span></div>
+            <div style="display:grid;grid-template-columns:60px 1fr;gap:8px;font-size:.85rem;align-items:start;margin-top:8px"><span style="color:var(--green);font-weight:700">To-be</span><span>Demand-based pricing toggled in seconds: weekday/weekend, season, occupancy, lead-time, sea-view premium, length-of-stay, channel.</span></div>
+          </div>
+          <p style="font-size:.85rem"><strong>Enabled by:</strong> Odoo <em>pricelists + price rules</em> + a nightly <em>dynamic-pricing scheduled action</em> with min/max guardrails — the one-screen <strong>“Rate Manager”</strong>.</p>
+          <span class="pill p-green">+12–22% RevPAR</span>
+        </div>
       </div>
 
       <div class="grid g2">
-        <div class="chartbox reveal"><h4>Profit-impact vs. effort of the four decisions</h4><div class="cap">Indicative — for sequencing</div><div class="canvas-h"><canvas id="cOwner"></canvas></div></div>
+        <div class="chartbox reveal"><h4>All four decisions — impact vs. effort</h4><div class="cap">Indicative — for sequencing</div><div class="canvas-h"><canvas id="cOwner"></canvas></div></div>
         <div class="reveal d1">
           <h3>Recommended sequence</h3>
           <div class="tbl-wrap"><table class="tbl">
@@ -3323,9 +3344,56 @@ E-->F["Knowledge base update"]</div>
               <tr><td>4</td><td>Reposition prices up + marketing (D1)</td><td>Do once pricing engine + demand proof exist</td></tr>
             </tbody>
           </table></div>
-          <div class="callout reveal"><div class="t">“Rate Manager” — the easy-vary pricing tool</div>A single Odoo screen where a manager sets a base rate per room type and toggles modifiers (weekend %, season %, occupancy %, sea-view premium, channel, LOS discount). One save updates website, Booking.com sync &amp; POS — replacing today's manual cross-channel rate alignment.</div>
+          <div class="callout reveal"><div class="t">“Rate Manager” — the easy-vary pricing tool</div>One Odoo screen: set a base rate per room type, toggle modifiers (weekend %, season %, occupancy %, sea-view premium, channel, LOS). One save updates website, channel sync &amp; POS — replacing today's manual cross-channel alignment.</div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- ============ DECISION 3 · VISIBILITY & EVENTS ============ -->
+  <section id="dec-listings" data-nav="Listings &amp; Events (D3)" data-grp="Growth &amp; Strategy">
+    <div class="wrap">
+      <span class="sec-tag reveal">Growth &amp; Strategy · Decision 3</span>
+      <h2 class="reveal">Multiply Visibility + Add Event Planning</h2>
+      <p class="lead reveal">List the resort, the restaurant and the dive center as <strong>three separate Google Business Profiles &amp; map pins</strong> — multiplying combined search visibility, reviews and discovery at near-zero cost — then package a high-ticket <strong>event-planning</strong> service.</p>
+
+      <div class="grid g3 reveal" style="margin:24px 0">
+        <div class="card"><div style="font-size:1.7rem">🏨</div><h4 style="color:var(--ink)">Casa Escondida Resort</h4><p style="font-size:.85rem">Primary GBP — rooms, stays, dive packages. ★★★★★</p><span class="pill p-teal">Map pin #1</span></div>
+        <div class="card"><div style="font-size:1.7rem">🍽️</div><h4 style="color:var(--ink)">The Restaurant &amp; Bar</h4><p style="font-size:.85rem">Own GBP — open-air dining, BBQ, sea-view bar; captures “restaurants near Anilao”. ★★★★★</p><span class="pill p-teal">Map pin #2</span></div>
+        <div class="card"><div style="font-size:1.7rem">🤿</div><h4 style="color:var(--ink)">PADI 5★ Dive Center</h4><p style="font-size:.85rem">Own GBP — captures “Anilao dive / muck photography”. ★★★★★</p><span class="pill p-teal">Map pin #3</span></div>
+      </div>
+
+      <div class="grid g2 reveal">
+        <div class="card" style="background:var(--panel2)"><h4>Why three listings beat one</h4><ul class="q s" style="list-style:none;padding:0;margin:0"><li>3× the map pins, review streams &amp; “near me” surfaces</li><li>Each entity ranks for its own keywords</li><li>Cross-links compound domain authority</li><li>Near-zero marginal cost</li></ul></div>
+        <div class="card" style="background:linear-gradient(160deg,rgba(167,139,250,.12),transparent)"><div style="font-size:1.6rem">💍</div><h4 style="color:var(--ink)">Event-planning service</h4><p style="font-size:.88rem">Casa already hosts weddings &amp; corporate events. Productise it: venue + catering + room blocks + AV + transfers + a coordinator. <strong>Enabled by</strong> Odoo Events + CRM for event leads/quotes; per-entity Website pages.</p><span class="pill p-purple">New high-ticket revenue</span></div>
+      </div>
+      <div class="callout reveal"><div class="t">Impact</div>More top-of-funnel discovery at ~zero marginal cost, plus a new high-margin events line — both feeding the same Odoo CRM pipeline.</div>
+    </div>
+  </section>
+
+  <!-- ============ DECISION 4 · PHOTO/VIDEO REFERRAL ENGINE ============ -->
+  <section id="dec-media" data-nav="Photo/Video Referral (D4)" data-grp="Growth &amp; Strategy">
+    <div class="wrap">
+      <span class="sec-tag reveal">Growth &amp; Strategy · Decision 4</span>
+      <h2 class="reveal">Photo &amp; Video → Referral Engine</h2>
+      <p class="lead reveal">Sell guest <strong>photo &amp; video packages</strong>. Guests share them with friends — the cheapest, most credible marketing there is — while Casa builds a library of authentic UGC for its own channels. A compounding acquisition loop.</p>
+
+      <h3 class="reveal">The referral loop</h3>
+      <div class="pipeline reveal">
+        <div class="pstep"><span class="pn">1</span><div class="pt">Capture</div><div class="pd">Dive &amp; resort photos/video</div></div>
+        <div class="pstep"><span class="pn">2</span><div class="pt">Upsell &amp; deliver</div><div class="pd">POS package · branded gallery link</div></div>
+        <div class="pstep"><span class="pn">3</span><div class="pt">Guest shares</div><div class="pd">To friends &amp; socials</div></div>
+        <div class="pstep"><span class="pn">4</span><div class="pt">Friends discover</div><div class="pd">Authentic word-of-mouth</div></div>
+        <div class="pstep"><span class="pn">5</span><div class="pt">New bookings</div><div class="pd">Referral code → CRM</div></div>
+        <div class="pstep"><span class="pn">6</span><div class="pt">Repeat</div><div class="pd">UGC fuels Casa's channels</div></div>
+      </div>
+
+      <div class="grid g3 reveal" style="margin-top:18px">
+        <div class="card"><div style="font-size:1.6rem">📣</div><h4 style="color:var(--ink)">Free word-of-mouth</h4><p style="font-size:.85rem">Every shared clip is a credible ad from a real guest — zero ad spend.</p></div>
+        <div class="card"><div style="font-size:1.6rem">🎞️</div><h4 style="color:var(--ink)">UGC library</h4><p style="font-size:.85rem">AI auto-tags &amp; cuts highlight reels to fuel Casa's own social channels.</p></div>
+        <div class="card"><div style="font-size:1.6rem">💰</div><h4 style="color:var(--ink)">Ancillary margin</h4><p style="font-size:.85rem">High-margin add-on per guest, sold at booking and on-site.</p></div>
+      </div>
+      <div class="callout reveal"><div class="t">Enabled by</div>Odoo product + POS upsell; Documents/Drive gallery with a branded share link + referral code; AI auto-tagging &amp; highlight reels — closing the loop back into the CRM.</div>
     </div>
   </section>
 
@@ -3578,7 +3646,7 @@ E-->F["Knowledge base update"]</div>
         <div class="card"><p><strong>Muck/macro diving</strong> — diving on sediment bottoms for small/rare critters · <strong>Nitrox (EANx)</strong> — enriched-air diving gas · <strong>PADI IDC</strong> — Instructor Development Center · <strong>l10n_ph</strong> — Odoo Philippine localization · <strong>MCP</strong> — Model Context Protocol.</p></div>
       </div>
 
-      <div class="callout reveal" style="margin-top:20px"><div class="t">Next step</div>Connect an Odoo 19 instance via MCP and execute the build in <code>odoo-build-spec/</code> using the orchestration loop in <code>agents/orchestration.md</code> — installing the modules and loading the full demo dataset described above.</div>
+      <div class="callout reveal" style="margin-top:20px"><div class="t">Status: LIVE</div>This Odoo 19 ERP is <strong>already implemented and running</strong> at <code>edu-escondida.odoo.com</code> — Hotel (rooms, schedule, housekeeping), Restaurant POS with kitchen display, Dive ops, Inventory, CRM, Accounting and the online booking website, all populated with demo data. Build artifacts retained in <code>odoo-build-spec/</code>.</div>
     </div>
   </section>
 
