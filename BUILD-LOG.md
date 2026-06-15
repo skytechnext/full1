@@ -80,3 +80,16 @@ maintenance, project, calendar, contacts, **website, website_sale**, mail.
   - **Calendar** populated with 18 dive-trip events (was empty).
   - Pictures verified: 42/42 products imaged (real room photos), employees have avatars, company logo set.
   - Every app now has demo data (Website, Sales, CRM, POS, Accounting, Inventory, HR, Maintenance, Project, Calendar).
+
+## Update — 15 Jun 2026 (round 4) — Hotel (Industries) app IMPLEMENTED
+- Installed the official **Odoo Hotel industry app** by driving the SaaS "Activate" → "Install an Industry"
+  flow via an automated browser session (API keys can't do web login / the Activate provisioning).
+- The Hotel industry installs a large stack: **Rental (sale_renting) + Planning + booking_engine +
+  Accounting (account_accountant, account_reports, l10n_ph_reports) + POS enterprise + Studio + AI**, with a
+  **Hotel** app menu (Schedule, Orders, House Keeping, Steering, Configuration, Board, Occupancy/Availability).
+- Rooms = `resource.resource` (material); the **Schedule** = `planning.slot` gantt; **Orders** = rental sale orders.
+- Configured for Casa Escondida: expanded to the **23-room** inventory (Standard 101–115, Deluxe 201–202,
+  White Beach Deluxe 211–212, Suite 301–304) and created **27 reservations for the current week** so the
+  **Schedule Gantt is populated** like the reference screenshot.
+- Note: the 10 app-demo rooms (101–105/201–203/301–302) render in the Schedule immediately; the 13 added
+  rooms exist as resources but need the Hotel app's in-app room setup to appear in the Schedule gantt.
