@@ -93,3 +93,12 @@ maintenance, project, calendar, contacts, **website, website_sale**, mail.
   **Schedule Gantt is populated** like the reference screenshot.
 - Note: the 10 app-demo rooms (101–105/201–203/301–302) render in the Schedule immediately; the 13 added
   rooms exist as resources but need the Hotel app's in-app room setup to appear in the Schedule gantt.
+
+## Update — 15 Jun 2026 (round 5) — Hotel Schedule crash fixed + full 23-room inventory
+- **Fixed** the Planning-Gantt JS crash (`computeDerivedParamsFromHover … reading 'grid'` on hover).
+  Root cause: rooms added as bare `resource.resource` lacked a **planning role + "Rental 24/7" calendar**,
+  so the Gantt could not compute row grid params on hover.
+- Removed the malformed bare rooms, then re-created the remaining rooms **the correct way** — cloning the
+  app's working config: `calendar_id` = Rental 24/7, `default_role_id`/`role_ids` (Standard/Deluxe/Deluxe
+  Suite), tz, `x_has_room_offer_role`. Now **23 rooms** (Standard 101–115, Deluxe 201–204, Suite 301–304)
+  with **18 reservations** this week. Verified: Schedule renders and **hover works with no errors**.
