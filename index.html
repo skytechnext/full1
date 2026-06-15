@@ -2101,8 +2101,8 @@ code{background:var(--panel2);padding:.1em .4em;border-radius:6px;font-size:.85e
 /* progress bar */
 #progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--grad);z-index:1000;transition:width .1s}
 /* top bar */
-#topbar{position:fixed;top:0;left:0;right:0;height:56px;background:rgba(10,15,26,.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);z-index:900;display:flex;align-items:center;justify-content:space-between;padding:0 20px}
-html[data-theme="light"] #topbar{background:rgba(255,255,255,.85)}
+#navfab{position:fixed;top:10px;left:10px;z-index:950;background:rgba(18,28,48,.9);backdrop-filter:blur(10px);border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:6px 12px;font-size:1.05rem;line-height:1;cursor:pointer;box-shadow:var(--shadow)}#navfab:hover{color:var(--teal);border-color:var(--teal)}
+html[data-theme="light"] #navfab{background:rgba(255,255,255,.9)}
 #topbar .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:-.02em}
 #topbar .logo{width:30px;height:30px;border-radius:9px;background:var(--grad);display:grid;place-items:center;font-size:15px;box-shadow:0 6px 16px -6px var(--teal)}
 .tb-actions{display:flex;gap:8px;align-items:center}
@@ -2112,7 +2112,7 @@ html[data-theme="light"] #topbar{background:rgba(255,255,255,.85)}
 
 /* layout */
 .shell{display:grid;grid-template-columns:262px 1fr;max-width:1480px;margin:0 auto;gap:0}
-#sidenav{position:sticky;top:56px;height:calc(100vh - 56px);overflow-y:auto;padding:22px 14px 60px;border-right:1px solid var(--line);font-size:.83rem}
+#sidenav{position:sticky;top:0;height:100vh;overflow-y:auto;padding:52px 14px 60px;border-right:1px solid var(--line);font-size:.83rem}
 #sidenav .grp{color:var(--muted);text-transform:uppercase;letter-spacing:.12em;font-size:.66rem;font-weight:700;margin:18px 10px 6px}
 #sidenav a{display:block;color:var(--ink2);padding:6px 12px;border-radius:9px;border-left:2px solid transparent;transition:.15s;line-height:1.35}
 #sidenav a:hover{background:var(--panel);color:var(--ink)}
@@ -2120,7 +2120,7 @@ html[data-theme="light"] #topbar{background:rgba(255,255,255,.85)}
 #sidenav a.nav-ext{color:var(--aqua)}#sidenav a.nav-ext:hover{border-left-color:var(--aqua)}
 main{min-width:0;padding:0 clamp(16px,3.5vw,56px)}
 .navtoggle{padding:5px 11px;font-size:1.05rem;line-height:1}
-.brandlogo{height:30px;width:auto;display:block}
+.brandlogo{height:30px;width:auto;display:block}.nav-brand{display:flex;align-items:center;gap:9px;padding:0 6px 12px;margin-bottom:6px;border-bottom:1px solid var(--line)}
 .tb-sub{color:var(--muted);font-size:.8rem;font-weight:600}
 body.nav-collapsed #sidenav{display:none}
 body.nav-collapsed .shell{grid-template-columns:1fr}
@@ -2167,9 +2167,9 @@ body.nav-collapsed .shell{grid-template-columns:1fr}
 .wa-out{align-self:flex-end;background:#005c4b;border-top-right-radius:2px;max-width:78%}
 .wa-in .nm{color:#53bdeb;font-weight:700;font-size:.71rem;display:block;margin-bottom:2px}
 .wa time{display:block;text-align:right;color:#8696a0;font-size:.62rem;margin-top:3px;font-style:normal}
-#scrim{position:fixed;inset:56px 0 0 0;background:rgba(0,0,0,.5);z-index:840;opacity:0;pointer-events:none;transition:opacity .3s}
+#scrim{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:840;opacity:0;pointer-events:none;transition:opacity .3s}
 body.nav-open #scrim{opacity:1;pointer-events:auto}
-section{padding:64px 0 32px;border-bottom:1px solid var(--line);scroll-margin-top:70px}
+section{padding:64px 0 32px;border-bottom:1px solid var(--line);scroll-margin-top:14px}
 .wrap{max-width:var(--maxw);margin:0 auto}
 
 /* hero */
@@ -2301,7 +2301,7 @@ footer{padding:50px 24px 70px;text-align:center;color:var(--muted);font-size:.82
 }
 @media(max-width:1080px){
   .shell{grid-template-columns:1fr}
-  #sidenav{position:fixed;left:0;top:56px;bottom:0;width:84vw;max-width:320px;background:var(--bg2);z-index:850;
+  #sidenav{position:fixed;left:0;top:0;bottom:0;width:84vw;max-width:320px;background:var(--bg2);z-index:850;
     transform:translateX(-104%);transition:transform .3s ease;box-shadow:var(--shadow);height:auto}
   body.nav-open #sidenav{transform:none}
   body.nav-collapsed #sidenav{display:block} /* on mobile, visibility is driven by nav-open */
@@ -2312,9 +2312,7 @@ footer{padding:50px 24px 70px;text-align:center;color:var(--muted);font-size:.82
 </head>
 <body>
 <div id="progress"></div>
-<div id="topbar">
-  <div class="brand"><button class="tb-btn navtoggle" onclick="toggleNav()" aria-label="Toggle menu" title="Menu">☰</button><img class="brandlogo" src="assets/logo-white.svg" alt="Casa Escondida"><span class="tb-sub">× Technext</span></div>
-</div>
+<button id="navfab" onclick="toggleNav()" aria-label="Toggle menu" title="Menu">☰</button>
 
 <div id="scrim" onclick="closeNavMobile()"></div>
 <div class="shell">
@@ -3587,7 +3585,7 @@ E-->F["Knowledge base update"]</div>
   <!--SECTION-ANCHOR-->
 
   <footer>
-    <p style="margin-bottom:14px"><strong>Companion documents:</strong> <a href="growth-opportunities.html">Growth Opportunities</a> · <a href="profit-estimator.html">Profit Estimator</a> · <a href="owner-faq.html">Owner Q&amp;A (FAQ)</a> · <a href="odoo-sales.html">Odoo Sales Page</a> · <a href="odoo-demo-guide.html">Odoo Demo Walkthrough</a> · <a href="stakeholder-questions.html">Stakeholder Question Bank</a> · <a href="staff-guides.html">Staff Guide to Odoo</a></p>
+    <p style="margin-bottom:14px"><strong>Companion documents:</strong> <a href="profit-estimator.html">Profit Estimator</a> · <a href="owner-faq.html">Owner Q&amp;A (FAQ)</a> · <a href="odoo-sales.html">Odoo Sales Page</a> · <a href="odoo-demo-guide.html">Odoo Demo Walkthrough</a> · <a href="stakeholder-questions.html">Stakeholder Question Bank</a> · <a href="staff-guides.html">Staff Guide to Odoo</a></p>
     <p><strong>Technext</strong> — Odoo ERP Implementation &amp; Digital Transformation · Prepared for Casa Escondida Anilao Resort &amp; Dive Center</p>
     <p>Confidential. Figures marked “estimate” are modelled assumptions for planning, not audited financials. Sources &amp; confidence ratings in the Appendix.</p>
     <p><small>Document v1.0 · 14 June 2026 · sky@technext.asia</small></p>
@@ -3615,12 +3613,11 @@ function runCount(el){el.classList.add('cnt-done');const t=parseFloat(el.dataset
 function buildNav(){
   const nav=document.getElementById('sidenav');const groups={};
   document.querySelectorAll('section[data-nav]').forEach(s=>{const g=s.dataset.grp||'';(groups[g]=groups[g]||[]).push(s);});
-  let html='<div class="nav-controls"><input id="search" placeholder="Search report…" oninput="doSearch(this.value)"><div class="nav-btnrow"><button class="tb-btn" onclick="toggleTheme()">◐ Theme</button><button class="tb-btn" id="installBtn" style="display:none" onclick="pwaInstall()">⬇ Install</button></div></div>';
+  let html='<div class="nav-brand"><img class="brandlogo" src="assets/logo-white.svg" alt="Casa Escondida"><span class="tb-sub">× Technext</span></div><div class="nav-controls"><input id="search" placeholder="Search report…" oninput="doSearch(this.value)"><div class="nav-btnrow"><button class="tb-btn" onclick="toggleTheme()">◐ Theme</button><button class="tb-btn" id="installBtn" style="display:none" onclick="pwaInstall()">⬇ Install</button></div></div>';
   for(const g in groups){if(g)html+=`<div class="grp">${g}</div>`;groups[g].forEach(s=>{html+=`<a href="#${s.id}">${s.dataset.nav}</a>`;});}
   html+='<div class="grp">Tools &amp; Documents</div>'+
     '<a href="profit-estimator.html" class="nav-ext">📊 Profit Estimator</a>'+
     '<a href="owner-faq.html" class="nav-ext">💬 Owner Q&amp;A</a>'+
-    '<a href="growth-opportunities.html" class="nav-ext">🚀 Growth Opportunities</a>'+
     '<a href="odoo-sales.html" class="nav-ext">⚓ Odoo Platform</a>'+
     '<a href="odoo-demo-guide.html" class="nav-ext">🧭 Demo Walkthrough</a>'+
     '<a href="staff-guides.html" class="nav-ext">🛎 Staff Guides</a>'+
