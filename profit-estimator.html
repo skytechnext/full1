@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Casa Escondida — Interactive Profit Estimator</title>
+<meta name="description" content="An interactive profit estimator for Casa Escondida — set your own occupancy, rates and costs and see revenue, EBITDA and the uplift from improvements, live.">
+<link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0a0f1a"><link rel="icon" href="assets/favicon.svg"><link rel="apple-touch-icon" href="icon-192.png">
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));}</script>
+<style>
+:root{--bg:#0a0f1a;--panel:#121c30;--panel2:#16223a;--line:#1f2d49;--ink:#e8f0fb;--ink2:#a9bdd8;--muted:#7388ab;--teal:#19c6c6;--aqua:#37e0c8;--blue:#3b82f6;--green:#36d399;--amber:#ffb454;--coral:#ff6b6b;--purple:#a78bfa;--grad:linear-gradient(135deg,#19c6c6,#3b82f6 55%,#6366f1);--shadow:0 18px 50px -20px rgba(0,0,0,.6);--sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.55;overflow-x:hidden}
+h1,h2,h3{margin:0 0 .4em;font-weight:800;letter-spacing:-.02em}a{color:var(--teal);text-decoration:none}
+#bar{position:sticky;top:0;z-index:100;background:rgba(10,15,26,.86);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 18px}
+#bar img{height:26px}.btn{background:var(--grad);color:#fff;font-weight:700;padding:9px 15px;border-radius:11px;font-size:.84rem;border:0;cursor:pointer}
+.btn.ghost{background:var(--panel);border:1px solid var(--line);color:var(--ink)}
+header{padding:40px 22px 8px;text-align:center}
+header h1{font-size:clamp(1.6rem,4vw,2.5rem);background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+header p{color:var(--ink2);max-width:720px;margin:6px auto}
+.wrap{max-width:1180px;margin:0 auto;padding:14px 20px 70px}
+.layout{display:grid;grid-template-columns:380px 1fr;gap:20px;align-items:start}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:var(--shadow)}
+.panel.sticky{position:sticky;top:64px}
+.grp{margin-bottom:16px}.grp h3{font-size:.82rem;text-transform:uppercase;letter-spacing:.08em;color:var(--aqua);margin-bottom:8px}
+.row{display:grid;grid-template-columns:1fr 84px;gap:8px;align-items:center;margin-bottom:7px;font-size:.86rem;color:var(--ink2)}
+.row input[type=number]{width:100%;background:var(--panel2);border:1px solid var(--line);color:var(--ink);border-radius:8px;padding:6px 8px;font-size:.85rem;text-align:right}
+.srow{margin-bottom:11px;font-size:.85rem}
+.srow label{display:flex;justify-content:space-between;color:var(--ink2);margin-bottom:3px}.srow label b{color:var(--teal)}
+input[type=range]{width:100%;accent-color:var(--teal)}
+.toggle{display:flex;align-items:center;gap:9px;margin-bottom:8px;font-size:.85rem;color:var(--ink2);cursor:pointer}
+.toggle input{width:17px;height:17px;accent-color:var(--green)}
+.presets{display:flex;gap:7px;margin-bottom:14px;flex-wrap:wrap}
+.presets button{flex:1;background:var(--panel2);border:1px solid var(--line);color:var(--ink2);border-radius:9px;padding:7px 6px;font-size:.78rem;cursor:pointer;font-weight:600}
+.presets button:hover{border-color:var(--teal);color:var(--teal)}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}
+.kpi{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;position:relative;overflow:hidden}
+.kpi::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--grad)}
+.kpi .v{font-size:1.5rem;font-weight:900;letter-spacing:-.02em;color:var(--ink)}
+.kpi .l{font-size:.74rem;color:var(--ink2)}.kpi .d{font-size:.72rem;color:var(--green);margin-top:2px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:var(--shadow);margin-bottom:18px}
+.card h3{font-size:1rem}
+.bar{display:grid;grid-template-columns:130px 1fr 96px;gap:10px;align-items:center;margin:7px 0;font-size:.82rem}
+.bar .t{height:14px;border-radius:7px;background:var(--panel2);overflow:hidden}.bar .f{height:100%;border-radius:7px;transition:width .4s}
+.bar .amt{text-align:right;color:var(--ink);font-weight:600}
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.cmp .c{border-radius:14px;padding:16px;border:1px solid var(--line)}
+.cmp .now{background:linear-gradient(160deg,rgba(115,136,171,.12),transparent)}.cmp .imp{background:linear-gradient(160deg,rgba(54,211,153,.14),transparent)}
+.cmp .big{font-size:1.7rem;font-weight:900}
+.note{font-size:.76rem;color:var(--muted);margin-top:10px}
+.donut{width:150px;height:150px;border-radius:50%;margin:0 auto;position:relative}
+.donut::after{content:"";position:absolute;inset:26px;border-radius:50%;background:var(--panel)}
+.leg{display:flex;flex-direction:column;gap:5px;font-size:.8rem}.leg span{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:7px}
+@media(max-width:900px){.layout{grid-template-columns:1fr}.panel.sticky{position:static}}
+@media(max-width:560px){.kpis{grid-template-columns:1fr 1fr}.cmp{grid-template-columns:1fr}}
+</style></head>
+<body>
+<div id="bar"><img src="assets/logo-white.svg" alt="Casa Escondida"><div><a href="index.html" style="color:var(--ink2);font-size:.82rem;margin-right:10px">Report</a><a href="growth-opportunities.html" class="btn ghost" style="margin-right:6px">Opportunities</a><button class="btn" onclick="window.print()">Print</button></div></div>
+<header>
+  <h1>Interactive Profit Estimator</h1>
+  <p>Set your own rooms, occupancy, rates and costs — see revenue, costs, EBITDA and margin update live. Then toggle the improvements to see the upside. <strong>All numbers are yours to change; nothing here is a fixed claim.</strong></p>
+</header>
+<div class="wrap">
+<div class="layout">
+  <!-- INPUTS -->
+  <div class="panel sticky">
+    <div class="presets">
+      <button onclick="preset('cons')">Conservative</button>
+      <button onclick="preset('base')">Base</button>
+      <button onclick="preset('amb')">Ambitious</button>
+    </div>
+    <div class="grp"><h3>Rooms &amp; nightly rate (₱)</h3>
+      <div class="row"><span>Standard ×<input id="n_std" type="number" value="15" style="width:46px;display:inline" oninput="calc()"></span><input id="r_std" type="number" value="6500" oninput="calc()"></div>
+      <div class="row"><span>Deluxe ×<input id="n_dlx" type="number" value="2" style="width:46px;display:inline" oninput="calc()"></span><input id="r_dlx" type="number" value="13000" oninput="calc()"></div>
+      <div class="row"><span>White Beach ×<input id="n_wbd" type="number" value="2" style="width:46px;display:inline" oninput="calc()"></span><input id="r_wbd" type="number" value="14000" oninput="calc()"></div>
+      <div class="row"><span>Suite ×<input id="n_ste" type="number" value="4" style="width:46px;display:inline" oninput="calc()"></span><input id="r_ste" type="number" value="16300" oninput="calc()"></div>
+    </div>
+    <div class="grp"><h3>Occupancy</h3>
+      <div class="srow"><label>Annual occupancy <b id="o_occ">57%</b></label><input id="occ" type="range" min="20" max="95" value="57" oninput="calc()"></div>
+    </div>
+    <div class="grp"><h3>Ancillary spend / occupied room-night (₱)</h3>
+      <div class="srow"><label>Diving <b id="o_dive">₱1,800</b></label><input id="dive" type="range" min="0" max="6000" step="100" value="1800" oninput="calc()"></div>
+      <div class="srow"><label>Food &amp; beverage <b id="o_fb">₱1,400</b></label><input id="fb" type="range" min="0" max="5000" step="100" value="1400" oninput="calc()"></div>
+      <div class="srow"><label>Retail / transport / other <b id="o_oth">₱500</b></label><input id="oth" type="range" min="0" max="3000" step="100" value="500" oninput="calc()"></div>
+      <div class="row"><span>Courses ₱ / month</span><input id="crs" type="number" value="600000" oninput="calc()"></div>
+    </div>
+    <div class="grp"><h3>Costs (% of revenue)</h3>
+      <div class="srow"><label>Staff / labour <b id="o_lab">28%</b></label><input id="lab" type="range" min="10" max="50" value="28" oninput="calc()"></div>
+      <div class="srow"><label>F&amp;B &amp; supplies <b id="o_sup">16%</b></label><input id="sup" type="range" min="5" max="40" value="16" oninput="calc()"></div>
+      <div class="srow"><label>Utilities / maintenance <b id="o_uti">12%</b></label><input id="uti" type="range" min="3" max="30" value="12" oninput="calc()"></div>
+      <div class="srow"><label>Other overhead <b id="o_ovh">10%</b></label><input id="ovh" type="range" min="3" max="25" value="10" oninput="calc()"></div>
+    </div>
+    <div class="grp"><h3>Channels</h3>
+      <div class="srow"><label>OTA share of room bookings <b id="o_ota">35%</b></label><input id="ota" type="range" min="0" max="80" value="35" oninput="calc()"></div>
+      <div class="srow"><label>OTA commission <b id="o_com">16%</b></label><input id="com" type="range" min="0" max="25" value="16" oninput="calc()"></div>
+    </div>
+    <div class="grp"><h3>Improvements (toggle the upside)</h3>
+      <label class="toggle"><input id="i_dyn" type="checkbox" onchange="calc()"> Dynamic pricing (+15% RevPAR)</label>
+      <label class="toggle"><input id="i_dir" type="checkbox" onchange="calc()"> Direct-booking shift (OTA → 15%)</label>
+      <label class="toggle"><input id="i_ups" type="checkbox" onchange="calc()"> Photo/video + ancillary upsell (+₱700/night)</label>
+      <label class="toggle"><input id="i_leak" type="checkbox" onchange="calc()"> Stop cash leakage (−3% costs)</label>
+    </div>
+  </div>
+  <!-- RESULTS -->
+  <div>
+    <div class="kpis">
+      <div class="kpi"><div class="v" id="k_rev">—</div><div class="l">Annual revenue</div><div class="d" id="k_revd"></div></div>
+      <div class="kpi"><div class="v" id="k_ebit">—</div><div class="l">EBITDA (annual)</div><div class="d" id="k_ebitd"></div></div>
+      <div class="kpi"><div class="v" id="k_marg">—</div><div class="l">EBITDA margin</div></div>
+      <div class="kpi"><div class="v" id="k_adr">—</div><div class="l">Blended ADR</div></div>
+      <div class="kpi"><div class="v" id="k_revpar">—</div><div class="l">RevPAR</div></div>
+      <div class="kpi"><div class="v" id="k_mo">—</div><div class="l">Monthly EBITDA</div></div>
+    </div>
+
+    <div class="card"><h3>Revenue by stream</h3><div id="revbars"></div></div>
+
+    <div class="card" style="display:grid;grid-template-columns:170px 1fr;gap:18px;align-items:center">
+      <div><div class="donut" id="donut"></div></div>
+      <div class="leg" id="leg"></div>
+    </div>
+
+    <div class="card"><h3>Cost breakdown &amp; profit</h3><div id="costbars"></div></div>
+
+    <div class="card"><h3>Current vs. with improvements</h3>
+      <div class="cmp">
+        <div class="c now"><div style="font-size:.78rem;color:var(--ink2)">Current</div><div class="big" id="cmp_now">—</div><div style="font-size:.78rem;color:var(--ink2)">EBITDA / yr</div></div>
+        <div class="c imp"><div style="font-size:.78rem;color:var(--ink2)">With improvements</div><div class="big" id="cmp_imp" style="color:var(--green)">—</div><div style="font-size:.78rem;color:var(--ink2)" id="cmp_up"></div></div>
+      </div>
+      <p class="note">Toggle the improvement checkboxes (left) to see the uplift. Improvements model dynamic pricing, the OTA→direct shift, ancillary upsell and leakage control — the levers in the strategy report.</p>
+    </div>
+    <p class="note">Defaults are illustrative starting points based on the verified 2026 rate card and typical PH dive-resort ratios. This is a planning tool — replace every input with your real figures for an accurate picture. Not a forecast or guarantee.</p>
+  </div>
+</div>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+const peso=n=>'₱'+Math.round(n).toLocaleString();
+const pesoM=n=>'₱'+(n/1e6).toFixed(2)+'M';
+function val(id){return parseFloat($(id).value)||0;}
+const COLORS={Rooms:'#19c6c6',Diving:'#3b82f6',"F&B":'#ffb454',Courses:'#a78bfa',Other:'#36d399'};
+function model(improve){
+  let occ=val('occ')/100;
+  const nights=365;
+  let roomsRate=val('n_std')*val('r_std')+val('n_dlx')*val('r_dlx')+val('n_wbd')*val('r_wbd')+val('n_ste')*val('r_ste');
+  let totalRooms=val('n_std')+val('n_dlx')+val('n_wbd')+val('n_ste');
+  let dyn=1, otaShare=val('ota')/100, upsell=0, leak=0;
+  if(improve){
+    if($('i_dyn').checked) dyn=1.15;
+    if($('i_dir').checked) otaShare=Math.min(otaShare,0.15);
+    if($('i_ups').checked) upsell=700;
+    if($('i_leak').checked) leak=0.03;
+  }
+  let roomRev=roomsRate*occ*nights*dyn;
+  let occNights=totalRooms*occ*nights;
+  let anc=(val('dive')+val('fb')+val('oth')+upsell)*occNights;
+  let courses=val('crs')*12;
+  let diveRev=(val('dive'))*occNights, fbRev=(val('fb'))*occNights, othRev=(val('oth')+upsell)*occNights;
+  let rev=roomRev+anc+courses;
+  let ota=roomRev*otaShare*(val('com')/100);
+  let costPct=(val('lab')+val('sup')+val('uti')+val('ovh'))/100-leak;
+  let costs=rev*costPct+ota;
+  let ebitda=rev-costs;
+  return {rev,roomRev,diveRev,fbRev,othRev,courses,ota,costs,ebitda,occNights,totalRooms,
+    adr:occNights?roomRev/occNights:0, revpar:totalRooms?roomRev/(totalRooms*nights):0,
+    streams:{Rooms:roomRev,Diving:diveRev,"F&B":fbRev,Courses:courses,Other:othRev},
+    costParts:{Labour:rev*val('lab')/100,Supplies:rev*val('sup')/100,Utilities:rev*val('uti')/100,Overhead:rev*(val('ovh')/100-leak),"OTA commission":ota}};
+}
+function bars(el,obj,total,colorFn){
+  let max=Math.max(...Object.values(obj),1);
+  $(el).innerHTML=Object.entries(obj).map(([k,v])=>`<div class="bar"><span>${k}</span><div class="t"><div class="f" style="width:${Math.max(2,v/max*100)}%;background:${colorFn(k)}"></div></div><span class="amt">${pesoM(v)}</span></div>`).join('');
+}
+function donut(streams,total){
+  let a=0,seg=[];for(const[k,v] of Object.entries(streams)){let p=total?v/total*100:0;seg.push(`${COLORS[k]} ${a}% ${a+p}%`);a+=p;}
+  $('donut').style.background=`conic-gradient(${seg.join(',')})`;
+  $('leg').innerHTML=Object.entries(streams).map(([k,v])=>`<div><span style="background:${COLORS[k]}"></span>${k} — ${total?(v/total*100).toFixed(0):0}% · ${pesoM(v)}</div>`).join('');
+}
+function calc(){
+  ['occ:o_occ:%','lab:o_lab:%','sup:o_sup:%','uti:o_uti:%','ovh:o_ovh:%','ota:o_ota:%','com:o_com:%'].forEach(s=>{let[i,o,u]=s.split(':');$(o).textContent=val(i)+u;});
+  $('o_dive').textContent=peso(val('dive'));$('o_fb').textContent=peso(val('fb'));$('o_oth').textContent=peso(val('oth'));
+  const cur=model(false), imp=model(true);
+  $('k_rev').textContent=pesoM(cur.rev);
+  $('k_ebit').textContent=pesoM(cur.ebitda);
+  $('k_marg').textContent=(cur.rev?cur.ebitda/cur.rev*100:0).toFixed(0)+'%';
+  $('k_adr').textContent=peso(cur.adr);
+  $('k_revpar').textContent=peso(cur.revpar);
+  $('k_mo').textContent=pesoM(cur.ebitda/12);
+  bars('revbars',cur.streams,cur.rev,k=>COLORS[k]||'#19c6c6');
+  donut(cur.streams,cur.rev);
+  bars('costbars',{...cur.costParts,'EBITDA (profit)':cur.ebitda},cur.rev,k=>k.includes('EBITDA')?'#36d399':(k.includes('OTA')?'#ff6b6b':'#7388ab'));
+  $('cmp_now').textContent=pesoM(cur.ebitda);
+  $('cmp_imp').textContent=pesoM(imp.ebitda);
+  let up=cur.ebitda?((imp.ebitda-cur.ebitda)/cur.ebitda*100):0;
+  $('cmp_up').textContent=(up>=0?'+':'')+up.toFixed(0)+'% vs current ('+pesoM(imp.ebitda-cur.ebitda)+'/yr)';
+  $('k_revd').textContent='';$('k_ebitd').textContent='';
+}
+function preset(p){
+  const set=(id,v)=>{$(id).value=v;};
+  if(p==='cons'){set('occ',45);set('dive',1200);set('fb',1100);set('oth',300);set('lab',32);set('sup',18);set('ota',45);['i_dyn','i_dir','i_ups','i_leak'].forEach(i=>$(i).checked=false);}
+  if(p==='base'){set('occ',57);set('dive',1800);set('fb',1400);set('oth',500);set('lab',28);set('sup',16);set('ota',35);['i_dyn','i_dir','i_ups','i_leak'].forEach(i=>$(i).checked=false);}
+  if(p==='amb'){set('occ',70);set('dive',2600);set('fb',1700);set('oth',900);set('lab',26);set('sup',15);set('ota',25);['i_dyn','i_dir','i_ups','i_leak'].forEach(i=>$(i).checked=true);}
+  calc();
+}
+calc();
+</script>
+</body></html>

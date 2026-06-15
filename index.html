@@ -2151,6 +2151,21 @@ body.nav-collapsed .shell{grid-template-columns:1fr}
 .pstep .pd{color:var(--ink2);font-size:.78rem;margin-top:2px}
 .pstep:not(:last-child)::after{content:"→";position:absolute;right:-9px;top:50%;transform:translateY(-50%);color:var(--teal);font-weight:800;z-index:2}
 @media(max-width:680px){.pstep:not(:last-child)::after{display:none}}
+/* responsive video embed */
+.video-embed{position:relative;width:100%;max-width:720px;margin:14px auto;padding-top:40.5%;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#000}
+.video-embed iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+@media(max-width:720px){.video-embed{padding-top:56.25%}}
+/* WhatsApp-style briefing */
+.wa{max-width:430px;border-radius:14px;overflow:hidden;border:1px solid var(--line);font-size:.83rem;box-shadow:var(--shadow)}
+.wa-hd{background:#1f2c33;padding:9px 13px;display:flex;align-items:center;gap:10px;color:#e9edef}
+.wa-hd .av{width:32px;height:32px;border-radius:50%;background:var(--grad);display:grid;place-items:center;font-size:1rem}
+.wa-hd div{line-height:1.2;font-weight:700}.wa-hd small{color:#8696a0;font-weight:500;font-size:.68rem}
+.wa-body{padding:12px 10px;background:#0b141a;background-image:radial-gradient(rgba(255,255,255,.025) 1px,transparent 1px);background-size:16px 16px;display:flex;flex-direction:column;gap:7px}
+.wa-in,.wa-out{max-width:90%;padding:7px 10px;border-radius:9px;color:#e9edef;line-height:1.5;position:relative}
+.wa-in{align-self:flex-start;background:#202c33;border-top-left-radius:2px}
+.wa-out{align-self:flex-end;background:#005c4b;border-top-right-radius:2px;max-width:78%}
+.wa-in .nm{color:#53bdeb;font-weight:700;font-size:.71rem;display:block;margin-bottom:2px}
+.wa time{display:block;text-align:right;color:#8696a0;font-size:.62rem;margin-top:3px;font-style:normal}
 #scrim{position:fixed;inset:56px 0 0 0;background:rgba(0,0,0,.5);z-index:840;opacity:0;pointer-events:none;transition:opacity .3s}
 body.nav-open #scrim{opacity:1;pointer-events:auto}
 section{padding:64px 0 32px;border-bottom:1px solid var(--line);scroll-margin-top:70px}
@@ -2334,7 +2349,7 @@ footer{padding:50px 24px 70px;text-align:center;color:var(--muted);font-size:.82
         <div class="kpi reveal"><div class="num" data-count="4.7" data-dec="1" data-suf="★">0</div><div class="lbl">Google rating</div><div class="sub">≈212 reviews · top-tier in Anilao</div></div>
         <div class="kpi reveal d1"><div class="num" data-count="2016">0</div><div class="lbl">Founded</div><div class="sub">≈10 years operating</div></div>
         <div class="kpi reveal d2"><div class="num" data-count="23">0</div><div class="lbl">Rooms</div><div class="sub">verified 2026 rate card</div></div>
-        <div class="kpi reveal d3"><div class="num" data-pre="₱" data-count="60" data-suf="M+">0</div><div class="lbl">Est. annual revenue</div><div class="sub">base-case model · see §14</div></div>
+        <div class="kpi reveal d3"><div class="num" data-count="6">0</div><div class="lbl">Revenue streams</div><div class="sub">rooms · dive · F&amp;B · courses · gear · retail</div></div>
       </div>
 
       <h3 class="reveal">Ten key findings</h3>
@@ -2352,7 +2367,7 @@ footer{padding:50px 24px 70px;text-align:center;color:var(--muted);font-size:.82
       </div>
 
       <div class="grid g2" style="margin-top:26px">
-        <div class="chartbox reveal"><h4>Estimated revenue mix (base case)</h4><div class="cap">Modelled — see §14 for assumptions</div><div class="canvas-h"><canvas id="cExecMix"></canvas></div></div>
+        <div class="chartbox reveal"><h4>Estimated revenue mix (base case)</h4><div class="cap">Illustrative % share by stream</div><div class="canvas-h"><canvas id="cExecMix"></canvas></div></div>
         <div class="chartbox reveal d1"><h4>Current vs. post-ERP scorecard</h4><div class="cap">Indexed to 100 = today; targets at 12 months post go-live</div><div class="canvas-h"><canvas id="cExecScore"></canvas></div></div>
       </div>
 
@@ -2412,7 +2427,7 @@ footer{padding:50px 24px 70px;text-align:center;color:var(--muted);font-size:.82
         </div>
       </div>
 
-      <div class="chartbox reveal" style="margin-top:22px"><h4>Estimated revenue contribution by stream</h4><div class="cap">Modelled base case — illustrative, see §14</div><div class="canvas-h"><canvas id="cRevStream"></canvas></div></div>
+      <div class="chartbox reveal" style="margin-top:22px"><h4>Estimated revenue contribution by stream</h4><div class="cap">Illustrative % share by stream</div><div class="canvas-h"><canvas id="cRevStream"></canvas></div></div>
     </div>
   </section>
 
@@ -2695,21 +2710,21 @@ flowchart LR
       <p class="lead reveal">Anilao hosts a dense field of dive resorts. Casa Escondida sits in the value-to-mid tier with elite reviews — a strong position to defend, with room to capture premium photographer demand currently going to Crystal Blue and Buceo.</p>
 
       <div class="tbl-wrap reveal" style="margin:22px 0"><table class="tbl">
-        <thead><tr><th>Resort</th><th>~Rooms</th><th>Price tier</th><th>Dive focus</th><th>Rating</th><th>Tech maturity</th></tr></thead>
+        <thead><tr><th>Resort</th><th>~Rooms</th><th>Price tier</th><th>Rate / night*</th><th>Dive focus</th><th>Rating</th><th>Tech maturity</th></tr></thead>
         <tbody>
-          <tr><td><strong>Casa Escondida</strong></td><td>24–31</td><td>Value–Mid</td><td>Macro / muck / photo</td><td>4.7★ (G)</td><td><span class="pill p-red">Low</span></td></tr>
-          <tr><td>Crystal Blue Resort</td><td>~20</td><td>Premium</td><td>Macro / photo (renowned)</td><td>~4.8★</td><td><span class="pill p-amber">Med</span></td></tr>
-          <tr><td>Buceo Anilao</td><td>23</td><td>Premium</td><td>Photographers (EU mgmt)</td><td>~4.7★</td><td><span class="pill p-amber">Med</span></td></tr>
-          <tr><td>Solitude Acacia</td><td>~30</td><td>Premium</td><td>All-round / service</td><td>~4.6★</td><td><span class="pill p-amber">Med</span></td></tr>
-          <tr><td>Aiyanar Beach &amp; Dive</td><td>16</td><td>Mid–Premium</td><td>Stylish / sea-view</td><td>~4.5★</td><td><span class="pill p-amber">Med</span></td></tr>
-          <tr><td>Eagle Point Resort</td><td>large</td><td>Mid</td><td>Resort + dive volume</td><td>~4.2★</td><td><span class="pill p-amber">Med</span></td></tr>
-          <tr><td>Vivere Azure</td><td>~30</td><td>Mid–Premium</td><td>Leisure + dive</td><td>~4.4★</td><td><span class="pill p-amber">Med</span></td></tr>
-          <tr><td>Club Ocellaris</td><td>~16</td><td>Mid</td><td>Diver-focused</td><td>~4.5★</td><td><span class="pill p-red">Low</span></td></tr>
-          <tr><td>Planet Dive</td><td>~20</td><td>Value–Mid</td><td>Dive volume</td><td>~4.2★</td><td><span class="pill p-red">Low</span></td></tr>
-          <tr><td>Dive Solana</td><td>~20</td><td>Mid–Premium</td><td>Dive + leisure</td><td>~4.4★</td><td><span class="pill p-amber">Med</span></td></tr>
+          <tr><td><strong>Casa Escondida</strong></td><td>23</td><td>Value–Mid</td><td>₱5,500–18,400 (rate card)</td><td>Macro / muck / photo</td><td>4.7★ (G)</td><td><span class="pill p-red">Low</span></td></tr>
+          <tr><td>Crystal Blue Resort</td><td>~20</td><td>Premium</td><td>≈₱10,000–12,000 (full-board)</td><td>Macro / photo (renowned)</td><td>~4.8★</td><td><span class="pill p-amber">Med</span></td></tr>
+          <tr><td>Buceo Anilao</td><td>23</td><td>Premium</td><td>fr. ~$72; dive ~$126–136/day</td><td>Photographers (EU mgmt)</td><td>~4.7★</td><td><span class="pill p-amber">Med</span></td></tr>
+          <tr><td>Solitude Acacia</td><td>25</td><td>Premium</td><td>USD, VAT-incl; ~$150 / 2 dives</td><td>All-round / service</td><td>~4.6★</td><td><span class="pill p-amber">Med</span></td></tr>
+          <tr><td>Aiyanar Beach &amp; Dive</td><td>16</td><td>Mid–Premium</td><td>Mid–premium; dive on higher side</td><td>Stylish / sea-view</td><td>~4.5★</td><td><span class="pill p-amber">Med</span></td></tr>
+          <tr><td>Eagle Point Resort</td><td>large</td><td>Mid</td><td>₱ mid-range</td><td>Resort + dive volume</td><td>~4.2★</td><td><span class="pill p-amber">Med</span></td></tr>
+          <tr><td>Vivere Azure</td><td>~30</td><td>Mid–Premium</td><td>₱ mid–premium</td><td>Leisure + dive</td><td>~4.4★</td><td><span class="pill p-amber">Med</span></td></tr>
+          <tr><td>Club Ocellaris</td><td>~16</td><td>Mid</td><td>₱ mid-range</td><td>Diver-focused</td><td>~4.5★</td><td><span class="pill p-red">Low</span></td></tr>
+          <tr><td>Planet Dive</td><td>~20</td><td>Value–Mid</td><td>₱ value–mid</td><td>Dive volume</td><td>~4.2★</td><td><span class="pill p-red">Low</span></td></tr>
+          <tr><td>Dive Solana</td><td>~20</td><td>Mid–Premium</td><td>₱ mid–premium</td><td>Dive + leisure</td><td>~4.4★</td><td><span class="pill p-amber">Med</span></td></tr>
         </tbody>
       </table></div>
-      <p><small>Room counts &amp; ratings are indicative from public listings; price tiers are relative. Verify before client presentation.</small></p>
+      <p><small>*Indicative published rates (2025–26) from resort sites / OTAs / dive-travel agents; competitor figures are external facts, not Casa revenue estimates. Verify before client presentation.</small></p>
 
       <div class="grid g2">
         <div class="chartbox reveal"><h4>Positioning map — price vs. rating</h4><div class="cap">Bubble size = approx. room count</div><div class="canvas-h tall"><canvas id="cPosition"></canvas></div></div>
@@ -2729,13 +2744,18 @@ flowchart LR
 
       <div class="grid g2" style="margin:22px 0">
         <div class="reveal">
-          <h3>TAM · SAM · SOM (illustrative)</h3>
+          <h3>Market sizing — TAM · SAM · SOM</h3>
           <div class="bars-mini" data-bars>
-            <div class="bm"><span>TAM — PH dive tourism</span><div class="track"><div class="fill" data-w="100%"></div></div><span>100%</span></div>
-            <div class="bm"><span>SAM — Anilao macro divers</span><div class="track"><div class="fill" data-w="42%"></div></div><span>~42%</span></div>
-            <div class="bm"><span>SOM — Casa Escondida reach</span><div class="track"><div class="fill" data-w="9%"></div></div><span>~9%</span></div>
+            <div class="bm"><span><b>TAM</b> — all PH dive tourism</span><div class="track"><div class="fill" data-w="100%"></div></div><span>100%</span></div>
+            <div class="bm"><span><b>SAM</b> — Anilao macro-dive demand</span><div class="track"><div class="fill" data-w="42%"></div></div><span>~42%</span></div>
+            <div class="bm"><span><b>SOM</b> — share Casa can realistically win</span><div class="track"><div class="fill" data-w="9%"></div></div><span>~9%</span></div>
           </div>
-          <p style="margin-top:14px"><small>Relative, illustrative scale — Anilao is a meaningful, defensible slice of PH dive tourism; Casa Escondida's serviceable share has headroom via direct channels.</small></p>
+          <div style="font-size:.8rem;color:var(--ink2);margin-top:10px;line-height:1.6">
+            <div><b>TAM</b> (Total Addressable Market): the entire market — all dive-tourism demand in the Philippines.</div>
+            <div><b>SAM</b> (Serviceable Available Market): the slice Casa's product actually serves — Anilao macro/muck divers &amp; photographers.</div>
+            <div><b>SOM</b> (Serviceable Obtainable Market): the realistic share Casa can capture near-term via its rooms, brand &amp; channels.</div>
+            <div style="color:var(--muted);margin-top:6px">Percentages are relative/illustrative (each ring as a share of the one above), not absolute market values.</div>
+          </div>
           <h3>Guest-origin mix (est.)</h3>
           <div class="canvas-h"><canvas id="cOrigin"></canvas></div>
         </div>
@@ -2747,47 +2767,6 @@ flowchart LR
         <div class="card"><h4>Headwinds</h4><p>Climate/coral risk · typhoon disruption · FX volatility · OTA power · rising labour/F&amp;B costs · competition intensity.</p></div>
         <div class="card"><h4>Niche moat</h4><p>Anilao's nudibranch/critter density &amp; blackwater diving create a destination pull that commoditised beach resorts lack.</p></div>
       </div>
-    </div>
-  </section>
-
-  <!-- ============ 13. VALUATION ============ -->
-  <section id="valuation" data-nav="Valuation Estimate" data-grp="Strategic Analysis">
-    <div class="wrap">
-      <span class="sec-tag reveal">Section 13 · Strategic Analysis</span>
-      <h2 class="reveal"><span class="sec-num">13</span>Estimated Company Worth</h2>
-      <div class="callout warn reveal"><div class="t">Important</div>The following is a <strong>modelled planning estimate</strong> built from public market benchmarks and reasonable assumptions — <em>not</em> audited financials or a formal valuation. It is intended to frame the size of the ERP prize, not to price the business.</div>
-
-      <h3 class="reveal">Step 1 — Revenue model (base case)</h3>
-      <div class="tbl-wrap reveal"><table class="tbl">
-        <thead><tr><th>Stream</th><th>Assumption</th><th>Est. annual (₱)</th></tr></thead>
-        <tbody>
-          <tr><td>Rooms</td><td>23 keys × ~₱9,500 blended ADR × ~57% occ. × 365</td><td>≈ ₱45.5M</td></tr>
-          <tr><td>Dive operations</td><td>Packages, guided dives, Nitrox, park fees</td><td>≈ ₱24.0M</td></tr>
-          <tr><td>F&amp;B</td><td>Full-board (₱1,500/pax), buffet/BBQ/bar</td><td>≈ ₱14.0M</td></tr>
-          <tr><td>Courses</td><td>OW/AOW/specialties/DM</td><td>≈ ₱8.0M</td></tr>
-          <tr><td>Gear, retail &amp; transport</td><td>Rental + pro-shop + van transfers</td><td>≈ ₱8.0M</td></tr>
-          <tr><th>Total revenue (est.)</th><th></th><th>≈ ₱99M (~$1.75M)</th></tr>
-        </tbody>
-      </table></div>
-      <p><small>Note: corrected to the verified <strong>23-key</strong> inventory. Fewer keys are offset by higher per-room rates (₱5,500–18,400) than public OTA data implied; total top-line plausibly ₱70–100M depending on occupancy, board mix and dive volume.</small></p>
-
-      <h3 class="reveal">Step 2 — Valuation triangulation</h3>
-      <div class="grid g3" style="margin-bottom:8px">
-        <div class="kpi reveal"><div class="num">₱90–135M</div><div class="lbl">Revenue multiple</div><div class="sub">~1.0–1.4× revenue (leisure resort)</div></div>
-        <div class="kpi reveal d1"><div class="num">₱110–170M</div><div class="lbl">EBITDA multiple</div><div class="sub">~₱22M EBITDA × 6–9×</div></div>
-        <div class="kpi reveal d2"><div class="num">₱95–150M</div><div class="lbl">RevPAR-per-key</div><div class="sub">23 keys × $75–115k/key benchmark</div></div>
-      </div>
-      <div class="callout reveal"><div class="t">Indicative enterprise value</div><strong>₱100M – ₱160M (≈ $1.8M – $2.8M)</strong>, base case ≈ <strong>₱120–135M</strong>. A successful ERP-driven RevPAR/margin uplift of 12–22% could add <strong>₱15–30M</strong> of enterprise value via higher, more durable cash flows — the core financial argument for the project.</div>
-
-      <h3 class="reveal">Step 3 — Sensitivity (EV, ₱M) by occupancy × ADR</h3>
-      <div class="tbl-wrap reveal"><table class="tbl">
-        <thead><tr><th>Occ ↓ / ADR →</th><th>₱5,000</th><th>₱6,000</th><th>₱7,000</th></tr></thead>
-        <tbody>
-          <tr><th>52%</th><td>92</td><td>108</td><td>124</td></tr>
-          <tr><th>62%</th><td>110</td><td>128</td><td>146</td></tr>
-          <tr><th>72%</th><td>128</td><td>150</td><td>172</td></tr>
-        </tbody>
-      </table></div>
     </div>
   </section>
 
@@ -3244,7 +3223,7 @@ E-->F["Knowledge base update"]</div>
       <p class="lead reveal">Success is measured, not assumed. Baseline today, target at 12 months, and a benefit-realisation curve that crosses cost within the first year.</p>
       <div class="grid g2" style="margin-top:18px">
         <div class="chartbox reveal"><h4>Baseline vs. 12-month target (indexed)</h4><div class="cap">100 = today</div><div class="canvas-h"><canvas id="cKpi"></canvas></div></div>
-        <div class="chartbox reveal d1"><h4>Cost vs. cumulative benefit (₱M)</h4><div class="cap">Break-even ≈ month 7–8</div><div class="canvas-h"><canvas id="cRoi"></canvas></div></div>
+        <div class="chartbox reveal d1"><h4>Cost vs. cumulative benefit (relative)</h4><div class="cap">Break-even ≈ month 7–8</div><div class="canvas-h"><canvas id="cRoi"></canvas></div></div>
       </div>
       <div class="callout reveal"><div class="t">Benefit thesis</div>The project pays for itself within ~8 months on OTA-commission savings + RevPAR uplift alone; ancillary revenue, labour efficiency and reduced leakage compound thereafter.</div>
     </div>
@@ -3388,6 +3367,9 @@ E-->F["Knowledge base update"]</div>
         <div class="pstep"><span class="pn">6</span><div class="pt">Repeat</div><div class="pd">UGC fuels Casa's channels</div></div>
       </div>
 
+      <h3 class="reveal">See it in action</h3>
+      <div class="video-embed reveal"><iframe src="https://www.youtube.com/embed/SqlGVHXuBOE" title="Photo &amp; video — guest experience" frameborder="0" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+
       <div class="grid g3 reveal" style="margin-top:18px">
         <div class="card"><div style="font-size:1.6rem">📣</div><h4 style="color:var(--ink)">Free word-of-mouth</h4><p style="font-size:.85rem">Every shared clip is a credible ad from a real guest — zero ad spend.</p></div>
         <div class="card"><div style="font-size:1.6rem">🎞️</div><h4 style="color:var(--ink)">UGC library</h4><p style="font-size:.85rem">AI auto-tags &amp; cuts highlight reels to fuel Casa's own social channels.</p></div>
@@ -3459,15 +3441,15 @@ E-->F["Knowledge base update"]</div>
         </div>
         <div class="reveal d1">
           <h3>Sample 06:30 briefing</h3>
-          <div class="card" style="font-size:.85rem;line-height:1.7;background:var(--panel2)">
-            <p style="margin:0 0 8px"><strong>🌊 Casa Escondida Dive Brief — Mon 12 Jan</strong></p>
-            <p style="margin:0 0 6px">☀️ <strong>Weather:</strong> Sunny, NE wind 8 kt, swell 0.4 m — <span style="color:var(--green)">boats GO</span>. Air 29°C / water 25°C → 3mm/5mm.</p>
-            <p style="margin:0 0 6px">🌙 <strong>Tides:</strong> Low 06:11 (0.2 m), High 12:34 (1.1 m). Best slack ~11:30–12:30 → Secret Bay AM2.</p>
-            <p style="margin:0 0 6px">🤿 <strong>Today:</strong> Boat 1 → Twin Rocks + Cathedral (6 divers, DM Jun). Boat 2 → Mainit muck (4 photogs, instr. AJ). PM: blackwater 18:00 (3).</p>
-            <p style="margin:0 0 6px">🎓 <strong>Courses:</strong> OW confined #2 (2 students, pool 14:00). Try-Dive 10:00 (1 guest).</p>
-            <p style="margin:0 0 6px">🧰 <strong>Gear:</strong> 14 tanks filled, 2 Nitrox. Reg #7 due service (blocked). Compressor diesel OK.</p>
-            <p style="margin:0 0 6px">📋 <strong>Park fee:</strong> ₱300×13 pax to collect at desk. ⚠️ Confirm boat 2 fuel before 08:00.</p>
-            <p style="margin:0">👉 React ✅ to confirm your assignment.</p>
+          <div class="wa">
+            <div class="wa-hd"><span class="av">🤿</span><div>Casa Dive Team<small>🤖 Brief Bot, AJ, Jun, +4 · online</small></div></div>
+            <div class="wa-body">
+              <div class="wa-in"><span class="nm">🤖 Dive Brief Bot</span>🌊 <b>Casa Escondida Dive Brief — Mon 12 Jan</b><br>☀️ <b>Weather:</b> Sunny, NE wind 8 kt, swell 0.4 m — boats GO. Air 29°C / water 25°C → 3/5mm.<br>🌙 <b>Tides:</b> Low 06:11 (0.2 m), High 12:34 (1.1 m). Best slack ~11:30–12:30 → Secret Bay AM2.<time>06:30 ✓✓</time></div>
+              <div class="wa-in"><span class="nm">🤖 Dive Brief Bot</span>🤿 <b>Today:</b> Boat 1 → Twin Rocks + Cathedral (6 divers, DM Jun). Boat 2 → Mainit muck (4 photogs, instr. AJ). PM blackwater 18:00 (3).<br>🎓 OW confined #2 (2, pool 14:00) · Try-Dive 10:00 (1).<time>06:30 ✓✓</time></div>
+              <div class="wa-in"><span class="nm">🤖 Dive Brief Bot</span>🧰 14 tanks filled, 2 Nitrox. Reg #7 due service (blocked). 📋 Park fee ₱300×13 to collect. ⚠️ Confirm Boat 2 fuel before 08:00.<br>👉 React ✅ to confirm your assignment.<time>06:30 ✓✓</time></div>
+              <div class="wa-out">Boat 1 ✅ — DM Jun<time>06:33 ✓✓</time></div>
+              <div class="wa-out">Boat 2 confirmed, fuel topped ✅ — AJ<time>06:36 ✓✓</time></div>
+            </div>
           </div>
           <div class="callout reveal" style="margin-top:14px"><div class="t">Fixes the discovery pain</div>Andrew's #1 operational problem was broken, unaccountable group-chat comms (a guest once went un-attended). This assistant makes the brief <strong>single-source, confirmable (✅) and logged back to Odoo</strong> — a built-in check-and-balance.</div>
         </div>
@@ -3551,55 +3533,6 @@ E-->F["Knowledge base update"]</div>
     </div>
   </section>
 
-  <!-- ============ 26. CONSULTANT LENSES ============ -->
-  <section id="lenses" data-nav="Consultant Lenses" data-grp="Advisory">
-    <div class="wrap">
-      <span class="sec-tag reveal">Section 26 · Advisory</span>
-      <h2 class="reveal"><span class="sec-num">26</span>Consultant Multi-Lens Analysis</h2>
-      <p class="lead reveal">The same engagement, examined through five professional lenses — each surfacing distinct findings, concerns and owned artifacts.</p>
-
-      <div class="tabs" data-tabg="lens">
-        <button class="tab active" onclick="tab('lens',0,this)">🏗 Solution Architect</button>
-        <button class="tab" onclick="tab('lens',1,this)">📋 Business Analyst</button>
-        <button class="tab" onclick="tab('lens',2,this)">📐 Project Manager</button>
-        <button class="tab" onclick="tab('lens',3,this)">⚙ Functional Consultant</button>
-        <button class="tab" onclick="tab('lens',4,this)">📈 Management Consultant</button>
-      </div>
-      <div data-panes="lens">
-        <div class="tabpane active"><div class="card"><h4>Solution Architect</h4>
-          <p><strong>Finding:</strong> Odoo 19 covers ~85% natively; the architecture must explicitly own the two gaps (PMS depth, OTA sync) rather than over-customise.</p>
-          <p><strong>Concern:</strong> Avoid bespoke code where Studio + Rental suffice; keep upgrade-safe. Plan the MCP/AI integration as a clean API boundary.</p>
-          <p><strong>Owns:</strong> module topology, data model, integration map, environments, non-functionals (performance, offline POS, backups), upgrade path.</p>
-          <p><strong>Recommendation:</strong> Rental-core PMS now; revisit OCA hotel / custom Gantt only if night-audit/room-board demand is proven.</p>
-        </div></div>
-        <div class="tabpane"><div class="card"><h4>Business Analyst</h4>
-          <p><strong>Finding:</strong> Processes are tribal and undocumented; the 14 workflows in §16 are the backbone of requirements.</p>
-          <p><strong>Concern:</strong> Requirement gaps from owner-held knowledge; needs structured discovery workshops per department.</p>
-          <p><strong>Owns:</strong> as-is/to-be process maps, requirements traceability, user stories, acceptance criteria, UAT scripts.</p>
-          <p><strong>Recommendation:</strong> Lock a prioritised backlog (P1 booking/folio/finance first); defer nice-to-haves to optimisation.</p>
-        </div></div>
-        <div class="tabpane"><div class="card"><h4>Project Manager</h4>
-          <p><strong>Finding:</strong> Owner-time and adoption are the critical-path constraints, not technology.</p>
-          <p><strong>Concern:</strong> Seasonality — avoid go-live in peak dive season; protect against scope creep.</p>
-          <p><strong>Owns:</strong> plan, RAID log, governance cadence, budget, change control, status reporting.</p>
-          <p><strong>Recommendation:</strong> Phase delivery, target go-live in a shoulder month, embed champions to offload the owner.</p>
-        </div></div>
-        <div class="tabpane"><div class="card"><h4>Functional Consultant</h4>
-          <p><strong>Finding:</strong> Most needs map to standard config: Rental rooms, POS floors, l10n_ph VAT, Appointments for dives.</p>
-          <p><strong>Concern:</strong> Correct VAT/official-receipt setup and POS room-charge flow are fiddly — get them right early.</p>
-          <p><strong>Owns:</strong> configuration, Studio automations, demo + test data, key-user training, cutover checklist.</p>
-          <p><strong>Recommendation:</strong> Build with realistic demo data (this spec) so users validate against lifelike scenarios.</p>
-        </div></div>
-        <div class="tabpane"><div class="card"><h4>Management Consultant</h4>
-          <p><strong>Finding:</strong> This is a value-creation play: ERP converts reputation into yield, margin and enterprise value (+₱15–30M potential).</p>
-          <p><strong>Concern:</strong> Without pricing &amp; direct-booking discipline, the tech alone won't move the P&amp;L.</p>
-          <p><strong>Owns:</strong> business case, KPI/benefit framework, operating-model &amp; org recommendations.</p>
-          <p><strong>Recommendation:</strong> Pair the ERP with a commercial playbook — direct-booking shift, dynamic pricing, ancillary upsell, loyalty.</p>
-        </div></div>
-      </div>
-    </div>
-  </section>
-
   <!-- ============ 27. APPENDIX ============ -->
   <section id="appendix" data-nav="Appendix &amp; Sources" data-grp="Advisory">
     <div class="wrap">
@@ -3610,7 +3543,7 @@ E-->F["Knowledge base update"]</div>
       <div class="grid g3 reveal" style="margin-bottom:18px">
         <div class="card"><span class="pill p-green">High</span><p>Multiple independent public sources (e.g., ratings, founding year, facilities).</p></div>
         <div class="card"><span class="pill p-amber">Medium</span><p>Single source or inferred from benchmarks (e.g., headcount, channel mix).</p></div>
-        <div class="card"><span class="pill p-red">Low / estimate</span><p>Modelled assumptions (valuation, revenue, “Andrew” co-founder).</p></div>
+        <div class="card"><span class="pill p-red">Low / estimate</span><p>Modelled assumptions (e.g. occupancy mix, channel mix, “Andrew” co-founder).</p></div>
       </div>
 
       <h3 class="reveal">Key sources consulted</h3>
@@ -3624,7 +3557,7 @@ E-->F["Knowledge base update"]</div>
         <li>Bluewater / Infinite Blue dive-travel resort pages</li>
         <li>buceoanilao.com rate sheets (competitor benchmark)</li>
         <li>BusinessMirror — PH hotel ADR/RevPAR 2025</li>
-        <li>Hotel valuation rule-of-thumb references (EBITDA / RevPAR-per-key)</li>
+        
         <li>Odoo 19 module documentation</li>
       </ul>
 
@@ -3632,9 +3565,9 @@ E-->F["Knowledge base update"]</div>
       <div class="tbl-wrap reveal"><table class="tbl">
         <thead><tr><th>Assumption</th><th>Basis</th><th>Confidence</th></tr></thead>
         <tbody>
-          <tr><td>23 keys, ~57% occupancy, ₱9,500 blended ADR</td><td>Verified 2026 rate card + PH benchmarks</td><td><span class="pill p-green">High</span></td></tr>
-          <tr><td>Revenue ≈ ₱60–100M</td><td>Stream model</td><td><span class="pill p-red">Est.</span></td></tr>
-          <tr><td>EV ≈ ₱100–160M</td><td>Revenue/EBITDA/RevPAR triangulation</td><td><span class="pill p-red">Est.</span></td></tr>
+          <tr><td>23 keys, ~57% occupancy</td><td>Verified 2026 rate card + PH benchmarks</td><td><span class="pill p-green">High</span></td></tr>
+          
+          
           <tr><td>OTA mix ~64%</td><td>Typical for niche dive resort</td><td><span class="pill p-amber">Med</span></td></tr>
           <tr><td>“Andrew” co-founder</td><td>Client-stated, unverified online</td><td><span class="pill p-red">Low</span></td></tr>
         </tbody>
@@ -3653,7 +3586,7 @@ E-->F["Knowledge base update"]</div>
   <!--SECTION-ANCHOR-->
 
   <footer>
-    <p style="margin-bottom:14px"><strong>Companion documents:</strong> <a href="growth-opportunities.html">Growth Opportunities</a> · <a href="owner-faq.html">Owner Q&amp;A (FAQ)</a> · <a href="odoo-sales.html">Odoo Sales Page</a> · <a href="odoo-demo-guide.html">Odoo Demo Walkthrough</a> · <a href="stakeholder-questions.html">Stakeholder Question Bank</a> · <a href="staff-guides.html">Staff Guide to Odoo</a></p>
+    <p style="margin-bottom:14px"><strong>Companion documents:</strong> <a href="growth-opportunities.html">Growth Opportunities</a> · <a href="profit-estimator.html">Profit Estimator</a> · <a href="owner-faq.html">Owner Q&amp;A (FAQ)</a> · <a href="odoo-sales.html">Odoo Sales Page</a> · <a href="odoo-demo-guide.html">Odoo Demo Walkthrough</a> · <a href="stakeholder-questions.html">Stakeholder Question Bank</a> · <a href="staff-guides.html">Staff Guide to Odoo</a></p>
     <p><strong>Technext</strong> — Odoo ERP Implementation &amp; Digital Transformation · Prepared for Casa Escondida Anilao Resort &amp; Dive Center</p>
     <p>Confidential. Figures marked “estimate” are modelled assumptions for planning, not audited financials. Sources &amp; confidence ratings in the Appendix.</p>
     <p><small>Document v1.0 · 14 June 2026 · sky@technext.asia</small></p>
@@ -3713,7 +3646,7 @@ function reRenderCharts(){CHARTS.forEach(c=>{const inst=Chart.getChart(c.id);if(
 
 /* ---------- INIT ---------- */
 window.addEventListener('DOMContentLoaded',()=>{
-  buildNav();observeAll();
+  buildNav();observeAll();document.querySelectorAll("#pestle .acc").forEach(a=>a.classList.add("open"));
   try{mermaid.initialize({startOnLoad:false,theme:document.documentElement.dataset.theme==='light'?'neutral':'dark',securityLevel:'loose',themeVariables:{fontSize:'13px',primaryColor:'#121c30',primaryTextColor:'#e8f0fb',lineColor:'#19c6c6'}});
     document.querySelectorAll('.mermaid').forEach(m=>m.dataset.src=m.textContent);mermaid.run();}catch(e){}
   renderCharts();
@@ -3781,7 +3714,7 @@ regChart(()=>mkChart('cAuto',{type:'bubble',data:{datasets:[
   {label:'Upsell engine',data:[{x:3.3,y:4.4,r:13}],backgroundColor:'rgba(244,114,182,.6)'},
   {label:'Dive-buddy match',data:[{x:3.4,y:3.6,r:11}],backgroundColor:'rgba(255,107,107,.55)'}
 ]},options:baseOpts({scales:{x:{title:{display:true,text:'Effort →',color:inkColors().tick},min:1,max:5,grid:{color:inkColors().grid},ticks:{color:inkColors().tick}},y:{title:{display:true,text:'Impact →',color:inkColors().tick},min:3,max:5,grid:{color:inkColors().grid},ticks:{color:inkColors().tick}}}})}));
-regChart(()=>mkChart('cRoi',{type:'line',data:{labels:['M0','M3','M6','M9','M12','M18','M24'],datasets:[{label:'Cumulative cost (₱M)',data:[1.2,2.6,3.4,3.9,4.3,5.0,5.6],borderColor:'#ff6b6b',backgroundColor:'transparent',tension:.3},{label:'Cumulative benefit (₱M)',data:[0,0.6,2.0,4.2,7.0,13,20],borderColor:'#36d399',backgroundColor:'rgba(54,211,153,.12)',fill:true,tension:.3}]},options:baseOpts({scales:gridScale()})}));
+regChart(()=>mkChart('cRoi',{type:'line',data:{labels:['M0','M3','M6','M9','M12','M18','M24'],datasets:[{label:'Cumulative cost (relative)',data:[1.2,2.6,3.4,3.9,4.3,5.0,5.6],borderColor:'#ff6b6b',backgroundColor:'transparent',tension:.3},{label:'Cumulative benefit (relative)',data:[0,0.6,2.0,4.2,7.0,13,20],borderColor:'#36d399',backgroundColor:'rgba(54,211,153,.12)',fill:true,tension:.3}]},options:baseOpts({scales:gridScale()})}));
 regChart(()=>mkChart('cKpi',{type:'bar',data:{labels:['Occupancy','ADR','RevPAR','Dive util.','F&B margin','DSO (lower=better)','CSAT'],datasets:[{label:'Baseline',data:[62,100,100,100,100,100,100],backgroundColor:'rgba(115,136,171,.55)'},{label:'Target (12 mo)',data:[70,108,118,128,114,70,112],backgroundColor:'#19c6c6'}]},options:baseOpts({scales:gridScale(),plugins:{legend:{labels:{color:inkColors().ink}}}})}));
 regChart(()=>mkChart('cRisk',{type:'bubble',data:{datasets:[
   {label:'Low adoption',data:[{x:3.2,y:4.2,r:16}],backgroundColor:'rgba(255,107,107,.65)'},
