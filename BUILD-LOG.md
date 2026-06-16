@@ -130,3 +130,12 @@ Generated demo data across the whole Hotel app (it's Studio-built on rental/plan
 - **Demo-data audit (all apps well-filled)**: 23 rooms, 27 reservations, 16 room orders, 23 housekeeping
   tasks, 61 sale orders, 30 CRM, 42 POS, 28 posted moves, 37 employees, 14 maintenance equip, 18 calendar,
   42 published web products. Verified report renders desktop + mobile with no errors.
+
+## Update — 16 Jun 2026 (round 9) — Real product photos + restaurant kitchen tickets
+- **Real photos for every product**: replaced the generated gradient placeholders on all 38 POS/service
+  products (F&B, bar, retail, dive, courses, beginner experiences, transport) with real, openly-licensed
+  photos fetched from Wikimedia Commons (proper UA + retry); rooms already had real photos. Verified:
+  42/42 products imaged, avg ~228 KB (real photos, not the ~5 KB gradients). POS cards now show real images.
+- **Restaurant kitchen display populated**: created 7 restaurant food orders (Buffet Lunch/Dinner, Filipino
+  Breakfast, Island BBQ, Sinigang, Garlic Prawns) on the open Restaurant session → 7 `pos.prep.order` +
+  **13 kitchen-ticket lines** on the "Casa Escondida Kitchen" preparation display (Restaurant+Bar categories).
