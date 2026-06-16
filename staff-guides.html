@@ -125,6 +125,8 @@ section.card.focus-on{outline:2px solid var(--rc,var(--teal));outline-offset:3px
 .sysdiag .node text{fill:var(--ink);font-size:14px;font-weight:700;pointer-events:none}
 .sysdiag .node .ic{font-size:17px}
 .sysdiag .core{fill:url(#coreg)}
+.sysdiag .corebtn{cursor:pointer}
+.sysdiag .corebtn:hover .core{filter:brightness(1.14)}
 .sysdiag .corepulse{fill:none;stroke:var(--teal);stroke-width:2;opacity:.6;animation:pulse 2.6s ease-out infinite}
 @keyframes pulse{0%{r:74px;opacity:.6}100%{r:128px;opacity:0}}
 .sysdiag .ctext{fill:#04121b;font-weight:800;text-anchor:middle}
@@ -181,6 +183,17 @@ section.card.focus-on{outline:2px solid var(--rc,var(--teal));outline-offset:3px
 .loopwrap{position:relative;margin:18px 0}
 .loopback{display:block;text-align:center;color:var(--teal);font-size:.8rem;font-weight:700;margin-top:6px}
 .loopback::before{content:"↻ ";font-size:1.1rem}
+
+/* ============ ARCHITECTURE LAYERS ============ */
+.arch{margin:16px 0}
+.layer{position:relative;background:var(--panel2);border:1px solid var(--line);border-left:4px solid var(--lc,var(--teal));border-radius:12px;padding:12px 14px;margin-bottom:32px}
+.layer:last-child{margin-bottom:0}
+.layer:not(:last-child)::after{content:"";position:absolute;left:50%;bottom:-25px;transform:translateX(-50%);width:0;height:0;border-left:9px solid transparent;border-right:9px solid transparent;border-top:14px solid var(--teal)}
+.layer .lname{font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.09em;color:var(--lc,var(--teal));margin-bottom:9px}
+.lrow{display:flex;flex-wrap:wrap;gap:8px}
+.achip{flex:1 1 130px;min-width:120px;text-align:center;background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:9px 11px;font-size:.8rem;font-weight:700;color:var(--ink);transition:.18s}
+.achip:hover{border-color:var(--lc,var(--teal));transform:translateY(-2px)}
+.achip small{display:block;color:var(--muted);font-size:.68rem;font-weight:500;margin-top:2px}
 
 /* ============ CHECKLIST (progress) ============ */
 .chk{list-style:none;padding:0;margin:14px 0 4px}
@@ -270,7 +283,7 @@ footer b{color:var(--ink2)}
     <a href="#start">Start</a><a href="#map">System map</a><a href="#roles">Roles</a>
     <a href="#reservations">Front Desk</a><a href="#dive">Dive</a><a href="#pos">POS</a>
     <a href="#housekeeping">Housekeeping</a><a href="#inventory">Inventory</a><a href="#accounts">Accounts</a>
-    <a href="#manager">Managers</a><a href="#folio">Folio</a><a href="#rollout">Rollout</a><a href="#golden">Golden rules</a><a href="#quiz">Quiz</a>
+    <a href="#manager">Managers</a><a href="#architect">Architect</a><a href="#folio">Folio</a><a href="#rollout">Rollout</a><a href="#golden">Golden rules</a><a href="#quiz">Quiz</a>
   </nav>
   <div class="tb-tools">
     <div class="ring" id="ring" title="Your training progress">
@@ -339,12 +352,14 @@ footer b{color:var(--ink2)}
       <line class="flow" x1="450" y1="465" x2="450" y2="270"/><line class="flow" x1="217" y1="408" x2="450" y2="270"/>
       <line class="flow" x1="120" y1="270" x2="450" y2="270"/><line class="flow" x1="217" y1="132" x2="450" y2="270"/>
     </g>
-    <!-- core -->
+    <!-- core (built & owned by the Solution Architect) -->
     <circle class="corepulse" cx="450" cy="270" r="74"/>
+    <g class="corebtn" onclick="jump('#architect')" tabindex="0" role="button"><title>Solution Architect — tap to open</title>
     <circle class="core" cx="450" cy="270" r="74"/>
     <text class="ctext" x="450" y="258" font-size="19">ONE ODOO</text>
     <text class="ctext" x="450" y="280" font-size="11" opacity=".85">Guest folio</text>
     <text class="ctext" x="450" y="296" font-size="11" opacity=".85">Stock · Money</text>
+    </g>
     <!-- nodes -->
     <g class="node" style="--nc:var(--blue)" onclick="jump('#start')" tabindex="0"><rect x="375" y="47" width="150" height="56" rx="13"/><text x="450" y="72" text-anchor="middle"><tspan class="ic">🔑</tspan> Getting</text><text x="450" y="90" text-anchor="middle">started</text></g>
     <g class="node" style="--nc:var(--aqua)" onclick="jump('#reservations')" tabindex="0"><rect x="608" y="104" width="150" height="56" rx="13"/><text x="683" y="129" text-anchor="middle"><tspan class="ic">🛎️</tspan> Front Desk</text><text x="683" y="147" text-anchor="middle">&amp; Reservations</text></g>
@@ -355,7 +370,7 @@ footer b{color:var(--ink2)}
     <g class="node" style="--nc:var(--pink)" onclick="jump('#accounts')" tabindex="0"><rect x="45" y="242" width="150" height="56" rx="13"/><text x="120" y="267" text-anchor="middle"><tspan class="ic">💰</tspan> Accounts</text><text x="120" y="285" text-anchor="middle">&amp; Finance</text></g>
     <g class="node" style="--nc:var(--indigo)" onclick="jump('#manager')" tabindex="0"><rect x="142" y="104" width="150" height="56" rx="13"/><text x="217" y="129" text-anchor="middle"><tspan class="ic">📊</tspan> Manager</text><text x="217" y="147" text-anchor="middle">/ Owner</text></g>
   </svg>
-  <div class="note"><b>Read it like this:</b> a charge raised anywhere — a dive, a cocktail, a transfer — flows to the guest's <b>one folio</b>; every sale moves <b>stock</b>; everything posts to <b>accounting</b>. No re-typing, no lost slips.</div>
+  <div class="note"><b>Read it like this:</b> a charge raised anywhere — a dive, a cocktail, a transfer — flows to the guest's <b>one folio</b>; every sale moves <b>stock</b>; everything posts to <b>accounting</b>. No re-typing, no lost slips. The Technext <b>Solution Architect</b> builds &amp; owns this core — tap the centre to open that guide.</div>
 </section>
 
 <!-- ============ ROLE PICKER ============ -->
@@ -370,6 +385,7 @@ footer b{color:var(--ink2)}
     <button class="rolecard" style="--rc:var(--green)" onclick="focusRole('inventory')"><span class="ic">📦</span><span class="nm">Inventory / Stores</span><span class="ds">Phase 1 priority — stock, reorders, FIFO, counts</span><span class="go">Open guide →</span></button>
     <button class="rolecard" style="--rc:var(--pink)" onclick="focusRole('accounts')"><span class="ic">💰</span><span class="nm">Accounts</span><span class="ds">VAT, reconciliation, vendor bills, reports</span><span class="go">Open guide →</span></button>
     <button class="rolecard" style="--rc:var(--indigo)" onclick="focusRole('manager')"><span class="ic">📊</span><span class="nm">Manager / Owner</span><span class="ds">Andrew, Dong, Eloisa — dashboards, approvals, rates</span><span class="go">Open guide →</span></button>
+    <button class="rolecard" style="--rc:var(--coral)" onclick="focusRole('architect')"><span class="ic">🏗️</span><span class="nm">Solution Architect</span><span class="ds">Technext — architecture, integrations, automations, security</span><span class="go">Open guide →</span></button>
     <button class="rolecard" style="--rc:var(--blue)" onclick="clearFocus();jump('#start')"><span class="ic">🔑</span><span class="nm">New here?</span><span class="ds">Start with the everyone basics</span><span class="go">Start →</span></button>
   </div>
 </section>
@@ -706,6 +722,139 @@ footer b{color:var(--ink2)}
   </ul>
 </section>
 
+<!-- ============ SOLUTION ARCHITECT ============ -->
+<section class="card reveal" id="architect" data-role="architect" style="--rc:var(--coral)">
+  <h2><span class="em">🏗️</span> Solution Architect</h2>
+  <div class="who">For the <b>Technext Solution Architect</b> &amp; the resort's technical champion. Owns the end-to-end Odoo 19 design — modules, data model, integrations, automations, security &amp; the phased rollout. <b>You build &amp; own the "one Odoo" core every other team relies on.</b></div>
+
+  <h3>🧱 Solution architecture — at a glance</h3>
+  <div class="arch">
+    <div class="layer" style="--lc:var(--aqua)">
+      <div class="lname">① Channels &amp; touchpoints</div>
+      <div class="lrow">
+        <div class="achip">🌐 Website<small>EN · 简体 · 繁體</small></div>
+        <div class="achip">🛒 eCommerce /shop<small>rooms · dives · retail</small></div>
+        <div class="achip">🔵 Booking.com<small>~15%, capped</small></div>
+        <div class="achip">💬 FB · WhatsApp · Viber<small>AI chatbot</small></div>
+        <div class="achip">🏨 Walk-in / POS<small>on-site</small></div>
+      </div>
+    </div>
+    <div class="layer" style="--lc:var(--amber)">
+      <div class="lname">② Integration layer</div>
+      <div class="lrow">
+        <div class="achip">🔗 QloApps Channel Manager<small>hotel_qloapps_channel_manager</small></div>
+        <div class="achip">🏩 Webkul Hotel / PMS<small>paid module</small></div>
+        <div class="achip">🤖 AI chatbot + daily brief<small>lead capture · translation</small></div>
+        <div class="achip">💳 Payments<small>GCash · Card · Bank · WeChat</small></div>
+      </div>
+    </div>
+    <div class="layer" style="--lc:var(--teal)">
+      <div class="lname">③ Odoo 19 core — edu-escondida.odoo.com</div>
+      <div class="lrow">
+        <div class="achip">🧲 CRM · Sales<small>leads → quote → SO</small></div>
+        <div class="achip">🛏️ PMS · Rental<small>rooms · folio</small></div>
+        <div class="achip">🛒 POS ×2<small>Restaurant · Dive/Retail</small></div>
+        <div class="achip">📦 Inventory<small>FIFO · 20-pack min</small></div>
+        <div class="achip">💰 Accounting<small>l10n_ph · VAT 12%</small></div>
+        <div class="achip">🤿 Calendar · Maintenance · HR<small>dives · gear · staff</small></div>
+      </div>
+    </div>
+    <div class="layer" style="--lc:var(--green)">
+      <div class="lname">④ Outputs &amp; compliance</div>
+      <div class="lrow">
+        <div class="achip">🧾 BIR official receipts<small>accreditation required</small></div>
+        <div class="achip">📋 DOT guest-arrival reports<small>passport / ID store</small></div>
+        <div class="achip">📊 Live dashboards<small>occupancy · RevPAR · cash</small></div>
+        <div class="achip">📲 PWA · offline<small>installable</small></div>
+      </div>
+    </div>
+  </div>
+  <div class="note">Tap any department on the <a href="#map">system map</a> to see how it plugs into layer ③ — and tap the glowing core to come back here.</div>
+
+  <h3>⚙️ Build &amp; deploy pipeline</h3>
+  <div class="flow">
+    <div class="fnode" style="--rc:var(--coral)"><span class="fnum">1</span><span class="fi">📐</span><span class="ft">Spec</span><span class="fd">odoo-build-spec/ — modules, data model, demo data</span></div>
+    <div class="fnode"><span class="fnum">2</span><span class="fi">📜</span><span class="ft">MCP runbook</span><span class="fd">mcp-runbook.md execution steps</span></div>
+    <div class="fnode"><span class="fnum">3</span><span class="fi">🤖</span><span class="ft">Multi-agent build</span><span class="fd">Orchestrator + stage agents</span></div>
+    <div class="fnode alt"><span class="fnum">4</span><span class="fi">🔍</span><span class="ft">Verify each stage</span><span class="fd">Gate on a verification query</span></div>
+    <div class="fnode good"><span class="fnum">5</span><span class="fi">🚀</span><span class="ft">Go-live + hypercare</span><span class="fd">4–6 weeks on-call</span></div>
+  </div>
+
+  <div class="tabs" data-tabs>
+    <button class="tab on" onclick="tab(this,'sa-int')">🔗 Integrations</button>
+    <button class="tab" onclick="tab(this,'sa-data')">🗄️ Data &amp; BIR</button>
+    <button class="tab" onclick="tab(this,'sa-auto')">⚡ Automations</button>
+    <button class="tab" onclick="tab(this,'sa-sec')">🔐 Security &amp; access</button>
+    <button class="tab" onclick="tab(this,'sa-env')">🧪 Environments</button>
+  </div>
+  <div class="tabpane on" id="sa-int">
+    <ul>
+      <li><b>Channel manager:</b> QloApps + <kbd>hotel_qloapps_channel_manager</kbd> syncs Booking.com (needs a QloApps subscription) — kills manual OTA copying.</li>
+      <li><b>PMS:</b> Webkul Hotel/PMS (paid) — must be purchased &amp; uploaded; rooms are modelled as priced, bookable eCommerce products until it lands.</li>
+      <li><b>Conversational:</b> AI chatbot across FB / WhatsApp / Viber / web for lead capture, translation &amp; next-day approval; plus the dive daily-brief generator.</li>
+      <li><b>Payments:</b> GCash, card, bank transfer, WeChat noted — map each to a POS / journal method.</li>
+    </ul>
+    <div class="warn">Webkul PMS &amp; QloApps <b>cannot be installed over the API</b> — schedule a manual install + subscription activation.</div>
+  </div>
+  <div class="tabpane" id="sa-data">
+    <ul>
+      <li><b>Localization:</b> <kbd>l10n_ph</kbd> installed; the <b>chart-of-accounts swap is blocked</b> by existing posted entries — needs an empty-books window. VAT 12% (output + input) applied meanwhile.</li>
+      <li><b>Currency:</b> everything is <b>PHP</b>; SGD / USD deactivated.</li>
+      <li><b>Master data:</b> ~24 rooms (8 sea-view), persona / channel tags, agent net-pricing, full-board &amp; transfer products.</li>
+    </ul>
+    <div class="warn"><b>Legal gap:</b> the POS must be <b>BIR-accredited</b> to issue legal official receipts (the old one lapsed). Resolve before go-live. DOT guest-arrival reports + passport / ID storage still apply.</div>
+  </div>
+  <div class="tabpane" id="sa-auto">
+    <p><b>7 scheduled actions + 1 automated rule</b> are live on the instance:</p>
+    <ol>
+      <li>Dynamic pricing (weekend / season / occupancy / sea-view / LOS modifiers)</li>
+      <li>Dive daily-briefing generator</li>
+      <li>Overbooking guard</li>
+      <li>Post-stay review request</li>
+      <li>Low-stock reorder (20-pack minimum → RFQ)</li>
+      <li>Certification-renewal reminders</li>
+      <li>Win-back campaign</li>
+      <li><i>Rule:</i> welcome message on booking confirmation</li>
+    </ol>
+    <div class="tip">Keep automations idempotent &amp; logged — they feed the manager dashboards and the cash-leakage alerts (Andrew's #1 priority).</div>
+  </div>
+  <div class="tabpane" id="sa-sec">
+    <ul>
+      <li><b>Access model:</b> shared <b>departmental logins</b> (3 POS units to start, dive shop priority) — scope app visibility &amp; record rules per role so staff see only their apps.</li>
+      <li><b>API tokens:</b> used only at runtime, <b>never committed</b>, deleted locally after the build — <b>rotate them</b>.</li>
+      <li><b>Approvals:</b> discount / refund / petty-cash / PO limits route to Andrew &amp; Dong for one-tap approval.</li>
+      <li><b>Devices:</b> non-waterproof POS hardware — plan placement &amp; the WiFi / network map.</li>
+    </ul>
+    <div class="warn">Never commit secrets. The instance token lives out-of-band (see <kbd>odoo-build-spec/instance.md</kbd>) and must be rotated.</div>
+  </div>
+  <div class="tabpane" id="sa-env">
+    <ul>
+      <li><b>Instance:</b> <kbd>edu-escondida.odoo.com</kbd> (Odoo 19 Enterprise), built over XML-RPC / MCP — 17 apps; 42 products, 40 customers &amp; demo orders / invoices loaded.</li>
+      <li><b>Repeatable build:</b> the spec in <kbd>odoo-build-spec/</kbd> + the agent loop in <kbd>agents/</kbd> re-run the install &amp; demo data, gating each stage on a verification query.</li>
+      <li><b>Phased rollout:</b> Phase 1 POS + Inventory → Phase 2 Accounting / GL → Phase 3 PMS / Channel / CRM.</li>
+      <li><b>Resilience:</b> PWA / offline shell, backups, test-then-improve (no fixed go-live).</li>
+    </ul>
+  </div>
+
+  <h3>🗓️ Engagement cadence</h3>
+  <div class="tl">
+    <div class="tli"><div class="tt">DISCOVERY</div><div class="tb">Capture requirements, correct assumptions (rooms, rates, channels, BIR), agree the phased plan.</div></div>
+    <div class="tli"><div class="tt">DESIGN</div><div class="tb">Module map, data model, integration topology, automation &amp; security design — "80% preparation".</div></div>
+    <div class="tli"><div class="tt">BUILD</div><div class="tb">Run the spec via the MCP runbook &amp; agent loop; load demo data; verify each stage.</div></div>
+    <div class="tli"><div class="tt">GO-LIVE → HYPERCARE</div><div class="tb">Train champions, cut over by phase, stay on-call 4–6 weeks, tune automations &amp; dashboards.</div></div>
+  </div>
+
+  <h3>✅ I can confidently…</h3>
+  <ul class="chk" data-chk="architect">
+    <li data-id="sa1"><span class="box">✓</span><span class="lbl">Explain the <b>4-layer architecture</b> end to end</span></li>
+    <li data-id="sa2"><span class="box">✓</span><span class="lbl">Plan the <b>Webkul PMS &amp; QloApps</b> manual install</span></li>
+    <li data-id="sa3"><span class="box">✓</span><span class="lbl">Sequence the <b>l10n_ph</b> swap &amp; BIR accreditation</span></li>
+    <li data-id="sa4"><span class="box">✓</span><span class="lbl">Own the <b>7 automations</b> &amp; the approval limits</span></li>
+    <li data-id="sa5"><span class="box">✓</span><span class="lbl">Enforce <b>least-privilege</b> access &amp; rotate API tokens</span></li>
+    <li data-id="sa6"><span class="box">✓</span><span class="lbl">Re-run the build from <b>spec + agent loop</b></span></li>
+  </ul>
+</section>
+
 <!-- ============ FOLIO (cross-cutting) ============ -->
 <section class="card reveal" id="folio" data-role="all">
   <h2><span class="em">🧾</span> The magic of "Charge to Room" — one folio</h2>
@@ -818,11 +967,11 @@ function tab(btn,id){const pane=document.getElementById(id);const group=btn.clos
 /* ============ JUMP (from SVG nodes) ============ */
 function jump(sel,fallback){const t=document.querySelector(sel)||(fallback?document.querySelector(fallback):null);if(t)t.scrollIntoView({behavior:'smooth',block:'start'});}
 /* keyboard-activate focusable SVG nodes */
-document.querySelectorAll('.sysdiag .node[tabindex]').forEach(n=>n.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();n.dispatchEvent(new MouseEvent('click'));}}));
+document.querySelectorAll('.sysdiag [tabindex]').forEach(n=>n.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();n.dispatchEvent(new MouseEvent('click'));}}));
 
 /* ============ FOCUS MODE ============ */
-const roleNames={reservations:'Front Desk',dive:'Dive Center',pos:'Kitchen, Bar & POS',housekeeping:'Housekeeping',inventory:'Inventory',accounts:'Accounts',manager:'Manager / Owner'};
-const roleColors={reservations:'var(--aqua)',dive:'var(--teal)',pos:'var(--amber)',housekeeping:'var(--purple)',inventory:'var(--green)',accounts:'var(--pink)',manager:'var(--indigo)'};
+const roleNames={reservations:'Front Desk',dive:'Dive Center',pos:'Kitchen, Bar & POS',housekeeping:'Housekeeping',inventory:'Inventory',accounts:'Accounts',manager:'Manager / Owner',architect:'Solution Architect'};
+const roleColors={reservations:'var(--aqua)',dive:'var(--teal)',pos:'var(--amber)',housekeeping:'var(--purple)',inventory:'var(--green)',accounts:'var(--pink)',manager:'var(--indigo)',architect:'var(--coral)'};
 function focusRole(role){
   document.body.classList.add('focusing');
   document.querySelectorAll('section.card').forEach(s=>s.classList.toggle('focus-on',s.dataset.role===role));
