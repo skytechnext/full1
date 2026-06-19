@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Casa Escondida — AI Build Playbook (2026 Agentic Best Practices)</title>
+<meta name="description" content="Modern best practices (2026) for building autonomous output engines like the Casa Escondida Black Box — agent loops, harness, context engineering, RAG, goals, evals & guardrails — with two alternate architecture variations.">
+<link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0a0f1a"><link rel="icon" href="assets/favicon.svg"><link rel="apple-touch-icon" href="icon-192.png">
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));}</script>
+<style>
+:root{--bg:#0a0f1a;--panel:#121c30;--panel2:#16223a;--line:#1f2d49;--ink:#e8f0fb;--ink2:#a9bdd8;--muted:#7388ab;--teal:#19c6c6;--aqua:#37e0c8;--blue:#3b82f6;--green:#36d399;--amber:#ffb454;--coral:#ff6b6b;--purple:#a78bfa;--grad:linear-gradient(135deg,#19c6c6,#3b82f6 55%,#6366f1);--shadow:0 18px 50px -20px rgba(0,0,0,.6);--mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;--sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.55;overflow-x:hidden}
+h1,h2,h3,h4{margin:0 0 .4em;font-weight:800;letter-spacing:-.02em}a{color:var(--teal);text-decoration:none}
+#bar{position:sticky;top:0;z-index:100;background:rgba(10,15,26,.86);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 18px;flex-wrap:wrap}
+#bar img{height:26px}
+header{padding:46px 22px 8px;text-align:center}
+header .eyebrow{font-size:.74rem;text-transform:uppercase;letter-spacing:.14em;color:var(--aqua);font-weight:700}
+header h1{font-size:clamp(1.7rem,4.6vw,2.8rem);background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;margin-top:8px}
+header p{color:var(--ink2);max-width:840px;margin:8px auto}
+.wrap{max-width:1240px;margin:0 auto;padding:14px 20px 80px}
+.sec{margin:46px 0}
+.sec>h2{font-size:clamp(1.25rem,3vw,1.7rem)}
+.sec>h2 .n{color:var(--teal);font-family:var(--mono);font-size:.7em;margin-right:.5em}
+.lead{color:var(--ink2);max-width:900px;margin:.2em 0 1.2em}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:var(--shadow);min-width:0}
+.grid{display:grid;gap:16px}.g2{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.grid>*{min-width:0}
+.tag{display:inline-block;font-size:.66rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:2px 8px;border-radius:20px;border:1px solid var(--line);color:var(--aqua)}
+.muted{color:var(--muted);font-size:.8rem}
+ul{margin:.3em 0 .3em 1.1em;padding:0}li{margin:.22em 0}
+.kvs{font-family:var(--mono);font-size:.78rem;color:var(--ink2)}.kvs b{color:var(--aqua);font-weight:600}
+.callout{border-left:3px solid var(--teal);background:var(--panel);border-radius:0 12px 12px 0;padding:12px 16px;margin:14px 0}
+.callout.warn{border-color:var(--amber)}
+.note{font-size:.78rem;color:var(--muted)}
+
+/* the loop ring */
+.loop{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:center;margin:10px 0}
+.loop .node{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:10px 14px;font-weight:700;font-size:.88rem;color:var(--ink)}
+.loop .a{color:var(--teal);font-size:1.3rem;font-weight:900}
+
+/* layered stack */
+.stack{display:flex;flex-direction:column;gap:8px}
+.layer{display:grid;grid-template-columns:150px 1fr;gap:12px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px;min-width:0}
+.layer .ln{font-weight:800;color:var(--aqua);font-size:.86rem}
+.layer p{margin:0;color:var(--ink2);font-size:.85rem}
+@media(max-width:620px){.layer{grid-template-columns:1fr}}
+
+table{width:100%;border-collapse:collapse;font-size:.84rem}th,td{text-align:left;padding:9px 11px;border-bottom:1px solid var(--line);vertical-align:top}th{color:var(--aqua);font-size:.7rem;text-transform:uppercase;letter-spacing:.05em}
+.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px;min-width:0;max-width:100%}
+.pill{display:inline-block;font-size:.68rem;font-weight:700;padding:2px 8px;border-radius:20px}
+.p-green{background:#0e2a1e;color:var(--green)}.p-amber{background:#2a230e;color:var(--amber)}.p-red{background:#2a0e14;color:var(--coral)}.p-blue{background:#0e1b2a;color:#7eb0ff}.p-purple{background:#1a1530;color:var(--purple)}
+
+/* variation cards */
+.var{border-radius:18px;padding:20px;border:1px solid var(--line);min-width:0}
+.var.rec{background:linear-gradient(160deg,#0e2a2c,#101a30);border-color:#1d5e63}
+.var.a{background:linear-gradient(160deg,#101a30,#121c30)}
+.var.b{background:linear-gradient(160deg,#16112e,#101a30);border-color:#3a2f63}
+.var h3{font-size:1.15rem}
+.var .badge{font-size:.66rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;padding:3px 9px;border-radius:20px;background:rgba(255,255,255,.06)}
+.var .badge.r{color:var(--green)}.var .badge.x{color:var(--blue)}.var .badge.y{color:var(--purple)}
+.var .spec{display:flex;justify-content:space-between;border-bottom:1px dashed var(--line);padding:6px 0;font-size:.84rem}
+.var .spec span{color:var(--muted)}.var .spec b{color:var(--ink)}
+
+@media(max-width:880px){.g3,.g4{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.g2,.g3,.g4{grid-template-columns:1fr}}
+</style></head>
+<body>
+<div id="bar"><img src="assets/logo-white.svg" alt="Casa Escondida"><div><a href="index.html" style="color:var(--ink2);font-size:.82rem;margin-right:10px">← Report</a><a href="ai-blackbox.html" style="color:var(--ink2);font-size:.82rem">The Black Box</a></div></div>
+
+<header>
+  <div class="eyebrow">Technext · Engineering Playbook</div>
+  <h1>AI Build Playbook</h1>
+  <p>The modern (2026) best practices behind the <a href="ai-blackbox.html">Black Box</a> — the agentic patterns that turn raw inputs into a finished website and a live ERP: <strong>loops, the harness, context engineering, RAG, goals, evals and guardrails</strong>. Closes with <strong>two alternate architecture variations</strong> and a recommendation.</p>
+  <p class="note">Reflects current industry guidance from Anthropic, Google Cloud, LangChain, Mews and others (2026). Sources at the foot of the page.</p>
+</header>
+
+<div class="wrap">
+
+  <!-- 01 THE LOOP -->
+  <section class="sec">
+    <h2><span class="n">01</span>The agent loop &amp; the harness</h2>
+    <p class="lead">Every autonomous output engine is, at its core, one tight loop wrapped in a <em>harness</em>. The model doesn't "do" the work in one shot — it iterates: decide a next step, take an action through a tool, observe the result, judge whether the goal is met, and repeat. The harness is everything around that loop that makes it safe, grounded and repeatable.</p>
+    <div class="card">
+      <div class="loop">
+        <span class="node">🎯 Goal</span><span class="a">→</span>
+        <span class="node">🧠 Plan / decide</span><span class="a">→</span>
+        <span class="node">🛠 Act (tool)</span><span class="a">→</span>
+        <span class="node">👀 Observe</span><span class="a">→</span>
+        <span class="node">🔁 Reflect / verify</span><span class="a">↺</span>
+      </div>
+      <p class="note" style="text-align:center;margin-top:4px">…loop until the verification for this step passes, then advance. Bounded retries; escalate on hard failure.</p>
+    </div>
+    <div class="grid g2" style="margin-top:16px">
+      <div class="card"><h4>The loop</h4><p class="muted">The reasoning cycle — ReAct (reason+act), planning and reflection. It owns "what next?" and "are we done?". Keep it bounded: a max-iteration cap and a clear success test stop runaway cost and goal drift.</p></div>
+      <div class="card"><h4>The harness</h4><p class="muted">The scaffolding around the loop: tool contracts, memory/context, retrieval, a policy/approval layer, and observability. A good harness means the same prompt produces reliable, auditable results run after run — not a clever one-off.</p></div>
+    </div>
+  </section>
+
+  <!-- 02 REFERENCE STACK -->
+  <section class="sec">
+    <h2><span class="n">02</span>The six-layer reference stack</h2>
+    <p class="lead">The enterprise pattern that's emerged for production agents (2026). Each layer has one job; you can swap implementations without rewriting the others.</p>
+    <div class="stack">
+      <div class="layer"><div class="ln">1 · Interface</div><p>Where requests enter — chat, API, a brief, a webhook. Normalises the ask into a goal the orchestrator can plan against.</p></div>
+      <div class="layer"><div class="ln">2 · Orchestration</div><p>Task decomposition &amp; planning; sequences stages, dispatches workers, holds state, loops until each stage verifies. The "plan-do-evaluate" brain.</p></div>
+      <div class="layer"><div class="ln">3 · Tools</div><p>Strict, typed contracts for every action the agent can take (Odoo MCP/XML-RPC, web, file I/O, Drive). Narrow, well-described tools beat one do-everything tool.</p></div>
+      <div class="layer"><div class="ln">4 · Memory &amp; retrieval</div><p>Short-term scratchpad (within a run) + long-term memory (across runs) + RAG over the knowledge base. Context persistence is what stops the agent "forgetting".</p></div>
+      <div class="layer"><div class="ln">5 · Policy &amp; safety</div><p>Policy-as-code + human approvals for irreversible/outbound actions + prompt-injection defenses + data validation. Guardrails live here, not in prompts alone.</p></div>
+      <div class="layer"><div class="ln">6 · Observability &amp; eval</div><p>Trace every step, log every write, and run evals on full trajectories (tool choice + outcome), not just final answers. As autonomy rises, this layer matters more.</p></div>
+    </div>
+  </section>
+
+  <!-- 03 CONTEXT ENGINEERING -->
+  <section class="sec">
+    <h2><span class="n">03</span>Context engineering — what the agent knows at the moment of action</h2>
+    <p class="lead">If prompt engineering is "how to ask," context engineering is "what does the agent know, see and remember when it acts?" In 2026 this is the discipline that most separates a demo from a dependable system.</p>
+    <div class="grid g3">
+      <div class="card"><h4>🗒 Short-term memory</h4><p class="muted">A run-scoped scratchpad: state checkpointed across every step so the agent can write a fact now and fetch it later. Compaction summarises old context when the window fills (this very engagement was compacted mid-build).</p></div>
+      <div class="card"><h4>🧠 Long-term memory</h4><p class="muted">Knowledge that survives the session — stored as files with per-write audit trails, shareable between agents in a workspace. Lets one run learn from the last instead of starting cold.</p></div>
+      <div class="card"><h4>🛠 Tool design as context</h4><p class="muted">Tools are part of the context budget. Give the model context-awareness (how much budget remains), prefer programmatic tool-calling for fan-out, and write crisp tool descriptions — the model only acts as well as its tools are described.</p></div>
+    </div>
+    <div class="callout"><strong>Rule of thumb:</strong> curate context, don't dump it. Retrieve the few facts a step needs, summarise the rest, and keep tool outputs tight. Most agent failures are context failures — wrong, missing, or stale information at the moment of action.</div>
+  </section>
+
+  <!-- 04 RAG -->
+  <section class="sec">
+    <h2><span class="n">04</span>RAG — grounding the engine in real facts</h2>
+    <p class="lead">Retrieval-Augmented Generation feeds the model real, current information (the company's docs, rates, photos, the live web) instead of trusting it to remember. The 2026 move is from a fixed pipeline to a <em>control loop</em> — and to routing each query to the cheapest pipeline that can answer it.</p>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Approach</th><th>How it works</th><th>Best for</th><th>Cost / latency</th></tr></thead>
+      <tbody>
+        <tr><td><b>Classic RAG</b></td><td>Retrieve top-k once → generate. Predictable, simple.</td><td>Simple, low-error-tolerance Q&amp;A (FAQ, policy)</td><td><span class="pill p-green">~$0.001/query · fast</span></td></tr>
+        <tr><td><b>Agentic RAG</b></td><td>The model decides <em>when/how</em> to retrieve, can decompose, retry &amp; cross-check sources inside its reasoning.</td><td>Complex tasks needing retries, decomposition, multi-source verification</td><td><span class="pill p-amber">~10× cost · +seconds</span></td></tr>
+        <tr><td><b>Adaptive RAG</b> <span class="pill p-green">2026 default</span></td><td>A classifier routes each query by complexity — simple → classic, hard → agentic/graph.</td><td>Mixed workloads — keeps cost low, scales effort only when needed</td><td><span class="pill p-blue">cost matches complexity</span></td></tr>
+        <tr><td><b>Corrective / self-reflective RAG</b></td><td>The model grades its own retrieval &amp; output and re-queries when evidence is weak.</td><td>High-stakes domains — substantially cuts hallucination</td><td><span class="pill p-amber">extra eval passes</span></td></tr>
+      </tbody>
+    </table></div>
+    <div class="callout warn"><strong>Governance precedes retrieval.</strong> Enterprise RAG fails without access controls, metadata and provenance on the corpus. Ground every claim, carry source + confidence, and never let the model invent what it can't retrieve — exactly how the report flags unverified facts.</div>
+  </section>
+
+  <!-- 05 PATTERNS -->
+  <section class="sec">
+    <h2><span class="n">05</span>Goals, planning &amp; the core patterns</h2>
+    <p class="lead">Start with the simplest pattern that fits — most teams over-architect. Compose these as needed.</p>
+    <div class="grid g4">
+      <div class="card"><h4>ReAct</h4><p class="muted">Reason → act → observe in a loop. The baseline for tool-using agents.</p></div>
+      <div class="card"><h4>Planning</h4><p class="muted">Decompose a known multi-step task up front for predictable execution.</p></div>
+      <div class="card"><h4>Reflection</h4><p class="muted">The agent critiques and improves its own output — use when quality is the bottleneck.</p></div>
+      <div class="card"><h4>Orchestrator–Worker</h4><p class="muted">A planner decomposes &amp; assigns; workers focus on one step. Only the orchestrator sees the whole.</p></div>
+    </div>
+    <div class="callout warn"><strong>Watch goal drift.</strong> Over many iterations a refined plan can wander from the original intent, and backtracking burns compute unpredictably. Pin the goal, verify against it each stage, and cap retries.</div>
+  </section>
+
+  <!-- 06 EVALS & GUARDRAILS -->
+  <section class="sec">
+    <h2><span class="n">06</span>Evals &amp; guardrails — non-negotiable</h2>
+    <div class="grid g2">
+      <div class="card"><h4>✅ Evaluation</h4><ul>
+        <li>Evals are <strong>not optional</strong>; test full <em>trajectories</em> (tool choice + outcome), not only the final answer.</li>
+        <li>Per-stage verification queries gate advancement (counts within tolerance, renders clean, spot-checks pass).</li>
+        <li>Observability: trace steps, log every write, measure cost &amp; latency per run.</li>
+      </ul></div>
+      <div class="card"><h4>🛡 Guardrails</h4><ul>
+        <li><strong>Policy-as-code</strong> + approvals for irreversible actions (destructive resets, price changes, outbound comms).</li>
+        <li>Prompt-injection defenses &amp; input validation — treat retrieved/external content as untrusted.</li>
+        <li>Secrets as runtime config, never committed; least-privilege tool scopes; rotate after use.</li>
+      </ul></div>
+    </div>
+  </section>
+
+  <!-- 07 VARIATIONS -->
+  <section class="sec">
+    <h2><span class="n">07</span>Two alternate architecture variations</h2>
+    <p class="lead">The same playbook can be assembled in different ways depending on budget, scale and how much exploration the task needs. Below: the recommended baseline plus <strong>two alternate variations</strong>. The right choice is the simplest one that meets the quality bar.</p>
+    <div class="grid g3">
+      <div class="var rec">
+        <span class="badge r">Recommended for Casa Escondida</span>
+        <h3 style="margin-top:10px">Baseline · Centralised loop</h3>
+        <p class="muted">A single orchestrator running a ReAct loop with adaptive RAG and a fixed stage runbook. The Black Box as built today.</p>
+        <div class="spec"><span>Topology</span><b>Centralised orchestrator</b></div>
+        <div class="spec"><span>Retrieval</span><b>Adaptive RAG</b></div>
+        <div class="spec"><span>Memory</span><b>Scratchpad + run log</b></div>
+        <div class="spec"><span>Cost / complexity</span><b>Low</b></div>
+        <div class="spec"><span>Covers</span><b>~80% of cases</b></div>
+        <p class="note" style="margin-top:10px">Best when the workflow is known (build a site + an ERP). Predictable, cheap, easy to debug.</p>
+      </div>
+      <div class="var a">
+        <span class="badge x">Variation A</span>
+        <h3 style="margin-top:10px">Lean · Single-agent micro-harness</h3>
+        <p class="muted">One capable agent, classic RAG, tight tool set, no sub-agents. Minimal moving parts.</p>
+        <div class="spec"><span>Topology</span><b>Single agent</b></div>
+        <div class="spec"><span>Retrieval</span><b>Classic RAG</b></div>
+        <div class="spec"><span>Memory</span><b>Short-term only</b></div>
+        <div class="spec"><span>Cost / complexity</span><b>Lowest</b></div>
+        <div class="spec"><span>Trade-off</span><b>Less parallelism / depth</b></div>
+        <p class="note" style="margin-top:10px">Best for a fast, low-cost build or a constrained instance. Cheapest to run; weaker on large fan-out research and self-correction.</p>
+      </div>
+      <div class="var b">
+        <span class="badge y">Variation B</span>
+        <h3 style="margin-top:10px">Scale · Hierarchical multi-agent</h3>
+        <p class="muted">Orchestrator + specialist swarm, reflection inside each worker, graph/agentic RAG, long-term shared memory.</p>
+        <div class="spec"><span>Topology</span><b>Hierarchical swarm</b></div>
+        <div class="spec"><span>Retrieval</span><b>Agentic / Graph RAG</b></div>
+        <div class="spec"><span>Memory</span><b>Long-term, shared</b></div>
+        <div class="spec"><span>Cost / complexity</span><b>High</b></div>
+        <div class="spec"><span>Trade-off</span><b>More coordination overhead</b></div>
+        <p class="note" style="margin-top:10px">Best for many properties / continuous operation / deep research. Highest quality &amp; throughput; needs strong observability to manage goal drift &amp; cost.</p>
+      </div>
+    </div>
+    <div class="tbl-wrap" style="margin-top:18px"><table>
+      <thead><tr><th>Dimension</th><th>Baseline (recommended)</th><th>Variation A · Lean</th><th>Variation B · Scale</th></tr></thead>
+      <tbody>
+        <tr><td>Agents</td><td>Orchestrator + 7 specialists, run in sequence</td><td>1</td><td>Orchestrator + specialist swarm, parallel</td></tr>
+        <tr><td>Loop pattern</td><td>ReAct + planning + staged verify</td><td>ReAct</td><td>Planning + reflection per worker</td></tr>
+        <tr><td>Retrieval</td><td>Adaptive routing</td><td>Classic top-k</td><td>Agentic / Graph RAG</td></tr>
+        <tr><td>Memory</td><td>Scratchpad + created-ID log</td><td>Short-term</td><td>Long-term, cross-run, shared</td></tr>
+        <tr><td>Human gates</td><td>Money / comms / destructive</td><td>Money / destructive</td><td>Policy-as-code + selective approvals</td></tr>
+        <tr><td>Relative cost</td><td><span class="pill p-amber">Medium</span></td><td><span class="pill p-green">Low</span></td><td><span class="pill p-red">High</span></td></tr>
+        <tr><td>Best when</td><td>Known workflow, one client</td><td>Speed/budget-bound</td><td>Many clients, ongoing ops, deep research</td></tr>
+      </tbody>
+    </table></div>
+    <div class="callout"><strong>Recommendation.</strong> Build on the <b>Baseline</b> for a single resort like Casa Escondida — it already delivered this website and the live Odoo demo. Drop to <b>Variation A</b> if you need the cheapest possible refresh; graduate to <b>Variation B</b> only when running the engine across a portfolio of properties or operating the resort's AI layer continuously, where its shared memory and parallelism earn their extra cost.</div>
+  </section>
+
+  <!-- 08 MAP -->
+  <section class="sec">
+    <h2><span class="n">08</span>How this maps to the Black Box</h2>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Playbook concept</th><th>In the Casa Escondida engine</th></tr></thead>
+      <tbody>
+        <tr><td>Agent loop + harness</td><td>Orchestrator looping the 9-stage runbook until each verification is green</td></tr>
+        <tr><td>Six-layer stack</td><td>Brief (interface) → orchestrator → Odoo/web/Drive tools → memory + RAG → approval gates → QA &amp; build log</td></tr>
+        <tr><td>Context engineering</td><td>Run scratchpad + state file of created IDs; mid-build context was compacted and resumed</td></tr>
+        <tr><td>RAG + grounding</td><td>Research agent grounds every section in web + Drive facts, with confidence flags</td></tr>
+        <tr><td>Evals + guardrails</td><td>Counts within ±10% of targets, 0-overflow render checks, human approval on resets/pricing/comms</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note" style="margin-top:14px">See also: <a href="ai-blackbox.html">The Black Box</a> (the engine) · <a href="agents/orchestration.md">orchestration spec</a> · <a href="index.html#ai">report §18 — AI &amp; Automation</a>.</p>
+  </section>
+
+  <!-- SOURCES -->
+  <section class="sec">
+    <h2><span class="n">09</span>Sources</h2>
+    <ul class="muted" style="font-size:.82rem">
+      <li>Google Cloud — <a href="https://docs.cloud.google.com/architecture/choose-design-pattern-agentic-ai-system">Choose a design pattern for your agentic AI system</a></li>
+      <li>Anthropic / Wire — <a href="https://usewire.io/blog/anthropic-managed-agents-memory-context-engineering/">Managed Agents memory &amp; context engineering</a></li>
+      <li>LangChain — <a href="https://www.langchain.com/blog/context-engineering-for-agents">Context engineering for agents</a></li>
+      <li>Beam.ai — <a href="https://beam.ai/agentic-insights/multi-agent-orchestration-patterns-production">6 multi-agent orchestration patterns for production (2026)</a></li>
+      <li>Towards Data Science — <a href="https://towardsdatascience.com/agentic-rag-vs-classic-rag-from-a-pipeline-to-a-control-loop/">Agentic RAG vs Classic RAG</a></li>
+      <li>Starmorph — <a href="https://blog.starmorph.com/blog/rag-techniques-compared-best-practices-guide">RAG techniques compared (2026)</a></li>
+      <li>A. Furmanets — <a href="https://andriifurmanets.com/blogs/ai-agents-2026-practical-architecture-tools-memory-evals-guardrails">AI agents in 2026: tools, memory, evals, guardrails</a></li>
+      <li>SitePoint — <a href="https://www.sitepoint.com/the-definitive-guide-to-agentic-design-patterns-in-2026/">Agentic design patterns 2026</a></li>
+    </ul>
+  </section>
+
+  <p class="note" style="text-align:center;margin-top:34px">Casa Escondida Anilao × Technext · AI Build Playbook · <a href="index.html">back to the report</a></p>
+</div>
+</body>
+</html>

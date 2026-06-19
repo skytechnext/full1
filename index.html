@@ -2276,6 +2276,7 @@ section{padding:64px 0 32px;border-bottom:1px solid var(--line);scroll-margin-to
 
 /* callout */
 .callout{border-left:3px solid var(--teal);background:var(--panel2);border-radius:0 14px 14px 0;padding:16px 20px;margin:16px 0}
+.muted{color:var(--muted)}
 .callout.warn{border-left-color:var(--amber)}
 .callout.risk{border-left-color:var(--coral)}
 .callout .t{font-weight:700;color:var(--ink);margin-bottom:4px;font-size:.82rem;text-transform:uppercase;letter-spacing:.06em}
@@ -2990,6 +2991,57 @@ flowchart LR
     </div>
   </section>
 
+  <!-- ============ 18B. AI IN ACTION — PEER STORY ============ -->
+  <section id="ai-story" data-nav="AI in Action — Peer Story" data-grp="Technology">
+    <div class="wrap">
+      <span class="sec-tag reveal">Spotlight · Technology</span>
+      <h2 class="reveal">AI in Action — A Resort Like Yours, Already Running on Modern AI</h2>
+      <p class="lead reveal">You don't have to imagine the payoff. Independent, owner-led resorts the size of Casa Escondida are <strong>already</strong> running the exact AI plays in this report — and publishing the results. Here is a real, comparable business and what modern AI did for it, mapped to your situation.</p>
+
+      <div class="grid g2">
+        <div class="card reveal" style="border-left:3px solid var(--teal)">
+          <span class="pill p-blue">Real company · 2025</span>
+          <h3 style="margin:.5em 0 .2em">The Address Collective</h3>
+          <p style="color:var(--ink2)">An <strong>independent four-star hotel group</strong> (Dublin, Cork, Sligo &amp; Glasgow) with its own signature <em>NORTH Eatery</em> restaurants — an owner-led, rooms-plus-restaurant business much like Casa Escondida, not a global chain.</p>
+          <p style="color:var(--ink2)"><strong>What they did:</strong> deployed an <strong>omnichannel AI concierge</strong> ("Sophia") that gives real-time price quotes, a <strong>unified inbox</strong> consolidating website + Instagram + Facebook, and an <strong>AI Data Hub</strong> so the reservations team updates FAQs and seasonal answers themselves — all running 24/7.</p>
+          <div class="grid g3" style="margin-top:10px;gap:10px">
+            <div class="card" style="text-align:center;padding:12px"><div style="font-size:1.5rem;font-weight:900;color:var(--green)">523%</div><div class="muted" style="font-size:.72rem">ROI in 2025 alone</div></div>
+            <div class="card" style="text-align:center;padding:12px"><div style="font-size:1.5rem;font-weight:900;color:var(--teal)">~6,000</div><div class="muted" style="font-size:.72rem">quotes sent autonomously</div></div>
+            <div class="card" style="text-align:center;padding:12px"><div style="font-size:1.5rem;font-weight:900;color:var(--amber)">50%+</div><div class="muted" style="font-size:.72rem">chats handled after hours</div></div>
+          </div>
+          <p style="color:var(--ink2);font-style:italic;margin-top:12px;border-left:2px solid var(--line);padding-left:12px">"The ROI generated through [AI] has been exceptional. In 2025 alone, the system generated nearly 6,000 quotes entirely autonomously, which had a direct positive impact on our financial results."<br><span class="muted" style="font-style:normal">— Mairead Delaney, Revenue &amp; Brand Director</span></p>
+        </div>
+
+        <div class="card reveal d1">
+          <h3 style="margin-bottom:.3em">More proof, same playbook</h3>
+          <ul style="color:var(--ink2)">
+            <li><strong>Hotel Casa Maya, Cancún</strong> — an independent beach resort — reported a <strong>61&nbsp;:&nbsp;1 ROI</strong> in under a year after adding the same kind of AI concierge + workflow automation.</li>
+            <li><strong>The market has already moved:</strong> in recent benchmarks AI <strong>handled ~66%</strong> of guest inquiries automatically, and <em>nearly all</em> hoteliers now report using AI in some form (Mews).</li>
+            <li><strong>Money is following it:</strong> hospitality technology attracted <strong>~$1B</strong> in new funding, led by property-management systems and AI.</li>
+          </ul>
+          <p style="color:var(--ink2);margin-top:8px">The common thread isn't a big brand or a big budget — it's <strong>independent operators capturing the demand that used to leak to OTAs after 6pm</strong>, by letting AI answer instantly, quote accurately, and hand warm leads to staff.</p>
+          <p class="muted" style="font-size:.74rem;margin-top:8px">Sources: Asksuite case studies (The Address Collective; Hotel Casa Maya), HotelTechReport, Mews, Hotel Dive — see Appendix.</p>
+        </div>
+      </div>
+
+      <h3 class="reveal" style="margin-top:26px">What this means for Casa Escondida</h3>
+      <p class="lead reveal">Every move above maps directly onto a pain we logged in your discovery sessions — and onto the AI layer already wired into your Odoo build.</p>
+      <div class="tbl-wrap reveal"><table class="tbl">
+        <thead><tr><th>Their winning move</th><th>Your situation (from discovery)</th><th>Your version — already specced</th></tr></thead>
+        <tbody>
+          <tr><td>24/7 AI concierge across web/IG/FB</td><td>Enquiries arrive on Facebook, WhatsApp, Viber &amp; IG; handled manually, slowly; 3 enquiries in week 1 of going direct</td><td><strong>Omni-channel AI concierge</strong> → auto-translate, answer, capture lead to Odoo CRM for next-day approval</td></tr>
+          <tr><td>Instant, accurate price quotes</td><td>Phasing off Booking.com — must win the direct enquiry or lose it to an OTA</td><td><strong>Quote automation</strong> on live Odoo rates + the <a href="ai-blackbox.html">Black Box</a> rate recommender</td></tr>
+          <tr><td>Capture after-hours demand (50%+)</td><td>Small team, self-managing departments; nobody watching channels overnight</td><td>AI answers instantly at any hour; staff review queued bookings in the morning</td></tr>
+          <tr><td>Team self-serves AI answers (Data Hub)</td><td>Owner Edwin/Evan + department heads want control without IT overhead</td><td>FAQ/automation content editable in Odoo — no developer needed</td></tr>
+          <tr><td>Workflow automation → measurable ROI</td><td>Success metric = <em>reduce repeat errors</em>; broken group-chat dive comms</td><td><strong>Dive Daily-Briefing agent</strong> + review responder + win-back — see <a href="#ai">§18 AI &amp; Automation</a></td></tr>
+        </tbody>
+      </table></div>
+      <div class="callout reveal" style="border-left:3px solid var(--teal);background:var(--panel);border-radius:0 12px 12px 0;padding:14px 16px;margin:16px 0">
+        <strong>The modern-practice takeaway.</strong> The resorts winning today aren't replacing their people with AI — they're using AI to <em>never miss an enquiry</em>, quote in seconds, and free staff for guests in front of them. The tools are proven, the ROI is published, and your Odoo build already includes the same capabilities. Want the engineering behind it? See the <a href="ai-build-playbook.html">AI Build Playbook →</a>
+      </div>
+    </div>
+  </section>
+
   <!-- ============ 19. ODOO 19 ARCHITECTURE ============ -->
   <section id="odoo" data-nav="Odoo 19 Architecture" data-grp="Technology">
     <div class="wrap">
@@ -3577,7 +3629,10 @@ E-->F["Knowledge base update"]</div>
         <li>Bluewater / Infinite Blue dive-travel resort pages</li>
         <li>buceoanilao.com rate sheets (competitor benchmark)</li>
         <li>BusinessMirror — PH hotel ADR/RevPAR 2025</li>
-        
+        <li>Asksuite — The Address Collective case (523% ROI, 2025)</li>
+        <li>HotelTechReport — Hotel Casa Maya Cancún (61:1 ROI)</li>
+        <li>Mews / Hotel Dive — AI-in-hospitality adoption &amp; funding (2025–26)</li>
+        <li>Google Cloud, LangChain, Anthropic — agentic-AI best practices (2026)</li>
         <li>Odoo 19 module documentation</li>
       </ul>
 
@@ -3606,7 +3661,7 @@ E-->F["Knowledge base update"]</div>
   <!--SECTION-ANCHOR-->
 
   <footer>
-    <p style="margin-bottom:14px"><strong>Companion documents:</strong> <a href="ai-blackbox.html">The Black Box (engine)</a> · <a href="profit-estimator.html">Profit Estimator</a> · <a href="owner-faq.html">Owner Q&amp;A (FAQ)</a> · <a href="odoo-sales.html">Odoo Sales Page</a> · <a href="odoo-demo-guide.html">Odoo Demo Walkthrough</a> · <a href="stakeholder-questions.html">Stakeholder Question Bank</a> · <a href="staff-guides.html">Staff Guide to Odoo</a></p>
+    <p style="margin-bottom:14px"><strong>Companion documents:</strong> <a href="ai-blackbox.html">The Black Box (engine)</a> · <a href="ai-build-playbook.html">AI Build Playbook</a> · <a href="profit-estimator.html">Profit Estimator</a> · <a href="owner-faq.html">Owner Q&amp;A (FAQ)</a> · <a href="odoo-sales.html">Odoo Sales Page</a> · <a href="odoo-demo-guide.html">Odoo Demo Walkthrough</a> · <a href="stakeholder-questions.html">Stakeholder Question Bank</a> · <a href="staff-guides.html">Staff Guide to Odoo</a></p>
     <p><strong>Technext</strong> — Odoo ERP Implementation &amp; Digital Transformation · Prepared for Casa Escondida Anilao Resort &amp; Dive Center</p>
     <p>Confidential. Figures marked “estimate” are modelled assumptions for planning, not audited financials. Sources &amp; confidence ratings in the Appendix.</p>
     <p><small>Document v1.0 · 14 June 2026 · sky@technext.asia</small></p>
@@ -3638,6 +3693,7 @@ function buildNav(){
   for(const g in groups){if(g)html+=`<div class="grp">${g}</div>`;groups[g].forEach(s=>{html+=`<a href="#${s.id}">${s.dataset.nav}</a>`;});}
   html+='<div class="grp">Tools &amp; Documents</div>'+
     '<a href="ai-blackbox.html" class="nav-ext">🛸 The Black Box</a>'+
+    '<a href="ai-build-playbook.html" class="nav-ext">📘 AI Build Playbook</a>'+
     '<a href="profit-estimator.html" class="nav-ext">📊 Profit Estimator</a>'+
     '<a href="owner-faq.html" class="nav-ext">💬 Owner Q&amp;A</a>'+
     '<a href="odoo-sales.html" class="nav-ext">⚓ Odoo Platform</a>'+
