@@ -139,3 +139,18 @@ Generated demo data across the whole Hotel app (it's Studio-built on rental/plan
 - **Restaurant kitchen display populated**: created 7 restaurant food orders (Buffet Lunch/Dinner, Filipino
   Breakfast, Island BBQ, Sinigang, Garlic Prawns) on the open Restaurant session → 7 `pos.prep.order` +
   **13 kitchen-ticket lines** on the "Casa Escondida Kitchen" preparation display (Restaurant+Bar categories).
+
+## Update — 19 Jun 2026 (round 10) — Scoping Meeting 2 (18 Jun) propagated
+From the *Casa Escondida × TechNext — Scoping Meeting 2* notes, corrected/expanded every deliverable:
+- **Room count 23 → 24** (added a 16th Standard "116"); breakdown now **8 ocean-view + 16 Standard (no view)**.
+  Updated in `index.html` (exec KPI, room callout, competitor table, appendix assumptions), `profit-estimator.html`
+  (Standard default 15 → 16, total 24), `discovery-summary.md`, and the live Odoo instance (24 room resources).
+- **Breakfast is optional**, not free/included — corrected across report F&B + callouts.
+- **Owner Edwin / Evan** added as a stakeholder (CEO-level): new founders card (grid 3→4), org-chart Mermaid
+  node, and founders narrative now references **two scoping meetings (11 & 18 Jun 2026)**.
+- **Dong** reframed as guiding **self-managing department heads**; dive ops run at a **6 divers : 1 divemaster** ratio.
+- **Digital**: website to **phase off Booking.com**; reviews steered to **TripAdvisor + Google**; noted 3 enquiries
+  in week 1 and the digital rental-waiver direction.
+- **New pain points** captured (11 & 18 Jun): gear-rental disputes, slow POS, success metric = *reduce repeat errors*.
+- `discovery-summary.md`: appended a full **"Scoping Meeting 2 — 18 Jun 2026 (updates & corrections)"** section.
+- Verified: report has 4 founder cards + owner node, 9 BPMN, 21 charts, **0 console errors, 0 horizontal overflow @390px**.
