@@ -55,3 +55,37 @@ This supersedes pre-discovery assumptions in earlier drafts of the report.
 ## Scheduling
 Andrew back **21 Jun**, available ~21–27; soft on-site week of **22–26 Jul**, formal implementation in July.
 No fixed go-live date (Andrew: systems must be tested/improved over time).
+
+---
+
+## Scoping Meeting 2 — 18 Jun 2026 (updates & corrections)
+Attendees: **Dong** (joined from Batangas, travelling next day) + **Ms. Eloisa**; TechNext (RJ, Pia, Phillip=lead dev, Jett=functional consultant, Rico=web/marketing, Sky=strategy, +VN/SG team). **Andrew was not on the call** (in Singapore meeting Sky; he is the primary client contact and is upskilling in AI — new MacBook with Claude).
+
+**New / changed vs Meeting 1**
+- **Rooms: 24, of which 8 are ocean-view** (16 Standard no-view + 2 Deluxe + 2 White Beach Deluxe + 4 Suite). (Supersedes the 23 figure.)
+- **Breakfast is optional** — website's “breakfast included / 100%” is wrong; change to optional.
+- **Remove Booking.com from the website** — its data is “not accurate anymore”; focus reviews on **TripAdvisor + Google**.
+- **“24/7 front office” claim is false** — to be removed from the website.
+- **Owner = Edwin/Evan** (CEO-level) surfaced; an owner-level meeting (Edwin + Dong) is a next step. Dong is “more like a resort manager” who **guides self-managing department heads**.
+- **Dive ratio confirmed 6:1** (+ safety diver beyond six).
+- **~90% of guests are divers**; new website already produced **3 enquiries in week 1**.
+
+**Requirements reinforced/new**
+- Odoo all-in-one (Accounting, POS, Inventory, Purchasing, Diving) — confirmed.
+- **Single folio**, settled at checkout; **charge to a room OR a person** (rooms are sometimes shared).
+- **Automated dive-crew scheduling**: any booking door → DM schedule + notification (avoid forcing an app download — push a message instead).
+- **Digital rental waiver/signature in POS** (gear-rental disputes: guests deny renting → lost revenue).
+- **POS prices editable** via Odoo Inventory.
+- AI chatbot + social management (Messenger + email unified, offline lead capture); AI videos/motion graphics for IG/FB (Rico); Chinese translation live, Chinese brand name “under Andrew”.
+- **Success metric (6 months, Dong):** “reduce repeat mistakes… make everything faster.”
+
+**Infra / data**
+- Computers only in the office (desktops); all other staff use **personal phones**. Internet stable with **Starlink backup** (“it never stops”), incl. on-boat.
+- Current **POS is the source of customer data** for migration and is **“too slow”** (manual workarounds).
+- Cancellation: no refund; rebook for weather/medical; **no-show forfeits 50% deposit** (implies 50% deposit).
+- Dive package includes boat, 1 DM, tanks, dive permit; free snacks/drinks on boat; special meals charged to room.
+- Decompression chamber ~1.5 h away (Batangas City); boats carry O2.
+
+**Next steps**: client sends ~20–30 website change items via Eloisa → TechNext implements immediately; remove Booking.com + breakfast-optional (Rico); phases meeting (Sky/Andrew/Dong); owner meeting (Sky/Edwin/Dong); identify current-POS main user for Jett; comms via **WhatsApp**.
+
+**Not discussed in Mtg 2** (still open): channel manager, BIR/CAS accreditation, payroll, kitchen-display, contract/commercials/budget, go-live date, edu-escondida.odoo.com.
