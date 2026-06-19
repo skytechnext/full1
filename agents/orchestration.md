@@ -86,3 +86,36 @@ The build is **complete** when the QA/Verification agent reports all nine stage 
 and record counts within ±10% of `demo-data.json` targets. The Orchestrator then emits a final build
 report (counts vs. targets, deviations, configured automations) and stops. The optional AI-automation
 layer (`automations.json:ai_agent_automations`) is then enabled as separate, human-approved services.
+
+---
+
+## The full pipeline — "the Black Box"
+
+The 6 build agents above are the ERP half. The complete engagement engine (see
+[`../ai-blackbox.html`](../ai-blackbox.html)) wraps them with the agents that produce the **website**
+and the resort's **operational AI layer**, all from a thin input contract.
+
+**Inputs:** (1) instructions/brief, (2) Odoo credentials, (3) a Google Drive of company material
+(photos, ads instructions, company data), (4) company name, (5) key personnel. Credentials + PII are
+runtime secrets — never committed; rotate after a run.
+
+**Agent roster (extends the build agents):**
+
+| Agent | Mandate | Tools | Done when |
+|-------|---------|-------|-----------|
+| **Orchestrator** | Plan run, sequence stages, hold state, loop-until-green, escalate gates | planning, state file, dispatch | all stages green |
+| **Research** | Verify company/market/competitors/reputation from web + Drive; build fact base w/ confidence flags | web search/fetch, Drive read | fact base + sources compiled |
+| **Content** | Write the 27 report sections + companion-page copy honouring tone/guardrails | fact base, brand voice | sections drafted & consistent |
+| **Design/Build (frontend)** | Render self-contained HTML — theme, charts, BPMN, nav, PWA, responsive (0 overflow) | HTML/CSS/JS, Chart.js, SVG | renders, 0 console errors |
+| **Asset** | Pull/process Drive photos + brand assets (openly-licensed fallback); wire into site + Odoo | Drive read, image fetch/process | every product/room imaged |
+| **Odoo Build** (Foundation→QA, above) | Run the 9-stage runbook idempotently | Odoo MCP / XML-RPC, browser | counts within ±10% |
+| **Automation** | Configure the resort's operational AI layer (`automations.json:ai_agent_automations`) | Studio/scheduled/server actions, AI hooks | actions exist & fire |
+| **QA/Verification** | Headless render (desktop + 390px), error/overflow checks, cross-module spot-checks, build report | headless browser, search_read | all verifications green |
+
+**Outputs:** (A) the strategy/due-diligence website + 7 companion pages (deployed to Pages, installable
+PWA); (B) a live, demo-ready Odoo 19 ERP (apps, Hotel module, rich seasonal demo data, booking site,
+operational AI layer); plus a build log + the machine-readable `odoo-build-spec/`.
+
+**Governance:** idempotent (search-before-create), gated (no stage starts before the prior is green),
+and human-in-the-loop on anything irreversible or outward-facing — price changes, destructive resets,
+and outbound guest comms pause for explicit approval; info-only steps run automatically.

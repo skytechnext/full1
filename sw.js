@@ -1,8 +1,9 @@
 /* Casa Escondida report — service worker (offline-capable PWA) */
-const CACHE = 'casa-escondida-v1';
+const CACHE = 'casa-escondida-v2';
 const CORE = [
   './',
   'index.html',
+  'ai-blackbox.html',
   'stakeholder-questions.html',
   'staff-guides.html',
   'odoo-sales.html',

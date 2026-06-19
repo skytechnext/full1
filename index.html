@@ -2973,6 +2973,20 @@ flowchart LR
         </tbody>
       </table></div>
       <p><small>…and ~15 further micro-automations (weather-aware dive scheduling, no-show follow-up, gear-availability nudges, VIP recognition, OTA payout reconciliation, NPS surveys, abandoned-cart recovery, etc.) detailed in <code>odoo-build-spec/automations.json</code>.</small></p>
+
+      <h3 class="reveal" style="margin-top:34px">18.1 · AI Agent Architecture — the operational layer</h3>
+      <p class="lead reveal">Beyond one-shot automations, the resort runs a small fleet of <strong>AI agents</strong> on top of the Odoo data. Each agent owns one job, reads/writes through Odoo's API (MCP/XML-RPC), and is governed by an approval policy — info-only actions run automatically; anything that moves a price or messages a guest pauses for a human.</p>
+      <div class="grid g3">
+        <div class="card reveal"><h4>💬 Guest Concierge</h4><p>Omni-channel (FB / WhatsApp / Viber / IG / web), auto-translating EN ⇄ Chinese. Answers FAQs, captures leads, drafts quotes → Odoo CRM for next-day staff approval.</p><p><small class="muted">reads: availability, rates · writes: crm.lead, draft quotation · approval: info auto, quotes human</small></p></div>
+        <div class="card reveal d1"><h4>🌊 Dive Daily-Briefing</h4><p>06:30 cron: pulls tides + marine weather + advisories, reads roster/gear/maintenance, composes the brief with safety flags, posts to the dive group and collects ✅ go/no-go.</p><p><small class="muted">reads: roster, gear, weather · writes: briefing log · approval: dive lead confirms</small></p></div>
+        <div class="card reveal d2"><h4>📈 Rate Recommender</h4><p>Reads occupancy, pace &amp; seasonality and proposes pricelist moves within min/max caps. Owner Decision 2's "Rate Manager" in agent form.</p><p><small class="muted">reads: bookings, occupancy · writes: pricelist (proposed) · approval: human write-back</small></p></div>
+        <div class="card reveal"><h4>⭐ Review Responder</h4><p>Drafts on-brand replies to new Google/TripAdvisor reviews using the booking + sentiment context; staff send.</p><p><small class="muted">reads: review, stay · writes: draft reply · approval: human send</small></p></div>
+        <div class="card reveal d1"><h4>🎯 Upsell &amp; Win-back</h4><p>Matches guest profiles to courses/photo/F&amp;B/upgrades pre-arrival, and targets lapsing divers monthly.</p><p><small class="muted">reads: CRM, history · writes: targeted offers · approval: send threshold</small></p></div>
+        <div class="card reveal d2"><h4>🧭 Build Orchestrator</h4><p>The meta-agent that <em>builds &amp; maintains</em> the ERP itself — sequences the 9-stage runbook, loops each stage until verification is green. See <a href="agents/orchestration.md">orchestration spec</a>.</p><p><small class="muted">reads: spec · writes: Odoo records · approval: destructive resets</small></p></div>
+      </div>
+      <div class="callout reveal" style="border-left:3px solid var(--teal);background:var(--panel);border-radius:0 12px 12px 0;padding:12px 16px;margin:16px 0">
+        <strong>The whole stack is itself produced by an agent pipeline.</strong> Feed a brief, Odoo credentials and a Google Drive of company material into the <a href="ai-blackbox.html">Black Box engine →</a> and it generates this website <em>and</em> a populated, demo-ready Odoo 19 instance — the reference run being Casa Escondida itself.
+      </div>
     </div>
   </section>
 
@@ -3592,7 +3606,7 @@ E-->F["Knowledge base update"]</div>
   <!--SECTION-ANCHOR-->
 
   <footer>
-    <p style="margin-bottom:14px"><strong>Companion documents:</strong> <a href="profit-estimator.html">Profit Estimator</a> · <a href="owner-faq.html">Owner Q&amp;A (FAQ)</a> · <a href="odoo-sales.html">Odoo Sales Page</a> · <a href="odoo-demo-guide.html">Odoo Demo Walkthrough</a> · <a href="stakeholder-questions.html">Stakeholder Question Bank</a> · <a href="staff-guides.html">Staff Guide to Odoo</a></p>
+    <p style="margin-bottom:14px"><strong>Companion documents:</strong> <a href="ai-blackbox.html">The Black Box (engine)</a> · <a href="profit-estimator.html">Profit Estimator</a> · <a href="owner-faq.html">Owner Q&amp;A (FAQ)</a> · <a href="odoo-sales.html">Odoo Sales Page</a> · <a href="odoo-demo-guide.html">Odoo Demo Walkthrough</a> · <a href="stakeholder-questions.html">Stakeholder Question Bank</a> · <a href="staff-guides.html">Staff Guide to Odoo</a></p>
     <p><strong>Technext</strong> — Odoo ERP Implementation &amp; Digital Transformation · Prepared for Casa Escondida Anilao Resort &amp; Dive Center</p>
     <p>Confidential. Figures marked “estimate” are modelled assumptions for planning, not audited financials. Sources &amp; confidence ratings in the Appendix.</p>
     <p><small>Document v1.0 · 14 June 2026 · sky@technext.asia</small></p>
@@ -3623,6 +3637,7 @@ function buildNav(){
   let html='<div class="nav-brand"><img class="brandlogo" src="assets/logo-white.svg" alt="Casa Escondida"><span class="tb-sub">× Technext</span></div><div class="nav-controls"><input id="search" placeholder="Search report…" oninput="doSearch(this.value)"><div class="nav-btnrow"><button class="tb-btn" onclick="toggleTheme()">◐ Theme</button><button class="tb-btn" id="installBtn" style="display:none" onclick="pwaInstall()">⬇ Install</button></div></div>';
   for(const g in groups){if(g)html+=`<div class="grp">${g}</div>`;groups[g].forEach(s=>{html+=`<a href="#${s.id}">${s.dataset.nav}</a>`;});}
   html+='<div class="grp">Tools &amp; Documents</div>'+
+    '<a href="ai-blackbox.html" class="nav-ext">🛸 The Black Box</a>'+
     '<a href="profit-estimator.html" class="nav-ext">📊 Profit Estimator</a>'+
     '<a href="owner-faq.html" class="nav-ext">💬 Owner Q&amp;A</a>'+
     '<a href="odoo-sales.html" class="nav-ext">⚓ Odoo Platform</a>'+
