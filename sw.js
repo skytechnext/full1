@@ -1,5 +1,5 @@
 /* Casa Escondida report — service worker (offline-capable PWA) */
-const CACHE = 'casa-escondida-v3';
+const CACHE = 'casa-escondida-v4';
 const CORE = [
   './',
   'index.html',
@@ -30,20 +30,32 @@ self.addEventListener('activate', (e) => {
   );
 });
 
+function cachePut(req, res) {
+  if (res && res.status === 200 && req.url.startsWith(self.location.origin)) {
+    const copy = res.clone();
+    caches.open(CACHE).then((c) => c.put(req, copy)).catch(() => {});
+  }
+  return res;
+}
+
 self.addEventListener('fetch', (e) => {
   const req = e.request;
   if (req.method !== 'GET') return;
-  // cache-first for same-origin; fall back to network then offline shell
+
+  const accept = req.headers.get('accept') || '';
+  const isHTML = req.mode === 'navigate' || accept.includes('text/html') || /\.html?($|\?)/.test(req.url);
+
+  if (isHTML) {
+    // network-first: always try fresh HTML, fall back to cache (offline), then shell
+    e.respondWith(
+      fetch(req).then((res) => cachePut(req, res))
+        .catch(() => caches.match(req).then((hit) => hit || caches.match('index.html')))
+    );
+    return;
+  }
+
+  // cache-first for static assets (icons, manifest, etc.)
   e.respondWith(
-    caches.match(req).then((hit) => {
-      if (hit) return hit;
-      return fetch(req).then((res) => {
-        if (res && res.status === 200 && req.url.startsWith(self.location.origin)) {
-          const copy = res.clone();
-          caches.open(CACHE).then((c) => c.put(req, copy)).catch(() => {});
-        }
-        return res;
-      }).catch(() => caches.match('index.html'));
-    })
+    caches.match(req).then((hit) => hit || fetch(req).then((res) => cachePut(req, res)).catch(() => caches.match('index.html')))
   );
 });
