@@ -18,10 +18,14 @@ human input.
 | `demo-data.json` | Master + transactional demo data with record counts & realism rules. |
 | `automations.json` | Native Odoo automations + external AI-agent automations. |
 | `mcp-runbook.md` | The exact ordered MCP call sequence (9 stages) + idempotency rules. |
+| `connection.md` | **How to connect** — three-tier strategy (Odoo.sh SSH → credentials/API → browser) + fallback logic. |
+| `connect/probe.py` | Health-check that picks the highest available connection tier. |
+| `connect/xmlrpc_client.py` | Dependency-free XML-RPC client (`x(model,method,args,kw)`), reads `ODOO_*` env. |
 
 ## How an AI agent should use this
 
-1. **Connect** to the Odoo 19 instance via the Odoo MCP server (verify with a `res.company` read).
+1. **Connect** — run `python connect/probe.py` to pick the highest available tier (Odoo.sh SSH →
+   credentials/API → browser; see `connection.md`), then verify with a `res.company` read.
 2. **Read** `modules.json` → install modules in `install_order`.
 3. **Follow** `mcp-runbook.md` stage by stage. Each stage has a verification query; do not advance
    until it passes (this is the loop — see `agents/orchestration.md`).

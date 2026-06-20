@@ -15,6 +15,9 @@ Typical Odoo MCP primitives assumed: `search_read(model, domain, fields)`,
 > **never commit it to this repo**). See `instance.md`.
 
 ## Stage 0 — Connect, preflight & RESET old demo data
+- **Pick the connection tier first** — run `connect/probe.py` (or the `choose_connection()` logic in
+  [`connection.md`](connection.md)): **Tier 1 Odoo.sh SSH** (preferred) → **Tier 2 credentials/API (MCP)**
+  → **Tier 3 browser**. Per-step overrides apply (SaaS Industry install → browser; custom-module deploy → SSH).
 - Read `res.company` to confirm connectivity and DB identity (expect Odoo 19).
 - **Delete all old/demo items first** (client instruction "first delete all old demo items"). Safe reset, in dependency-safe order:
   1. Cancel/delete draft & demo transactions: `pos.order`, `sale.order`, `account.move` (drafts), `stock.picking`, `calendar.event`, `event.event`, `project.task`, `maintenance.request`, `crm.lead`.

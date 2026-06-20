@@ -4,13 +4,21 @@ The Odoo 19 build target for Casa Escondida.
 
 ## Connection
 
-- **URL:** https://edu-escondida.odoo.com/odoo
-- **Access credential:** supplied by the client **out-of-band** (a token/hash was provided in chat).
-  - 🔒 **Do NOT commit the token to this repository or any file.** Store it as an environment secret
-    (e.g. `ODOO_MCP_TOKEN`) or in the Odoo MCP server's config only.
-  - If it was ever shared in plaintext, treat it as exposed and **rotate it** after the build.
-- The executing agent connects through an **Odoo MCP server** pointed at this URL with that secret.
-  No Odoo MCP server is attached to the planning session that produced this spec — attach one to run.
+**Full strategy + fallback logic is in [`connection.md`](connection.md). Summary:**
+
+| Tier | Path | Works on | Use for |
+|---|---|---|---|
+| 1 (preferred) | **Odoo.sh SSH** → `odoo shell` (`env`), git deploy | Odoo.sh only | bulk server-side build, custom modules, logs |
+| 2 (fallback) | **Credentials / API** (XML-RPC/JSON-RPC, via MCP) | any instance | most record CRUD, standard installs |
+| 3 (last resort) | **Browser** (Playwright) | any instance | SaaS *Activate*/Industry install, some Studio |
+
+- **Current demo URL:** https://edu-escondida.odoo.com/odoo — an Odoo **Online / SaaS** education
+  instance, so **no SSH**; it was built via Tier 2 (API) + Tier 3 (browser, for the Hotel-industry
+  install). For the real build, an **Odoo.sh** project unlocks Tier 1 (the most capable path).
+- **Secrets** (API key, SSH key, login) are supplied **out-of-band** and stored as env / MCP config —
+  🔒 **never commit them.** Env the helpers read: `ODOO_URL`, `ODOO_DB`, `ODOO_LOGIN`, `ODOO_API_KEY`
+  (Tier 2) and `ODOO_SH_HOST` (Tier 1). If any was shared in plaintext, **rotate it.**
+- **Pick the tier automatically:** `python connect/probe.py`.
 
 ## Build sequence (summary — full detail in `mcp-runbook.md`)
 
