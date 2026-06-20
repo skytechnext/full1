@@ -18,6 +18,8 @@ human input.
 | `demo-data.json` | Master + transactional demo data with record counts & realism rules. |
 | `automations.json` | Native Odoo automations + external AI-agent automations. |
 | `mcp-runbook.md` | The exact ordered MCP call sequence (9 stages) + idempotency rules. |
+| `accounting-overhaul.md` | **Accounting overhaul** build spec — maps the finance plan to Odoo config (analytics, journals, liabilities, reconciliation, EWT, POS). |
+| `accounting_setup.py` | Idempotent, env-driven script that applies the accounting overhaul over the API (`--dry-run` to preview). |
 | `connection.md` | **How to connect** — three-tier strategy (Odoo.sh SSH → credentials/API → browser) + fallback logic. |
 | `connect/probe.py` | Health-check that picks the highest available connection tier. |
 | `connect/xmlrpc_client.py` | Dependency-free XML-RPC client (`x(model,method,args,kw)`), reads `ODOO_*` env. |
