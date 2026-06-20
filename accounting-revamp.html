@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Casa Escondida — Accounting Overhaul on Odoo 19 (Automated Finance)</title>
+<meta name="description" content="A detailed, automation-first plan to overhaul Casa Escondida's accounting on Odoo 19 — chart of accounts, every finance workflow (O2C, P2P, bank, tax/BIR, payroll, assets, close), the automation catalog, migration/cutover, controls and KPIs.">
+<link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0a0f1a"><link rel="icon" href="assets/favicon.svg"><link rel="apple-touch-icon" href="icon-192.png">
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));}</script>
+<style>
+:root{--bg:#0a0f1a;--panel:#121c30;--panel2:#16223a;--panel3:#1b2942;--line:#1f2d49;--ink:#e8f0fb;--ink2:#a9bdd8;--muted:#7388ab;--teal:#19c6c6;--aqua:#37e0c8;--blue:#3b82f6;--green:#36d399;--amber:#ffb454;--coral:#ff6b6b;--purple:#a78bfa;--grad:linear-gradient(135deg,#19c6c6,#3b82f6 55%,#6366f1);--shadow:0 18px 50px -20px rgba(0,0,0,.6);--mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;--sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+html[data-theme=light]{--bg:#eef3fb;--panel:#fff;--panel2:#f3f7ff;--panel3:#e9f0fb;--line:#d3deef;--ink:#10203a;--ink2:#33486a;--muted:#64789a;--shadow:0 18px 50px -28px rgba(20,40,80,.35)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.55;overflow-x:hidden}
+h1,h2,h3,h4{margin:0 0 .4em;font-weight:800;letter-spacing:-.02em}a{color:var(--teal);text-decoration:none}a:hover{text-decoration:underline}
+code{font-family:var(--mono);background:var(--panel2);padding:1px 5px;border-radius:5px;font-size:.85em}
+#prog{position:fixed;top:0;left:0;height:3px;width:0;background:var(--grad);z-index:200;transition:width .1s}
+#bar{position:sticky;top:0;z-index:120;background:rgba(10,15,26,.86);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 16px;flex-wrap:wrap}
+html[data-theme=light] #bar{background:rgba(255,255,255,.85)}
+#bar img{height:24px}.bar-r{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.tb-btn{background:var(--panel);border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:7px 11px;font-size:.78rem;cursor:pointer;font-weight:600}
+.tb-btn:hover{border-color:var(--teal)}
+#secnav{position:fixed;top:52px;right:16px;z-index:130;background:var(--panel);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:8px;max-height:74vh;overflow:auto;width:270px;display:none}
+#secnav.open{display:block}
+#secnav a{display:block;color:var(--ink2);font-size:.82rem;padding:6px 10px;border-radius:8px}
+#secnav a:hover,#secnav a.active{background:var(--panel2);color:var(--teal);text-decoration:none}
+#secnav .gh{font-size:.66rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);padding:8px 10px 3px;font-weight:700}
+header{padding:46px 22px 6px;text-align:center}
+header .eyebrow{font-size:.74rem;text-transform:uppercase;letter-spacing:.14em;color:var(--aqua);font-weight:700}
+header h1{font-size:clamp(1.7rem,4.6vw,2.8rem);background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;margin-top:8px}
+header p{color:var(--ink2);max-width:880px;margin:8px auto}
+.wrap{max-width:1180px;margin:0 auto;padding:14px 20px 90px}
+section.sec{margin:48px 0;scroll-margin-top:64px}
+.sec>h2{font-size:clamp(1.25rem,3vw,1.75rem)}
+.sec>h2 .n{color:var(--teal);font-family:var(--mono);font-size:.62em;margin-right:.5em}
+.lead{color:var(--ink2);max-width:920px;margin:.2em 0 1.2em}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:var(--shadow);min-width:0}
+.grid{display:grid;gap:16px}.g2{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.grid>*{min-width:0}
+.muted{color:var(--muted)}.note{font-size:.78rem;color:var(--muted)}small{font-size:.8rem}
+ul{margin:.3em 0 .3em 1.1em;padding:0}li{margin:.22em 0}
+.kvs{font-family:var(--mono);font-size:.76rem;color:var(--ink2)}.kvs b{color:var(--aqua);font-weight:600}
+.callout{border-left:3px solid var(--teal);background:var(--panel);border-radius:0 12px 12px 0;padding:13px 16px;margin:14px 0}
+.callout.warn{border-left-color:var(--amber)}.callout.auto{border-left-color:var(--green)}.callout.sec{border-left-color:var(--coral)}
+.pill{display:inline-block;font-size:.66rem;font-weight:700;padding:2px 8px;border-radius:20px}
+.p-green{background:#0e2a1e;color:var(--green)}.p-amber{background:#2a230e;color:var(--amber)}.p-red{background:#2a0e14;color:var(--coral)}.p-blue{background:#0e1b2a;color:#7eb0ff}.p-purple{background:#1a1530;color:var(--purple)}.p-teal{background:#0e2a2c;color:var(--aqua)}
+.tag{display:inline-block;font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:2px 8px;border-radius:6px;background:var(--panel2);border:1px solid var(--line);color:var(--aqua)}
+table{width:100%;border-collapse:collapse;font-size:.83rem}th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}th{color:var(--aqua);font-size:.68rem;text-transform:uppercase;letter-spacing:.05em}
+.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px;min-width:0;max-width:100%}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:20px 0}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px;text-align:center;min-width:0}
+.stat .v{font-size:clamp(1.4rem,4vw,2.1rem);font-weight:900;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.stat .l{font-size:.72rem;color:var(--ink2);font-weight:600;margin-top:2px}
+.rv{opacity:0;transform:translateY(16px);transition:opacity .6s,transform .6s}.rv.on{opacity:1;transform:none}
+/* workflow chain */
+.chain{display:flex;gap:8px;flex-wrap:wrap;align-items:stretch;margin:6px 0 4px}
+.chain .c{flex:1 1 130px;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:9px 11px;font-size:.8rem;color:var(--ink);min-width:0;position:relative}
+.chain .c b{display:block;color:var(--aqua);font-size:.62rem;text-transform:uppercase;letter-spacing:.04em;margin-bottom:2px}
+.chain .c .au{position:absolute;top:6px;right:7px;font-size:.62rem}
+.auto-dot{color:var(--green)}.man-dot{color:var(--amber)}
+.wfcard{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:var(--shadow);margin-bottom:6px;min-width:0}
+.wfcard h3{font-size:1.08rem;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.cyc{font-family:var(--mono);font-size:.66rem;background:var(--panel3);border:1px solid var(--line);border-radius:6px;padding:2px 6px;color:var(--aqua)}
+.ab{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0}
+@media(max-width:680px){.ab{grid-template-columns:1fr}}
+.ab .col{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:12px}
+.ab .col h4{font-size:.82rem;margin-bottom:6px}.ab .col.now h4{color:var(--coral)}.ab .col.tobe h4{color:var(--green)}
+.ab .col ul{font-size:.83rem;color:var(--ink2)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:.76rem;color:var(--muted);margin:6px 0 0}
+@media(max-width:880px){.g3,.g4{grid-template-columns:1fr 1fr}.stats{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.g2,.g3,.g4{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}}
+.foot{text-align:center;margin-top:46px;padding-top:20px;border-top:1px solid var(--line)}
+</style></head>
+<body>
+<div id="prog"></div>
+<div id="bar">
+  <img src="assets/logo-white.svg" alt="Casa Escondida" id="logo">
+  <div class="bar-r">
+    <a href="index.html" class="tb-btn">← Report</a>
+    <a href="odoo-sales.html" class="tb-btn">⚓ Odoo</a>
+    <button class="tb-btn" onclick="toggleTheme()">◐ Theme</button>
+    <button class="tb-btn" onclick="toggleNav()">☰ Sections</button>
+  </div>
+</div>
+<nav id="secnav"></nav>
+
+<header>
+  <div class="eyebrow">Casa Escondida × Technext · Finance Transformation</div>
+  <h1>Accounting Overhaul on Odoo 19</h1>
+  <p>A complete, <strong>automation-first</strong> rebuild of how Casa Escondida keeps its books — one live ledger fed by the Hotel, Dive Center, Restaurant, Retail and Courses, with <strong>every workflow explained</strong> end-to-end, BIR-aligned, and engineered so the team touches numbers only where judgement (not typing) is required.</p>
+  <p class="note">Philippines tax mechanics below (VAT, withholding, invoicing, CAS/POS accreditation) are a <strong>plan to confirm with your accountant and BIR RDO</strong> — rules change; this maps them onto Odoo.</p>
+</header>
+
+<div class="wrap">
+
+  <!-- 00 STATS -->
+  <section class="sec" id="glance">
+    <div class="stats">
+      <div class="stat rv"><div class="v" data-target="5">0</div><div class="l">revenue streams, one ledger</div></div>
+      <div class="stat rv"><div class="v" data-target="9">0</div><div class="l">finance workflows automated</div></div>
+      <div class="stat rv"><div class="v" data-target="90" data-suffix="%">0</div><div class="l">target bank lines auto-reconciled</div></div>
+      <div class="stat rv"><div class="v" data-target="3" data-suffix="-day">0</div><div class="l">target monthly close</div></div>
+    </div>
+  </section>
+
+  <!-- 01 WHY -->
+  <section class="sec" id="why" data-nav="Why an Overhaul" data-grp="Strategy">
+    <h2 class="rv"><span class="n">01</span>Why an overhaul — not a tidy-up</h2>
+    <p class="lead rv">Casa Escondida runs five businesses under one roof, but the money is recorded as if it were one shoebox. The result is slow closes, manual re-keying, and the very thing the owners flagged in discovery: <strong>repeat errors</strong>. The fix isn't a new bookkeeper — it's a single automated ledger where each transaction is born once, in the system that created it, and flows to the books untouched.</p>
+    <div class="tbl-wrap rv"><table>
+      <thead><tr><th>Today (as-is)</th><th>Pain it causes</th><th>Overhaul fixes it with…</th></tr></thead>
+      <tbody>
+        <tr><td>POS, hotel folios, OTA payouts re-typed into spreadsheets / a separate book</td><td>Double entry, transposition errors, no daily picture</td><td>POS + Hotel + Sales post straight to one ledger; no re-keying</td></tr>
+        <tr><td>Bank &amp; GCash reconciled by hand, monthly, in arrears</td><td>Cash blind spots; fraud/leakage hard to spot</td><td>Bank-feed import + reconciliation models → near-daily, ~90% auto</td></tr>
+        <tr><td>Vendor bills entered manually; no 3-way match</td><td>Overpayments, missed withholding, late EWT</td><td>AI bill capture (OCR) + PO/receipt match + auto-EWT</td></tr>
+        <tr><td>VAT &amp; withholding computed in Excel at filing time</td><td>Filing stress, penalties, surprises</td><td>Tax computed on every line; returns pre-filled from the ledger</td></tr>
+        <tr><td>No P&amp;L by department</td><td>Can't see if the dive shop or restaurant actually earns</td><td>Analytic accounting → live P&amp;L per profit centre</td></tr>
+        <tr><td><span class="pill p-red">Lapsed</span> POS BIR accreditation; chart of accounts not yet on PH template</td><td>Compliance &amp; audit risk</td><td>BIR-accredited Odoo CAS/POS + clean <code>l10n_ph</code> cutover</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- 02 ARCHITECTURE -->
+  <section class="sec" id="arch" data-nav="Target Architecture" data-grp="Strategy">
+    <h2 class="rv"><span class="n">02</span>Target architecture — one ledger, fed by everything</h2>
+    <p class="lead rv">Every operational app already posts to Accounting in Odoo. The overhaul wires them all to a single PH chart of accounts, tags each line with its department, and lets tax + bank automation do the rest.</p>
+    <div class="grid g3">
+      <div class="card rv"><h4>🧾 Core ledger</h4><p class="muted">Odoo <strong>Accounting</strong> + <strong><code>l10n_ph</code></strong> (PH chart of accounts &amp; tax). Double-entry, full audit trail, period locks, multi-currency (PHP base, USD for OTA/foreign).</p></div>
+      <div class="card rv"><h4>🔌 Feeder apps</h4><p class="muted">Hotel (folios), POS (Restaurant + Dive Shop), Sales/eCommerce, Purchase, Inventory (COGS), Payroll, Fixed Assets — each posts journal entries automatically on its own events.</p></div>
+      <div class="card rv"><h4>🏷 Analytic layer</h4><p class="muted">Analytic plan = <em>Profit centre</em>: Rooms · Dive · Restaurant · Retail · Courses. Every income/expense line is tagged, giving live per-department P&amp;L without a second set of books.</p></div>
+    </div>
+    <div class="card rv" style="margin-top:14px">
+      <h4>Data flow (source → ledger)</h4>
+      <div class="chain">
+        <div class="c"><b>Operations</b>Hotel · POS · Sales · Purchase · Payroll · Assets</div>
+        <div class="c"><b>Auto journal entries</b>on confirm / close / checkout</div>
+        <div class="c"><b>Single ledger</b><code>l10n_ph</code> CoA + analytic tags</div>
+        <div class="c"><b>Tax engine</b>VAT &amp; withholding per line</div>
+        <div class="c"><b>Bank reconciliation</b>feeds + models</div>
+        <div class="c"><b>Reports &amp; returns</b>P&amp;L · BS · BIR</div>
+      </div>
+      <p class="note" style="margin-top:8px">No hand-keyed re-entry anywhere in this chain — humans approve and review, they don't transcribe.</p>
+    </div>
+  </section>
+
+  <!-- 03 AUTOMATION PRINCIPLES -->
+  <section class="sec" id="principles" data-nav="Automation Principles" data-grp="Strategy">
+    <h2 class="rv"><span class="n">03</span>Automation principles</h2>
+    <div class="grid g3">
+      <div class="card rv"><h4>① Capture at source</h4><p class="muted">A transaction is recorded once, by the app that created it (POS sale, room checkout, vendor bill scan). Accounting receives a posting, never a re-typed copy.</p></div>
+      <div class="card rv"><h4>② Touchless by default</h4><p class="muted">Routine postings, tax calc, depreciation, recurring entries and bank matches run automatically. Humans act only on exceptions and approvals.</p></div>
+      <div class="card rv"><h4>③ Rules &gt; memory</h4><p class="muted">Reconciliation models, fiscal positions and tax tags encode the "right answer" so it can't be forgotten — directly attacking the <em>repeat-errors</em> goal.</p></div>
+      <div class="card rv"><h4>④ Controls baked in</h4><p class="muted">Approval tiers, segregation of duties, period locks and a full audit log are configuration, not discipline.</p></div>
+      <div class="card rv"><h4>⑤ Compliance by construction</h4><p class="muted">BIR VAT, withholding and invoice formats are computed on every line, so returns are a report — not a month-end scramble.</p></div>
+      <div class="card rv"><h4>⑥ One source of truth</h4><p class="muted">Owners, heads and the accountant read the same live dashboards. No reconciling versions of the truth.</p></div>
+    </div>
+    <div class="legend"><span><b class="auto-dot">●</b> automated step</span><span><b class="man-dot">●</b> human gate (approve / review)</span></div>
+  </section>
+
+  <!-- 04 CHART OF ACCOUNTS -->
+  <section class="sec" id="coa" data-nav="Chart of Accounts &amp; Books" data-grp="Foundation">
+    <h2 class="rv"><span class="n">04</span>Chart of accounts &amp; books of accounts</h2>
+    <p class="lead rv">The foundation everything posts to. We adopt the <code>l10n_ph</code> PH chart, extend it for a resort + dive operation, and structure analytic tags so a single posting answers both "what kind of account?" and "which business?".</p>
+    <div class="grid g2">
+      <div class="card rv"><h4>Chart of accounts (PH-aligned)</h4>
+        <ul class="muted">
+          <li><strong>Assets</strong> — Cash on hand, BPI/BDO bank, GCash, AR (guests/OTA/agents), inventory (F&amp;B, retail, dive gear, Nitrox/O₂), input VAT, creditable withholding (2307s received), prepaid, fixed assets &amp; accumulated depreciation.</li>
+          <li><strong>Liabilities</strong> — AP (vendors), output VAT, VAT payable, withholding tax payable (EWT/compensation), SSS/PhilHealth/Pag-IBIG payable, <em>guest deposits / advances</em> (deferred), gift-card/voucher liability, accrued expenses.</li>
+          <li><strong>Equity</strong> — owners' capital, retained earnings, drawings.</li>
+          <li><strong>Income</strong> — Room revenue, Dive (fun dives, courses, gear rental), F&amp;B, Bar, Retail, Transport/park-fee pass-through, other.</li>
+          <li><strong>COGS / Expenses</strong> — F&amp;B cost, retail cost, dive consumables, salaries &amp; benefits, OTA commissions, utilities (incl. Starlink), repairs, depreciation, marketing.</li>
+        </ul>
+      </div>
+      <div class="card rv"><h4>Books of accounts (computerised)</h4>
+        <ul class="muted">
+          <li>General Journal, General Ledger.</li>
+          <li>Cash Receipts &amp; Cash Disbursements books.</li>
+          <li>Sales &amp; Purchases books.</li>
+          <li>All generated automatically from journal entries — registered with BIR as a <strong>Computerised Accounting System (CAS)</strong> / Books, with the required Acknowledgement Certificate or Permit-to-Use for sales machines.</li>
+        </ul>
+        <p class="kvs" style="margin-top:6px"><b>Odoo:</b> account.account · account.journal · analytic plan "Profit centre" · fiscal positions</p>
+      </div>
+    </div>
+    <div class="callout warn rv"><strong>Known blocker (from the build log).</strong> The active chart of accounts <em>cannot</em> be swapped to the <code>l10n_ph</code> template while posted journal entries exist — it needs an <strong>empty-books cutover window</strong> (see §15 Migration). 12% VAT is already in use in the interim.</div>
+  </section>
+
+  <!-- 05 O2C -->
+  <section class="sec" id="o2c" data-nav="Order-to-Cash" data-grp="Core Workflows">
+    <h2 class="rv"><span class="n">05</span>Order-to-Cash — every peso of revenue, captured automatically</h2>
+    <p class="lead rv">From a booking or a walk-in to cash in the bank, reconciled. Casa Escondida has four revenue doors (rooms, dive, restaurant/bar, retail) plus OTAs — all funnel into the same automated cash cycle.</p>
+
+    <div class="wfcard rv">
+      <h3>🛏 Rooms &amp; folio <span class="cyc">O2C · Hotel</span></h3>
+      <div class="chain">
+        <div class="c"><span class="au auto-dot">●</span><b>Book</b>Website / OTA / walk-in → reservation</div>
+        <div class="c"><span class="au auto-dot">●</span><b>Deposit</b>advance → guest-deposit liability</div>
+        <div class="c"><span class="au auto-dot">●</span><b>Stay</b>room + dive + F&amp;B charged to one folio</div>
+        <div class="c"><span class="au man-dot">●</span><b>Check-out</b>folio reviewed &amp; closed</div>
+        <div class="c"><span class="au auto-dot">●</span><b>Invoice</b>BIR Sales Invoice issued</div>
+        <div class="c"><span class="au auto-dot">●</span><b>Payment</b>card/cash/GCash recorded</div>
+        <div class="c"><span class="au auto-dot">●</span><b>Reconcile</b>auto-matched to bank feed</div>
+      </div>
+      <div class="ab">
+        <div class="col now"><h4>Now</h4><ul><li>Charges tracked on paper/Excel</li><li>One bill re-typed at checkout</li><li>Deposits not tracked as liability</li><li>Revenue recognised whenever it's entered</li></ul></div>
+        <div class="col tobe"><h4>To-be (Odoo)</h4><ul><li>Room + dive + restaurant <em>room-charges</em> accumulate on one folio</li><li>Checkout → single Sales Invoice, VAT split per line, revenue tagged Rooms/Dive/F&amp;B</li><li>Advance deposits sit in a <em>deferred</em> liability and release on stay</li><li>Payment auto-matches the bank line</li></ul></div>
+      </div>
+      <div class="callout auto rv"><strong>Automated:</strong> deposit→liability on confirmation · folio→invoice on checkout · VAT &amp; analytic tags per line · payment→bank match. <strong>Human gate:</strong> front desk reviews the folio before closing.</div>
+      <p class="kvs"><b>Odoo:</b> Hotel folio → sale.order → account.move (invoice) → account.payment · deferred-revenue on guest deposits</p>
+    </div>
+
+    <div class="wfcard rv">
+      <h3>🍽 POS — Restaurant, Bar, Dive Shop &amp; Retail <span class="cyc">O2C · POS</span></h3>
+      <div class="chain">
+        <div class="c"><span class="au auto-dot">●</span><b>Sale</b>order rung on BIR-accredited POS</div>
+        <div class="c"><span class="au auto-dot">●</span><b>Receipt</b>compliant invoice/receipt printed</div>
+        <div class="c"><span class="au auto-dot">●</span><b>Stock</b>inventory + COGS posted</div>
+        <div class="c"><span class="au man-dot">●</span><b>Session close</b>cashier counts drawer</div>
+        <div class="c"><span class="au auto-dot">●</span><b>Post</b>day's sales → journal entries</div>
+        <div class="c"><span class="au auto-dot">●</span><b>Reconcile</b>card/GCash settlements matched</div>
+      </div>
+      <div class="ab">
+        <div class="col now"><h4>Now</h4><ul><li>Lapsed POS accreditation</li><li>Sales summarised manually</li><li>Stock &amp; COGS not linked</li></ul></div>
+        <div class="col tobe"><h4>To-be (Odoo)</h4><ul><li><strong>BIR-accredited</strong> Odoo POS, sequential invoice numbers</li><li>Each session close posts sales, VAT, COGS and payment splits in one move</li><li>"Room Charge" payment method pushes F&amp;B/dive to the guest folio</li><li>Storable items decrement stock → COGS automatic</li></ul></div>
+      </div>
+      <div class="callout auto rv"><strong>Automated:</strong> receipt numbering · inventory + COGS · session-close journal · settlement matching. <strong>Human gate:</strong> cashier drawer count + manager session approval.</div>
+      <p class="kvs"><b>Odoo:</b> pos.order → pos.session (close) → account.move · stock valuation → COGS · payment methods incl. Room Charge</p>
+    </div>
+
+    <div class="wfcard rv">
+      <h3>🌐 OTA &amp; agency settlements <span class="cyc">O2C · Channels</span></h3>
+      <div class="ab">
+        <div class="col now"><h4>Now</h4><ul><li>OTA pays net of commission; the gross/commission split is lost</li><li>Commission expense under-recorded</li></ul></div>
+        <div class="col tobe"><h4>To-be (Odoo)</h4><ul><li>Booking records <em>gross</em> revenue + a <em>commission</em> expense line (vendor = Booking.com)</li><li>Net payout auto-matched; commission bill reconciled against the variance</li><li>As Booking.com is phased down, direct-booking revenue lands at full margin</li></ul></div>
+      </div>
+      <div class="callout auto rv"><strong>Automated:</strong> gross-vs-net commission posting · payout reconciliation flag on variance. <strong>Human gate:</strong> accountant clears flagged variances.</div>
+    </div>
+  </section>
+
+  <!-- 06 P2P -->
+  <section class="sec" id="p2p" data-nav="Procure-to-Pay" data-grp="Core Workflows">
+    <h2 class="rv"><span class="n">06</span>Procure-to-Pay — bills captured, matched, withheld, paid</h2>
+    <p class="lead rv">Diesel, food, beverage, O₂/Nitrox, gear, utilities, repairs. The overhaul turns a pile of supplier invoices into a controlled, AI-assisted pipeline that also handles Philippine withholding tax correctly, every time.</p>
+    <div class="wfcard rv">
+      <h3>🧾 Vendor bill to payment <span class="cyc">P2P</span></h3>
+      <div class="chain">
+        <div class="c"><span class="au man-dot">●</span><b>Request</b>dept head raises a need</div>
+        <div class="c"><span class="au man-dot">●</span><b>PO</b>approved by tier</div>
+        <div class="c"><span class="au auto-dot">●</span><b>Receive</b>goods received → stock</div>
+        <div class="c"><span class="au auto-dot">●</span><b>Capture</b>email/photo bill → AI OCR draft</div>
+        <div class="c"><span class="au auto-dot">●</span><b>3-way match</b>PO ↔ receipt ↔ bill</div>
+        <div class="c"><span class="au auto-dot">●</span><b>Withhold</b>EWT computed; 2307 generated</div>
+        <div class="c"><span class="au man-dot">●</span><b>Approve</b>payment batch</div>
+        <div class="c"><span class="au auto-dot">●</span><b>Pay &amp; reconcile</b>bank match</div>
+      </div>
+      <div class="ab">
+        <div class="col now"><h4>Now</h4><ul><li>Bills keyed by hand, no PO match</li><li>Withholding worked out at filing</li><li>Reorders reactive; stock-outs of diesel/O₂</li></ul></div>
+        <div class="col tobe"><h4>To-be (Odoo)</h4><ul><li><strong>AI bill digitisation</strong>: forward/snap a supplier invoice → Odoo drafts the bill with vendor, lines, VAT</li><li>3-way match blocks overpayment</li><li>Fiscal position auto-applies <strong>expanded withholding tax</strong>; Form <strong>2307</strong> generated for the supplier</li><li>Reorder rules raise RFQs before run-outs</li></ul></div>
+      </div>
+      <div class="callout auto rv"><strong>Automated:</strong> OCR bill draft · 3-way match · EWT calc + 2307 · auto-reorder RFQ · payment-batch bank match. <strong>Human gates:</strong> PO approval tier, payment-batch approval.</div>
+      <p class="kvs"><b>Odoo:</b> purchase.order → stock.picking → account.move (vendor bill, OCR) · fiscal position (EWT) · payments.batch · reorder rules</p>
+    </div>
+  </section>
+
+  <!-- 07 BANK -->
+  <section class="sec" id="bank" data-nav="Bank &amp; Cash + Auto-Reconcile" data-grp="Core Workflows">
+    <h2 class="rv"><span class="n">07</span>Bank, GCash &amp; cash — reconciliation that runs itself</h2>
+    <p class="lead rv">The single biggest day-to-day time sink in most resorts. Odoo turns reconciliation from a monthly marathon into a near-daily, mostly-automatic review.</p>
+    <div class="grid g2">
+      <div class="card rv"><h4>How it works</h4>
+        <ul class="muted">
+          <li><strong>Statement in:</strong> bank feed (where supported) or one-click import of BPI/BDO/GCash statements (CSV/OFX).</li>
+          <li><strong>Reconciliation models:</strong> rules that auto-match a statement line to an invoice/bill, or auto-create the entry (e.g. bank charges, interest, GCash fees) — the bulk match without a human.</li>
+          <li><strong>Suggestions:</strong> fuzzy-match on amount/reference/partner for the rest; one click to confirm.</li>
+          <li><strong>Exceptions only:</strong> staff look at the handful that don't match — that's where errors hide.</li>
+        </ul>
+      </div>
+      <div class="card rv"><h4>Cash discipline</h4>
+        <ul class="muted">
+          <li>POS drawer counts at every session close create the cash journal entry.</li>
+          <li>Daily cash deposit recorded; bank credit auto-matches the deposit.</li>
+          <li>Petty cash as its own journal with receipts attached.</li>
+          <li>Variances surface immediately, not at month-end.</li>
+        </ul>
+        <p class="kvs" style="margin-top:6px"><b>Target:</b> ~90% of bank lines auto-reconciled · reconciliation done within a day, not a month</p>
+      </div>
+    </div>
+    <div class="callout auto rv"><strong>Automated:</strong> statement import · model-based matching · auto-entries for fees/charges · payment matching. <strong>Human gate:</strong> confirm suggested matches + clear exceptions.</div>
+  </section>
+
+  <!-- 08 TAX/BIR -->
+  <section class="sec" id="tax" data-nav="Tax &amp; BIR Compliance" data-grp="Compliance">
+    <h2 class="rv"><span class="n">08</span>Tax &amp; BIR compliance engine</h2>
+    <p class="lead rv">Compliance stops being a deadline and becomes a by-product. Because VAT and withholding are computed on every line as it's posted, the returns are reports drawn from the ledger — not a spreadsheet rebuilt each period.</p>
+    <div class="tbl-wrap rv"><table>
+      <thead><tr><th>Obligation</th><th>What Odoo does</th><th>Output / form</th><th>Cadence</th></tr></thead>
+      <tbody>
+        <tr><td><strong>VAT 12%</strong> (output &amp; input)</td><td>Tax tag on every sale/purchase line; net VAT computed live</td><td>VAT report → <strong>BIR 2550Q</strong> + SLSP</td><td>Quarterly</td></tr>
+        <tr><td><strong>Expanded withholding (EWT)</strong></td><td>Fiscal position withholds on qualifying supplier payments; certificates generated</td><td>Form <strong>2307</strong>; <strong>0619-E</strong> / <strong>1601-EQ</strong> + QAP</td><td>Monthly / quarterly</td></tr>
+        <tr><td><strong>Compensation withholding</strong></td><td>From payroll run</td><td><strong>1601-C</strong>; annual <strong>1604-C</strong> + <strong>2316</strong></td><td>Monthly / annual</td></tr>
+        <tr><td><strong>Sales documents</strong></td><td>BIR-registered, sequentially numbered <strong>Sales Invoices</strong> (the principal document under the Ease of Paying Taxes Act); receipts supplementary</td><td>Registered invoice series</td><td>Per transaction</td></tr>
+        <tr><td><strong>CAS / POS accreditation</strong></td><td>Odoo registered as the Computerised Accounting System; POS machines BIR-accredited</td><td>Acknowledgement Certificate / PTU</td><td>Once + on change</td></tr>
+        <tr><td><strong>Books of accounts</strong></td><td>Journals/ledgers generated from postings</td><td>Computerised books</td><td>Continuous</td></tr>
+        <tr><td><strong>e-Invoicing (EIS)</strong></td><td>Ready to transmit if/when mandated for the business</td><td>EIS feed</td><td>As required</td></tr>
+      </tbody>
+    </table></div>
+    <div class="callout sec rv"><strong>Sequence &amp; accreditation matter.</strong> Before selling on the new POS, the machines/CAS must be BIR-registered and invoice series approved — the old accreditation has lapsed. Confirm thresholds, the EOPT invoice rules and current forms with your accountant/RDO; this plan maps them, it doesn't replace professional filing.</div>
+  </section>
+
+  <!-- 09 PAYROLL -->
+  <section class="sec" id="payroll" data-nav="Payroll &amp; Statutory" data-grp="Core Workflows">
+    <h2 class="rv"><span class="n">09</span>Payroll &amp; statutory</h2>
+    <p class="lead rv">~36 staff across dive, kitchen, housekeeping, front office and admin — much of it seasonal. Payroll feeds the ledger directly and carries the statutory deductions every PH employer owes.</p>
+    <div class="grid g2">
+      <div class="card rv"><h4>The run</h4><ul class="muted"><li>Attendance / roster → payslips per pay period.</li><li>Statutory deductions computed: <strong>SSS, PhilHealth, Pag-IBIG (HDMF)</strong>, withholding on compensation.</li><li>13th-month accrual tracked through the year.</li><li>One payroll journal posts gross, deductions-payable and net to the ledger.</li></ul></div>
+      <div class="card rv"><h4>Automated outputs</h4><ul class="muted"><li>Employee payslips + <strong>BIR 2316</strong> at year-end.</li><li>Remittance schedules for SSS/PhilHealth/Pag-IBIG.</li><li>Compensation withholding flows to <strong>1601-C / 1604-C</strong>.</li><li>Labour cost lands in each department's P&amp;L via analytic tags.</li></ul></div>
+    </div>
+    <div class="callout auto rv"><strong>Automated:</strong> deduction calc · payroll journal posting · statutory + 2316 outputs · analytic labour costing. <strong>Human gate:</strong> approve the payroll run before posting/paying.</div>
+  </section>
+
+  <!-- 10 ASSETS -->
+  <section class="sec" id="assets" data-nav="Fixed Assets &amp; Revenue" data-grp="Core Workflows">
+    <h2 class="rv"><span class="n">10</span>Fixed assets, deferrals &amp; revenue recognition</h2>
+    <div class="grid g2">
+      <div class="card rv"><h4>Fixed assets &amp; depreciation</h4><ul class="muted"><li>Boats, compressors, dive gear, vehicles, building improvements, Starlink/IT capitalised with useful lives.</li><li>Odoo posts <strong>depreciation automatically</strong> each period — no manual schedules.</li><li>Disposals/sales handle gain/loss and stop depreciation.</li><li>Gear linked to Maintenance so a unit in service is unavailable for rental.</li></ul></div>
+      <div class="card rv"><h4>Revenue recognition</h4><ul class="muted"><li><strong>Guest deposits / advances</strong> → deferred-revenue liability, released to income on stay.</li><li><strong>Prepaid dive packages &amp; courses</strong> → recognised as dives/sessions are delivered.</li><li><strong>Gift cards / vouchers</strong> → liability until redeemed.</li><li>Keeps income in the right period — cleaner P&amp;L and audit.</li></ul></div>
+    </div>
+    <div class="callout auto rv"><strong>Automated:</strong> recurring depreciation entries · deferred-revenue release schedules · voucher liability tracking. <strong>Human gate:</strong> set useful lives / recognition schedule at setup.</div>
+  </section>
+
+  <!-- 11 ANALYTIC -->
+  <section class="sec" id="analytic" data-nav="Department P&amp;L" data-grp="Insight">
+    <h2 class="rv"><span class="n">11</span>Live P&amp;L per department (analytic accounting)</h2>
+    <p class="lead rv">The owners asked whether each part of the business actually earns. Analytic accounting answers it continuously: every income and cost line carries a profit-centre tag, so a real P&amp;L for Rooms, Dive, Restaurant, Retail and Courses exists at any moment — no second ledger, no month-end allocation exercise.</p>
+    <div class="grid g3">
+      <div class="card rv"><h4>Tag once</h4><p class="muted">POS, folios, bills and payroll auto-apply the profit-centre tag from the product/department — staff don't choose it.</p></div>
+      <div class="card rv"><h4>Report anytime</h4><p class="muted">Per-department revenue, COGS, labour and contribution margin; drill from a dashboard tile to the underlying entries.</p></div>
+      <div class="card rv"><h4>Decide faster</h4><p class="muted">Feeds the report's RevPAR/GOPPAR/capture KPIs and the <a href="profit-estimator.html">Profit Estimator</a> with real numbers, not guesses.</p></div>
+    </div>
+  </section>
+
+  <!-- 12 CLOSE -->
+  <section class="sec" id="close" data-nav="Automated Monthly Close" data-grp="Insight">
+    <h2 class="rv"><span class="n">12</span>The automated monthly close (record-to-report)</h2>
+    <p class="lead rv">Because the day-to-day is already automated, closing the month becomes a short checklist of reviews — the target is a <strong>3-day close</strong> instead of weeks.</p>
+    <div class="tbl-wrap rv"><table>
+      <thead><tr><th>#</th><th>Close step</th><th>Mostly…</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Confirm all bank/GCash lines reconciled (exceptions cleared)</td><td><span class="pill p-green">auto + review</span></td></tr>
+        <tr><td>2</td><td>POS sessions all closed &amp; posted; cash variances resolved</td><td><span class="pill p-green">auto + review</span></td></tr>
+        <tr><td>3</td><td>Vendor bills captured &amp; matched; accruals for un-billed costs</td><td><span class="pill p-amber">review</span></td></tr>
+        <tr><td>4</td><td>Depreciation &amp; deferred-revenue entries posted</td><td><span class="pill p-green">auto</span></td></tr>
+        <tr><td>5</td><td>Payroll posted; statutory accrued</td><td><span class="pill p-green">auto</span></td></tr>
+        <tr><td>6</td><td>VAT &amp; withholding reviewed against the ledger</td><td><span class="pill p-green">auto + review</span></td></tr>
+        <tr><td>7</td><td>Lock the period; publish P&amp;L, balance sheet, cash &amp; department dashboards</td><td><span class="pill p-amber">approve</span></td></tr>
+      </tbody>
+    </table></div>
+    <div class="callout auto rv"><strong>Automated:</strong> reconciliation status, recurring entries, tax reports, statement generation. <strong>Human gate:</strong> accruals judgement + period lock approval.</div>
+  </section>
+
+  <!-- 13 AUTOMATION CATALOG -->
+  <section class="sec" id="catalog" data-nav="Automation Catalog" data-grp="Insight">
+    <h2 class="rv"><span class="n">13</span>Finance automation catalog</h2>
+    <p class="lead rv">Every automation in one table — what fires it, what Odoo does, and where a human still signs off.</p>
+    <div class="tbl-wrap rv"><table>
+      <thead><tr><th>Automation</th><th>Trigger</th><th>Does</th><th>Human gate</th></tr></thead>
+      <tbody>
+        <tr><td>POS session posting</td><td>Cashier closes session</td><td>Sales, VAT, COGS, payment splits → journal</td><td>Drawer count</td></tr>
+        <tr><td>Folio → invoice</td><td>Guest checkout</td><td>Single VAT-split invoice, analytic-tagged</td><td>Folio review</td></tr>
+        <tr><td>Deferred revenue release</td><td>Stay / delivery date</td><td>Moves deposit from liability to income</td><td>—</td></tr>
+        <tr><td>AI vendor-bill capture</td><td>Bill emailed/snapped</td><td>OCR draft bill with VAT + lines</td><td>Match &amp; approve</td></tr>
+        <tr><td>3-way match</td><td>Bill validated</td><td>Blocks if PO/receipt/bill disagree</td><td>Resolve mismatch</td></tr>
+        <tr><td>Withholding (EWT)</td><td>Qualifying bill/payment</td><td>Computes EWT, generates 2307</td><td>—</td></tr>
+        <tr><td>Bank reconciliation models</td><td>Statement import</td><td>Auto-match / auto-create bulk lines</td><td>Confirm + exceptions</td></tr>
+        <tr><td>Depreciation</td><td>Period end</td><td>Posts depreciation per asset</td><td>—</td></tr>
+        <tr><td>Recurring entries</td><td>Schedule</td><td>Rent, subscriptions, amortisations</td><td>—</td></tr>
+        <tr><td>Payroll journal</td><td>Run approved</td><td>Gross, deductions, net → ledger</td><td>Approve run</td></tr>
+        <tr><td>Tax returns prep</td><td>Period end</td><td>VAT/withholding reports from ledger</td><td>Accountant files</td></tr>
+        <tr><td>OTA payout reconcile</td><td>Payout received</td><td>Matches net, flags commission variance</td><td>Clear variance</td></tr>
+        <tr><td>Auto-reorder RFQ</td><td>Stock below min</td><td>Raises RFQ (diesel, O₂, F&amp;B)</td><td>Approve PO</td></tr>
+        <tr><td>Dunning / AR follow-up</td><td>Invoice overdue</td><td>Reminder sequence to agents/groups</td><td>Escalation</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- 14 CONTROLS -->
+  <section class="sec" id="controls" data-nav="Controls &amp; Audit" data-grp="Governance">
+    <h2 class="rv"><span class="n">14</span>Controls, security &amp; audit</h2>
+    <div class="grid g3">
+      <div class="card rv"><h4>Segregation of duties</h4><p class="muted">Who can create a bill ≠ who approves payment ≠ who posts. Role-based access per department head vs. accountant vs. owner.</p></div>
+      <div class="card rv"><h4>Approval tiers</h4><p class="muted">POs and payment batches route by amount; large or unusual items need a second approver before money moves.</p></div>
+      <div class="card rv"><h4>Period locks</h4><p class="muted">Once a month is closed and filed, the period is locked — no silent back-dated edits.</p></div>
+      <div class="card rv"><h4>Full audit trail</h4><p class="muted">Every posting is logged with who/when; reversals are explicit entries, never deletions.</p></div>
+      <div class="card rv"><h4>Attachments on entries</h4><p class="muted">The scanned bill, OR, or contract is stapled to its journal entry — audit-ready on click.</p></div>
+      <div class="card rv"><h4>Bank-feed integrity</h4><p class="muted">Reconciliation against the actual statement catches leakage and fraud early, not at year-end.</p></div>
+    </div>
+  </section>
+
+  <!-- 15 MIGRATION -->
+  <section class="sec" id="migration" data-nav="Migration &amp; Cutover" data-grp="Delivery">
+    <h2 class="rv"><span class="n">15</span>Migration &amp; cutover plan</h2>
+    <p class="lead rv">The overhaul is sequenced around one hard constraint: the PH chart of accounts can only be adopted cleanly on an <strong>empty-books window</strong>. We pick a cutover date, freeze the old books, load opening balances, and run parallel until trusted.</p>
+    <div class="tbl-wrap rv"><table>
+      <thead><tr><th>Step</th><th>What happens</th></tr></thead>
+      <tbody>
+        <tr><td><b>1 · Design</b></td><td>Finalise PH chart of accounts, journals, tax tags, fiscal positions, analytic plan, approval tiers.</td></tr>
+        <tr><td><b>2 · Accreditation</b></td><td>Register Odoo as CAS / get POS machines BIR-accredited; approve the invoice series. (Gating for go-live selling.)</td></tr>
+        <tr><td><b>3 · Cutover date</b></td><td>Choose a clean fiscal boundary (ideally year/quarter start) so the <code>l10n_ph</code> CoA can be adopted with no posted entries blocking it.</td></tr>
+        <tr><td><b>4 · Opening balances</b></td><td>Import trial-balance opening figures, open AR/AP, inventory valuation, asset register with accumulated depreciation, deposit liabilities.</td></tr>
+        <tr><td><b>5 · Master data</b></td><td>Customers, vendors (with TINs for 2307), products with tax tags, employees with statutory IDs.</td></tr>
+        <tr><td><b>6 · Parallel run</b></td><td>Run Odoo alongside the old method for one cycle; reconcile totals; train heads + accountant.</td></tr>
+        <tr><td><b>7 · Go-live</b></td><td>Switch off the old books; Odoo becomes the single source of truth; hypercare support.</td></tr>
+      </tbody>
+    </table></div>
+    <div class="callout warn rv"><strong>The l10n_ph swap is the long pole.</strong> Posted journal entries block the CoA template change, so the cutover date must land where books can be empty (fresh fiscal period or a fresh database seeded with opening balances). Plan filings around it.</div>
+  </section>
+
+  <!-- 16 KPIs -->
+  <section class="sec" id="kpis" data-nav="KPIs &amp; Benefits" data-grp="Delivery">
+    <h2 class="rv"><span class="n">16</span>KPIs &amp; benefits</h2>
+    <div class="tbl-wrap rv"><table>
+      <thead><tr><th>Metric</th><th>Typical today</th><th>Target after overhaul</th></tr></thead>
+      <tbody>
+        <tr><td>Monthly close time</td><td>2–4 weeks</td><td><strong>~3 days</strong></td></tr>
+        <tr><td>Bank lines auto-reconciled</td><td>~0% (all manual)</td><td><strong>~90%</strong></td></tr>
+        <tr><td>Manual journal entries / month</td><td>Hundreds</td><td>Exceptions only</td></tr>
+        <tr><td>Vendor bills with PO/receipt match</td><td>None</td><td><strong>100% of PO-based spend</strong></td></tr>
+        <tr><td>Tax-filing prep effort</td><td>Days of Excel</td><td>Report + review</td></tr>
+        <tr><td>Department P&amp;L visibility</td><td>None</td><td>Live, per profit centre</td></tr>
+        <tr><td>Repeat data-entry errors</td><td>Frequent (owner-flagged)</td><td>Designed out at source</td></tr>
+      </tbody>
+    </table></div>
+    <div class="callout auto rv"><strong>Bottom line:</strong> faster closes, lower compliance risk, real per-department profit visibility, and the owners' headline goal — <em>fewer repeat errors</em> — achieved by capturing each number once and letting rules carry it through.</div>
+  </section>
+
+  <!-- 17 ROADMAP -->
+  <section class="sec" id="roadmap" data-nav="Roadmap" data-grp="Delivery">
+    <h2 class="rv"><span class="n">17</span>Phased roadmap</h2>
+    <div class="grid g4">
+      <div class="card rv"><span class="tag">Phase 1</span><h4 style="margin-top:6px">Foundation</h4><p class="muted">PH CoA design, journals, tax tags, analytic plan, roles &amp; approvals. POS/CAS accreditation started.</p></div>
+      <div class="card rv"><span class="tag">Phase 2</span><h4 style="margin-top:6px">Revenue &amp; bank</h4><p class="muted">POS + Hotel folio → ledger; deferred revenue; bank feeds + reconciliation models; OTA commission posting.</p></div>
+      <div class="card rv"><span class="tag">Phase 3</span><h4 style="margin-top:6px">Spend &amp; tax</h4><p class="muted">AI bill capture, 3-way match, EWT/2307, payroll + statutory, fixed assets, VAT/withholding returns.</p></div>
+      <div class="card rv"><span class="tag">Phase 4</span><h4 style="margin-top:6px">Close &amp; insight</h4><p class="muted">3-day close checklist, department P&amp;L dashboards, dunning, continuous improvement &amp; hypercare.</p></div>
+    </div>
+    <p class="note rv" style="margin-top:14px">See also: <a href="odoo-sales.html">the Odoo platform overview</a> · <a href="odoo-demo-guide.html">demo walkthrough</a> · <a href="index.html#odoo">report §19 Odoo architecture</a> · <a href="profit-estimator.html">profit estimator</a>.</p>
+  </section>
+
+  <!-- 18 SOURCES -->
+  <section class="sec" id="notes" data-nav="Notes &amp; Disclaimer" data-grp="Delivery">
+    <h2 class="rv"><span class="n">18</span>Notes &amp; disclaimer</h2>
+    <div class="card rv">
+      <ul class="muted">
+        <li>Grounded in Casa Escondida's live Odoo 19 build (PHP currency, 12% VAT &amp; Input VAT in use, <code>l10n_ph</code> installed, CoA-swap pending an empty-books window, POS accreditation to be re-established) — see <a href="index.html">the report</a> and build log.</li>
+        <li>Philippine tax mechanics (VAT 2550Q, EWT/2307, 1601-C/1604, invoice rules under the Ease of Paying Taxes Act, CAS/POS accreditation, SSS/PhilHealth/Pag-IBIG) are presented as a <strong>plan to validate</strong> with your accountant and BIR RDO; rules and thresholds change and this document does not constitute tax advice.</li>
+        <li>Odoo capabilities described (auto bank reconciliation, OCR bill capture, fiscal positions, analytic accounting, automated depreciation, deferred revenue, payroll) are standard Odoo 19 Accounting/adjacent-app features, configured for this business.</li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="foot note">Casa Escondida Anilao × Technext · Accounting Overhaul on Odoo 19 · <a href="index.html">back to the report</a></div>
+</div>
+
+<script>
+/* nav from sections */
+const secnav=document.getElementById('secnav');
+const groups={};document.querySelectorAll('section[data-nav]').forEach(s=>{const g=s.dataset.grp||'';(groups[g]=groups[g]||[]).push(s);});
+let nh='';for(const g in groups){if(g)nh+=`<div class="gh">${g}</div>`;groups[g].forEach(s=>nh+=`<a href="#${s.id}">${s.dataset.nav}</a>`);}secnav.innerHTML=nh;
+function toggleNav(){secnav.classList.toggle('open');}
+secnav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>secnav.classList.remove('open')));
+document.addEventListener('click',e=>{if(!secnav.contains(e.target)&&!/Sections/.test(e.target.textContent||''))secnav.classList.remove('open');});
+function toggleTheme(){const h=document.documentElement;const l=h.getAttribute('data-theme')==='light';h.setAttribute('data-theme',l?'dark':'light');document.getElementById('logo').style.filter=l?'none':'invert(1) brightness(.3)';}
+window.addEventListener('scroll',()=>{
+  const h=document.documentElement;document.getElementById('prog').style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';
+  let cur='';document.querySelectorAll('section[data-nav]').forEach(s=>{if(s.getBoundingClientRect().top<140)cur=s.id;});
+  secnav.querySelectorAll('a').forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+cur));
+});
+const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');
+  if(e.target.classList.contains('stat')){const v=e.target.querySelector('.v');if(v&&!v.dataset.done)countUp(v);}
+  io.unobserve(e.target);}});},{threshold:.15});
+document.querySelectorAll('.rv').forEach(x=>io.observe(x));
+function countUp(elm){elm.dataset.done=1;const tgt=+elm.dataset.target,suf=elm.dataset.suffix||'';let t0=null;
+  function step(ts){if(!t0)t0=ts;const p=Math.min((ts-t0)/1000,1);const e=1-Math.pow(1-p,3);
+    elm.textContent=Math.round(tgt*e)+(p===1?suf:'');if(p<1)requestAnimationFrame(step);}requestAnimationFrame(step);}
+</script>
+</body>
+</html>
