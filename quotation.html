@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Casa Escondida — Odoo 19 Implementation Quotation (Indicative)</title>
+<meta name="description" content="Indicative quotation & scope of work for the Casa Escondida Anilao Odoo 19 ERP implementation by Technext — deliverables, line-item pricing, payment milestones, timeline, terms and sign-off.">
+<link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0a0f1a"><link rel="icon" href="assets/favicon.svg"><link rel="apple-touch-icon" href="icon-192.png">
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));}</script>
+<style>
+:root{--bg:#0a0f1a;--panel:#121c30;--panel2:#16223a;--panel3:#1b2942;--line:#1f2d49;--ink:#e8f0fb;--ink2:#a9bdd8;--muted:#7388ab;--teal:#19c6c6;--aqua:#37e0c8;--blue:#3b82f6;--green:#36d399;--amber:#ffb454;--coral:#ff6b6b;--purple:#a78bfa;--grad:linear-gradient(135deg,#19c6c6,#3b82f6 55%,#6366f1);--shadow:0 18px 50px -20px rgba(0,0,0,.6);--mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;--sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+html[data-theme=light]{--bg:#eef3fb;--panel:#fff;--panel2:#f3f7ff;--panel3:#e9f0fb;--line:#d3deef;--ink:#10203a;--ink2:#33486a;--muted:#64789a;--shadow:0 18px 50px -28px rgba(20,40,80,.35)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.55;overflow-x:hidden}
+h1,h2,h3,h4{margin:0 0 .4em;font-weight:800;letter-spacing:-.02em}a{color:var(--teal);text-decoration:none}a:hover{text-decoration:underline}
+code{font-family:var(--mono);background:var(--panel2);padding:1px 5px;border-radius:5px;font-size:.85em}
+#prog{position:fixed;top:0;left:0;height:3px;width:0;background:var(--grad);z-index:200;transition:width .1s}
+#bar{position:sticky;top:0;z-index:120;background:rgba(10,15,26,.86);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 16px;flex-wrap:wrap}
+html[data-theme=light] #bar{background:rgba(255,255,255,.85)}
+#bar img{height:24px}.bar-r{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.tb-btn{background:var(--panel);border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:7px 11px;font-size:.78rem;cursor:pointer;font-weight:600}
+.tb-btn:hover{border-color:var(--teal)}
+#secnav{position:fixed;top:52px;right:16px;z-index:130;background:var(--panel);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:8px;max-height:74vh;overflow:auto;width:250px;display:none}
+#secnav.open{display:block}
+#secnav a{display:block;color:var(--ink2);font-size:.82rem;padding:6px 10px;border-radius:8px}
+#secnav a:hover,#secnav a.active{background:var(--panel2);color:var(--teal);text-decoration:none}
+#secnav .gh{font-size:.66rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);padding:8px 10px 3px;font-weight:700}
+header{padding:42px 22px 6px;text-align:center}
+header .eyebrow{font-size:.74rem;text-transform:uppercase;letter-spacing:.14em;color:var(--aqua);font-weight:700}
+header h1{font-size:clamp(1.7rem,4.6vw,2.6rem);background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;margin-top:8px}
+header p{color:var(--ink2);max-width:820px;margin:8px auto}
+.wrap{max-width:1080px;margin:0 auto;padding:14px 20px 90px}
+section.sec{margin:42px 0;scroll-margin-top:64px}
+.sec>h2{font-size:clamp(1.2rem,3vw,1.6rem)}
+.sec>h2 .n{color:var(--teal);font-family:var(--mono);font-size:.62em;margin-right:.5em}
+.lead{color:var(--ink2);max-width:880px;margin:.2em 0 1.1em}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:var(--shadow);min-width:0}
+.grid{display:grid;gap:16px}.g2{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(3,1fr)}
+.grid>*{min-width:0}
+.muted{color:var(--muted)}.note{font-size:.78rem;color:var(--muted)}
+ul{margin:.3em 0 .3em 1.1em;padding:0}li{margin:.2em 0}
+.meta{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:8px 0}
+.meta .b{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.meta .b b{display:block;font-size:.64rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+.meta .b span{font-size:.86rem;color:var(--ink)}
+@media(max-width:760px){.meta{grid-template-columns:1fr 1fr}}
+table{width:100%;border-collapse:collapse;font-size:.84rem}th,td{text-align:left;padding:9px 11px;border-bottom:1px solid var(--line);vertical-align:top}th{color:var(--aqua);font-size:.66rem;text-transform:uppercase;letter-spacing:.05em}
+td.r,th.r{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px;min-width:0;max-width:100%}
+tr.tot td{font-weight:800;color:var(--ink);border-top:2px solid var(--line)}
+tr.sub td{font-weight:700}
+.pill{display:inline-block;font-size:.64rem;font-weight:700;padding:2px 8px;border-radius:20px}
+.p-green{background:#0e2a1e;color:var(--green)}.p-amber{background:#2a230e;color:var(--amber)}.p-teal{background:#0e2a2c;color:var(--aqua)}
+.callout{border-left:3px solid var(--teal);background:var(--panel);border-radius:0 12px 12px 0;padding:13px 16px;margin:14px 0}
+.callout.warn{border-left-color:var(--amber)}
+.banner{background:linear-gradient(160deg,#2a230e,#16223a);border:1px solid #5a4a1e;border-radius:14px;padding:12px 16px;margin:6px 0 16px;font-size:.86rem;color:var(--amber)}
+.rv{opacity:0;transform:translateY(16px);transition:opacity .6s,transform .6s}.rv.on{opacity:1;transform:none}
+@media(max-width:760px){.g3,.g2{grid-template-columns:1fr}}
+.foot{text-align:center;margin-top:46px;padding-top:20px;border-top:1px solid var(--line)}
+</style></head>
+<body>
+<div id="prog"></div>
+<div id="bar">
+  <img src="assets/logo-white.svg" alt="Casa Escondida" id="logo">
+  <div class="bar-r">
+    <a href="index.html" class="tb-btn">← Report</a>
+    <a href="requirements.html" class="tb-btn">📑 Requirements</a>
+    <a href="odoo-sales.html" class="tb-btn">⚓ Sales</a>
+    <button class="tb-btn" onclick="toggleTheme()">◐ Theme</button>
+    <button class="tb-btn" onclick="toggleNav()">☰ Sections</button>
+  </div>
+</div>
+<nav id="secnav"></nav>
+
+<header>
+  <div class="eyebrow">Technext · Odoo Implementation</div>
+  <h1>Quotation &amp; Scope of Work</h1>
+  <p>Casa Escondida Anilao Resort &amp; Dive Center — Odoo 19 ERP implementation. This is a structured, <strong>indicative</strong> quotation for discussion; final pricing follows detailed scoping &amp; sign-off of the <a href="requirements.html">requirements baseline</a>.</p>
+</header>
+
+<div class="wrap">
+
+  <section class="sec" id="meta">
+    <div class="meta">
+      <div class="b rv"><b>Quotation</b><span>QT-CE-2026-001 (Indicative)</span></div>
+      <div class="b rv"><b>Date</b><span>22 Jun 2026</span></div>
+      <div class="b rv"><b>Valid until</b><span>30 days from date</span></div>
+      <div class="b rv"><b>Currency</b><span>PHP (VAT 12%)</span></div>
+      <div class="b rv"><b>Prepared by</b><span>Technext — sky@technext.asia</span></div>
+      <div class="b rv"><b>Prepared for</b><span>Owner (Edwin/Evan)</span></div>
+      <div class="b rv"><b>Hosting</b><span>Odoo Online / Odoo.sh</span></div>
+      <div class="b rv"><b>Live demo</b><span>edu-escondida.odoo.com</span></div>
+    </div>
+    <div class="banner rv">⚠️ <strong>Indicative figures for discussion only.</strong> Amounts depend on final scope, user count, Odoo edition and integration needs confirmed during detailed scoping. Not a binding offer; superseded by a signed engagement contract.</div>
+  </section>
+
+  <!-- 01 SUMMARY -->
+  <section class="sec" id="summary" data-nav="Engagement Summary" data-grp="Quotation">
+    <h2 class="rv"><span class="n">01</span>Engagement summary</h2>
+    <p class="lead rv">A phased, low-risk implementation of one Odoo 19 platform across the whole property — POS &amp; Inventory first (stop the leakage), then PMS + Website + Accounting, then Dive ops, CRM, HR and the AI automation layer — delivered with data migration, training and hypercare. Built and de-risked against a working live demo before go-live.</p>
+    <div class="grid g3">
+      <div class="card rv"><h4>What you get</h4><ul class="muted"><li>Configured Odoo across 8+ areas</li><li>BIR-aligned finance + accounting overhaul</li><li>Direct-booking website + AI concierge</li><li>Migrated data &amp; trained team</li></ul></div>
+      <div class="card rv"><h4>How it's delivered</h4><ul class="muted"><li>3 phases + hypercare</li><li>Live-demo-first, UAT-gated</li><li>Standard config over custom code</li><li>Knowledge transfer throughout</li></ul></div>
+      <div class="card rv"><h4>Why it pays back</h4><ul class="muted"><li>Captured revenue, less leakage</li><li>Fewer repeat errors</li><li>Direct bookings at full margin</li><li>Faster close, live visibility</li></ul></div>
+    </div>
+  </section>
+
+  <!-- 02 SCOPE -->
+  <section class="sec" id="scope" data-nav="Scope of Work" data-grp="Quotation">
+    <h2 class="rv"><span class="n">02</span>Scope of work &amp; deliverables</h2>
+    <div class="tbl-wrap rv"><table>
+      <thead><tr><th>Phase</th><th>Scope</th><th>Key deliverables</th></tr></thead>
+      <tbody>
+        <tr><td><span class="pill p-teal">Phase 1</span></td><td>POS (Restaurant/Bar + Dive Shop) + Inventory + Accounting foundation</td><td>Configured POS, live stock + reorder rules, PH chart of accounts, 12% VAT, journals</td></tr>
+        <tr><td><span class="pill p-teal">Phase 2</span></td><td>Hotel/PMS + Website/eCommerce + channel + Accounting overhaul</td><td>Folio→invoice, direct-booking site, OTA capture, bank reconciliation, analytics</td></tr>
+        <tr><td><span class="pill p-teal">Phase 3</span></td><td>Dive Center + CRM/Marketing + HR/Maintenance + AI layer</td><td>Manifests/e-waivers/courses, pipelines, skills/maintenance, AI concierge/pricing/briefing/guards</td></tr>
+        <tr><td><span class="pill p-green">Hypercare</span></td><td>Go-live &amp; stabilisation</td><td>Cutover, war-room support, defect fixes, optimisation, handover</td></tr>
+        <tr><td colspan="2">Cross-cutting</td><td>Discovery, solution design, data migration &amp; opening balances, training &amp; change management, project management &amp; QA</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- 03 PRICING -->
+  <section class="sec" id="pricing" data-nav="Pricing (Indicative)" data-grp="Quotation">
+    <h2 class="rv"><span class="n">03</span>Pricing — one-time implementation</h2>
+    <p class="lead rv">Indicative professional-services fees for the full programme. Line items can be staged or de-scoped during scoping.</p>
+    <div class="tbl-wrap rv"><table>
+      <thead><tr><th>#</th><th>Line item</th><th class="r">Indicative (₱)</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Phase 1 — POS + Inventory + Accounting foundation</td><td class="r">180,000</td></tr>
+        <tr><td>2</td><td>Phase 2 — PMS + Website + Channel + Accounting overhaul</td><td class="r">320,000</td></tr>
+        <tr><td>3</td><td>Phase 3 — Dive + CRM + HR + AI automation layer</td><td class="r">260,000</td></tr>
+        <tr><td>4</td><td>Data migration &amp; opening balances</td><td class="r">90,000</td></tr>
+        <tr><td>5</td><td>Training &amp; change management</td><td class="r">70,000</td></tr>
+        <tr><td>6</td><td>Project management, QA &amp; 30-day hypercare</td><td class="r">80,000</td></tr>
+        <tr class="sub"><td></td><td>Subtotal (services)</td><td class="r">1,000,000</td></tr>
+        <tr><td></td><td>VAT 12%</td><td class="r">120,000</td></tr>
+        <tr class="tot"><td></td><td>Total one-time (indicative, VAT-incl)</td><td class="r">1,120,000</td></tr>
+      </tbody>
+    </table></div>
+
+    <h3 class="rv" style="margin-top:24px">Recurring — subscription &amp; support</h3>
+    <div class="tbl-wrap rv"><table>
+      <thead><tr><th>Item</th><th>Basis</th><th class="r">Indicative (₱)</th></tr></thead>
+      <tbody>
+        <tr><td>Odoo subscription (Online / Odoo.sh)</td><td>per user / month — per Odoo's published pricing; depends on edition &amp; user count (~12–15 users)</td><td class="r">confirm at scoping</td></tr>
+        <tr><td>Channel manager / OTA sync (if required)</td><td>third-party subscription</td><td class="r">pass-through</td></tr>
+        <tr><td>Support &amp; optimisation retainer (post-hypercare)</td><td>per month, optional</td><td class="r">25,000 / mo</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note rv">Odoo licence fees are billed by Odoo directly and are <strong>not</strong> included in the services total above. We'll size the exact edition/user count during scoping.</p>
+  </section>
+
+  <!-- 04 MILESTONES -->
+  <section class="sec" id="milestones" data-nav="Payment Milestones" data-grp="Terms">
+    <h2 class="rv"><span class="n">04</span>Payment milestones</h2>
+    <div class="tbl-wrap rv"><table>
+      <thead><tr><th>Milestone</th><th>Trigger</th><th class="r">% of services</th></tr></thead>
+      <tbody>
+        <tr><td>Mobilisation</td><td>Contract signed; discovery starts</td><td class="r">20%</td></tr>
+        <tr><td>Phase 1 accepted</td><td>POS + Inventory + Accounting foundation in UAT</td><td class="r">25%</td></tr>
+        <tr><td>Phase 2 accepted</td><td>PMS + Website + Accounting overhaul in UAT</td><td class="r">25%</td></tr>
+        <tr><td>Phase 3 accepted</td><td>Dive + CRM + HR + AI in UAT</td><td class="r">20%</td></tr>
+        <tr><td>Go-live + hypercare complete</td><td>Cutover + 30-day stabilisation signed off</td><td class="r">10%</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- 05 TIMELINE -->
+  <section class="sec" id="timeline" data-nav="Indicative Timeline" data-grp="Terms">
+    <h2 class="rv"><span class="n">05</span>Indicative timeline</h2>
+    <div class="grid g3">
+      <div class="card rv"><h4>Phase 1</h4><p class="muted">~3–4 weeks — foundation &amp; leakage control.</p></div>
+      <div class="card rv"><h4>Phase 2</h4><p class="muted">~4–6 weeks — PMS, website, accounting overhaul.</p></div>
+      <div class="card rv"><h4>Phase 3 + hypercare</h4><p class="muted">~4–6 weeks + 30-day stabilisation.</p></div>
+    </div>
+    <p class="note rv">Sequenced to avoid go-live in peak season and to allow BIR accreditation / the empty-books CoA cutover. Exact dates set at planning.</p>
+  </section>
+
+  <!-- 06 ASSUMPTIONS -->
+  <section class="sec" id="assumptions" data-nav="Assumptions &amp; Exclusions" data-grp="Terms">
+    <h2 class="rv"><span class="n">06</span>Assumptions &amp; exclusions</h2>
+    <div class="grid g2">
+      <div class="card rv"><h4>Assumptions</h4><ul class="muted"><li>Reliable internet/Starlink at the property.</li><li>Client team available for discovery, UAT &amp; training.</li><li>Accountant available for BIR/CAS specifics.</li><li>POS hardware &amp; printers available or separately procured.</li><li>Requirements baseline (this set) signed off.</li></ul></div>
+      <div class="card rv"><h4>Exclusions</h4><ul class="muted"><li>Odoo licence fees (billed by Odoo).</li><li>Hardware, networking, Starlink.</li><li>BIR filing itself (Odoo prepares; accountant files).</li><li>Third-party OTA/channel subscriptions (pass-through).</li><li>Custom code beyond agreed scope (change control).</li></ul></div>
+    </div>
+  </section>
+
+  <!-- 07 TERMS -->
+  <section class="sec" id="terms" data-nav="Terms" data-grp="Terms">
+    <h2 class="rv"><span class="n">07</span>Commercial terms</h2>
+    <ul class="muted rv">
+      <li><strong>Validity:</strong> 30 days from the date above.</li>
+      <li><strong>Change control:</strong> scope changes are assessed for impact on time/cost and approved before work proceeds.</li>
+      <li><strong>Acceptance:</strong> each phase is accepted on passing its UAT criteria (see <a href="requirements.html#acceptance">requirements §10</a>).</li>
+      <li><strong>IP &amp; data:</strong> client owns its data; configuration handed over; no credentials stored in code; keys rotated after use.</li>
+      <li><strong>Taxes:</strong> figures are VAT-inclusive where stated; withholding (if applicable) per BIR rules.</li>
+      <li><strong>This document</strong> is indicative and superseded by a signed engagement contract.</li>
+    </ul>
+  </section>
+
+  <!-- 08 SIGNOFF -->
+  <section class="sec" id="accept" data-nav="Acceptance" data-grp="Terms">
+    <h2 class="rv"><span class="n">08</span>Acceptance</h2>
+    <div class="tbl-wrap rv"><table>
+      <thead><tr><th>Party</th><th>Name</th><th>Signature</th><th>Date</th></tr></thead>
+      <tbody>
+        <tr><td>Casa Escondida — Owner</td><td>Edwin / Evan</td><td style="height:42px"></td><td></td></tr>
+        <tr><td>Technext — Lead</td><td>&nbsp;</td><td></td><td></td></tr>
+      </tbody>
+    </table></div>
+    <div class="callout rv">To proceed: confirm scope against the <a href="requirements.html">requirements set</a>, accept this quotation, and we mobilise within the agreed window. Questions? See the <a href="owner-faq.html">Owner Q&amp;A</a> or the <a href="odoo-sales.html">sales overview</a>.</div>
+  </section>
+
+  <div class="foot note">Casa Escondida Anilao × Technext · Quotation QT-CE-2026-001 (indicative) · <a href="index.html">back to the report</a></div>
+</div>
+
+<script>
+const secnav=document.getElementById('secnav');
+const groups={};document.querySelectorAll('section[data-nav]').forEach(s=>{const g=s.dataset.grp||'';(groups[g]=groups[g]||[]).push(s);});
+let nh='';for(const g in groups){if(g)nh+=`<div class="gh">${g}</div>`;groups[g].forEach(s=>nh+=`<a href="#${s.id}">${s.dataset.nav}</a>`);}secnav.innerHTML=nh;
+function toggleNav(){secnav.classList.toggle('open');}
+secnav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>secnav.classList.remove('open')));
+document.addEventListener('click',e=>{if(!secnav.contains(e.target)&&!/Sections/.test(e.target.textContent||''))secnav.classList.remove('open');});
+function toggleTheme(){const h=document.documentElement;const l=h.getAttribute('data-theme')==='light';h.setAttribute('data-theme',l?'dark':'light');document.getElementById('logo').style.filter=l?'none':'invert(1) brightness(.3)';}
+window.addEventListener('scroll',()=>{
+  const h=document.documentElement;document.getElementById('prog').style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';
+  let cur='';document.querySelectorAll('section[data-nav]').forEach(s=>{if(s.getBoundingClientRect().top<140)cur=s.id;});
+  secnav.querySelectorAll('a').forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+cur));
+});
+const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target);}});},{threshold:.12});
+document.querySelectorAll('.rv').forEach(x=>io.observe(x));
+</script>
+</body>
+</html>

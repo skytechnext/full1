@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Casa Escondida — Business Requirements (BRD, FRD, NFR, RTM)</title>
+<meta name="description" content="Full requirements set for the Casa Escondida Odoo 19 ERP programme — Business Requirements Document plus functional (FRD), non-functional (NFR), data/integration, acceptance criteria, RACI and a requirements traceability matrix.">
+<link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0a0f1a"><link rel="icon" href="assets/favicon.svg"><link rel="apple-touch-icon" href="icon-192.png">
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));}</script>
+<style>
+:root{--bg:#0a0f1a;--panel:#121c30;--panel2:#16223a;--panel3:#1b2942;--line:#1f2d49;--ink:#e8f0fb;--ink2:#a9bdd8;--muted:#7388ab;--teal:#19c6c6;--aqua:#37e0c8;--blue:#3b82f6;--green:#36d399;--amber:#ffb454;--coral:#ff6b6b;--purple:#a78bfa;--grad:linear-gradient(135deg,#19c6c6,#3b82f6 55%,#6366f1);--shadow:0 18px 50px -20px rgba(0,0,0,.6);--mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;--sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+html[data-theme=light]{--bg:#eef3fb;--panel:#fff;--panel2:#f3f7ff;--panel3:#e9f0fb;--line:#d3deef;--ink:#10203a;--ink2:#33486a;--muted:#64789a;--shadow:0 18px 50px -28px rgba(20,40,80,.35)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.55;overflow-x:hidden}
+h1,h2,h3,h4{margin:0 0 .4em;font-weight:800;letter-spacing:-.02em}a{color:var(--teal);text-decoration:none}a:hover{text-decoration:underline}
+code{font-family:var(--mono);background:var(--panel2);padding:1px 5px;border-radius:5px;font-size:.85em}
+#prog{position:fixed;top:0;left:0;height:3px;width:0;background:var(--grad);z-index:200;transition:width .1s}
+#bar{position:sticky;top:0;z-index:120;background:rgba(10,15,26,.86);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 16px;flex-wrap:wrap}
+html[data-theme=light] #bar{background:rgba(255,255,255,.85)}
+#bar img{height:24px}.bar-r{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.tb-btn{background:var(--panel);border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:7px 11px;font-size:.78rem;cursor:pointer;font-weight:600}
+.tb-btn:hover{border-color:var(--teal)}
+#secnav{position:fixed;top:52px;right:16px;z-index:130;background:var(--panel);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:8px;max-height:74vh;overflow:auto;width:280px;display:none}
+#secnav.open{display:block}
+#secnav a{display:block;color:var(--ink2);font-size:.82rem;padding:6px 10px;border-radius:8px}
+#secnav a:hover,#secnav a.active{background:var(--panel2);color:var(--teal);text-decoration:none}
+#secnav .gh{font-size:.66rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);padding:8px 10px 3px;font-weight:700}
+header{padding:42px 22px 6px;text-align:center}
+header .eyebrow{font-size:.74rem;text-transform:uppercase;letter-spacing:.14em;color:var(--aqua);font-weight:700}
+header h1{font-size:clamp(1.7rem,4.6vw,2.7rem);background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;margin-top:8px}
+header p{color:var(--ink2);max-width:880px;margin:8px auto}
+.wrap{max-width:1180px;margin:0 auto;padding:14px 20px 90px}
+section.sec{margin:46px 0;scroll-margin-top:64px}
+.sec>h2{font-size:clamp(1.2rem,3vw,1.7rem)}
+.sec>h2 .n{color:var(--teal);font-family:var(--mono);font-size:.62em;margin-right:.5em}
+.lead{color:var(--ink2);max-width:920px;margin:.2em 0 1.1em}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:var(--shadow);min-width:0}
+.grid{display:grid;gap:16px}.g2{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.grid>*{min-width:0}
+.muted{color:var(--muted)}.note{font-size:.78rem;color:var(--muted)}small{font-size:.8rem}
+ul{margin:.3em 0 .3em 1.1em;padding:0}li{margin:.22em 0}
+.kvs{font-family:var(--mono);font-size:.76rem;color:var(--ink2)}.kvs b{color:var(--aqua);font-weight:600}
+.callout{border-left:3px solid var(--teal);background:var(--panel);border-radius:0 12px 12px 0;padding:13px 16px;margin:14px 0}
+.callout.warn{border-left-color:var(--amber)}.callout.sec{border-left-color:var(--coral)}
+.pill{display:inline-block;font-size:.64rem;font-weight:700;padding:2px 7px;border-radius:20px;white-space:nowrap}
+.p-green{background:#0e2a1e;color:var(--green)}.p-amber{background:#2a230e;color:var(--amber)}.p-red{background:#2a0e14;color:var(--coral)}.p-blue{background:#0e1b2a;color:#7eb0ff}.p-purple{background:#1a1530;color:var(--purple)}.p-teal{background:#0e2a2c;color:var(--aqua)}.p-grey{background:#1c2742;color:var(--muted)}
+table{width:100%;border-collapse:collapse;font-size:.82rem}th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}th{color:var(--aqua);font-size:.66rem;text-transform:uppercase;letter-spacing:.05em}
+td code{font-size:.78em}
+.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px;min-width:0;max-width:100%}
+.docctl{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:8px 0}
+.docctl .b{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.docctl .b b{display:block;font-size:.64rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+.docctl .b span{font-size:.86rem;color:var(--ink)}
+@media(max-width:760px){.docctl{grid-template-columns:1fr 1fr}}
+.rv{opacity:0;transform:translateY(16px);transition:opacity .6s,transform .6s}.rv.on{opacity:1;transform:none}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:.74rem;color:var(--muted);margin:8px 0 0}
+@media(max-width:880px){.g3,.g4{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.g2,.g3,.g4{grid-template-columns:1fr}}
+.foot{text-align:center;margin-top:46px;padding-top:20px;border-top:1px solid var(--line)}
+</style></head>
+<body>
+<div id="prog"></div>
+<div id="bar">
+  <img src="assets/logo-white.svg" alt="Casa Escondida" id="logo">
+  <div class="bar-r">
+    <a href="index.html" class="tb-btn">← Report</a>
+    <a href="quotation.html" class="tb-btn">🧾 Quotation</a>
+    <a href="odoo-sales.html" class="tb-btn">⚓ Sales</a>
+    <button class="tb-btn" onclick="toggleTheme()">◐ Theme</button>
+    <button class="tb-btn" onclick="toggleNav()">☰ Sections</button>
+  </div>
+</div>
+<nav id="secnav"></nav>
+
+<header>
+  <div class="eyebrow">Casa Escondida × Technext · Requirements Set</div>
+  <h1>Business Requirements (BRD + FRD + NFR + RTM)</h1>
+  <p>The complete requirements baseline for the Casa Escondida Anilao Odoo 19 ERP programme — the <strong>Business Requirements Document</strong> plus the functional, non-functional, data/integration, acceptance, RACI and traceability documents, in one controlled set.</p>
+</header>
+
+<div class="wrap">
+
+  <!-- 00 DOC CONTROL -->
+  <section class="sec" id="control">
+    <div class="docctl">
+      <div class="b rv"><b>Document</b><span>BRD &amp; Requirements Set v1.0</span></div>
+      <div class="b rv"><b>Status</b><span>Draft for client review</span></div>
+      <div class="b rv"><b>Prepared by</b><span>Technext (sky@technext.asia)</span></div>
+      <div class="b rv"><b>For</b><span>Casa Escondida Anilao — Owner (Edwin/Evan)</span></div>
+      <div class="b rv"><b>Date</b><span>22 Jun 2026</span></div>
+      <div class="b rv"><b>Based on</b><span>Scoping Meetings 1 &amp; 2 (11 &amp; 18 Jun 2026)</span></div>
+      <div class="b rv"><b>Classification</b><span>Confidential</span></div>
+      <div class="b rv"><b>Approval</b><span>Pending — see §16 sign-off</span></div>
+    </div>
+    <div class="legend"><span><span class="pill p-red">M</span> Must</span><span><span class="pill p-amber">S</span> Should</span><span><span class="pill p-blue">C</span> Could</span><span><span class="pill p-grey">W</span> Won't (this phase)</span> · MoSCoW priority</div>
+  </section>
+
+  <!-- 01 PURPOSE -->
+  <section class="sec" id="purpose" data-nav="Purpose &amp; Scope" data-grp="Business">
+    <h2 class="rv"><span class="n">01</span>Purpose &amp; document scope</h2>
+    <p class="lead rv">This document baselines <strong>what</strong> Casa Escondida needs from the new ERP and <strong>why</strong> — the agreed reference against which the build, UAT and acceptance are measured. It consolidates several artefacts that are usually separate: the BRD (business needs), FRD (functional behaviour), NFRs (quality attributes), data/integration requirements, acceptance criteria and a traceability matrix.</p>
+    <div class="grid g2">
+      <div class="card rv"><h4>In scope</h4><ul class="muted"><li>One ERP across Hotel/PMS, Restaurant &amp; Bar POS, Dive Center, Retail, Inventory, Accounting, CRM/Marketing, Website/eCommerce, HR &amp; Maintenance.</li><li>The AI/automation layer (concierge, dynamic pricing, dive briefing, guards).</li><li>BIR-aligned finance &amp; the accounting overhaul.</li><li>Data migration, training, go-live &amp; hypercare.</li></ul></div>
+      <div class="card rv"><h4>Out of scope (this programme)</h4><ul class="muted"><li>Physical network / Starlink hardware procurement (assumed in place).</li><li>Construction/renovation of the property.</li><li>Third-party OTA contracts themselves (Odoo integrates; commercial terms are the owner's).</li><li>Statutory tax filing itself (Odoo prepares; the accountant files).</li></ul></div>
+    </div>
+  </section>
+
+  <!-- 02 CONTEXT -->
+  <section class="sec" id="context" data-nav="Business Context" data-grp="Business">
+    <h2 class="rv"><span class="n">02</span>Business context &amp; drivers</h2>
+    <p class="lead rv">Casa Escondida Anilao is an owner-led PADI 5-Star dive resort (24 rooms, 8 ocean-view) running five businesses under one roof — rooms, dive center, restaurant/bar, retail and courses — today coordinated by paper, spreadsheets and group chats. Discovery surfaced consistent, costly friction.</p>
+    <div class="tbl-wrap rv"><table>
+      <thead><tr><th>Driver</th><th>What's happening today</th><th>Desired outcome</th></tr></thead>
+      <tbody>
+        <tr><td>Cash leakage (owner's #1 concern)</td><td>No live inventory/spend control; "if the paper is lost, the revenue is not realised"</td><td>Every sale &amp; cost captured at source; live stock &amp; cash position</td></tr>
+        <tr><td>Repeat errors (owner's success metric)</td><td>Manual re-keying across POS, folios, books</td><td>Capture once, rules carry it through — errors designed out</td></tr>
+        <tr><td>Scattered enquiries</td><td>FB / WhatsApp / Viber / Booking.com handled by hand, slowly</td><td>Omni-channel capture + AI concierge → CRM</td></tr>
+        <tr><td>OTA dependency</td><td>Commission erodes margin; phasing off Booking.com</td><td>Direct bookings via own site; OTA as supplement</td></tr>
+        <tr><td>No visibility</td><td>No occupancy/RevPAR/dive-utilisation/cash dashboards</td><td>Live per-department P&amp;L &amp; KPIs</td></tr>
+        <tr><td>Compliance risk</td><td>Lapsed POS BIR accreditation; manual VAT</td><td>BIR-accredited POS/CAS; tax computed on every line</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- 03 STAKEHOLDERS -->
+  <section class="sec" id="stakeholders" data-nav="Stakeholders &amp; RACI" data-grp="Business">
+    <h2 class="rv"><span class="n">03</span>Stakeholders &amp; RACI</h2>
+    <div class="tbl-wrap rv"><table>
+      <thead><tr><th>Stakeholder</th><th>Interest</th><th>Discovery</th><th>Design&nbsp;sign-off</th><th>UAT</th><th>Go-live</th></tr></thead>
+      <tbody>
+        <tr><td>Owner (Edwin/Evan)</td><td>ROI, control, less leakage/error</td><td>A</td><td>A</td><td>A</td><td>A</td></tr>
+        <tr><td>GM / Instructor (Dong)</td><td>Dive ops, dept heads</td><td>R</td><td>C</td><td>R</td><td>C</td></tr>
+        <tr><td>Front office / Reservations</td><td>Bookings, folio, check-in/out</td><td>C</td><td>C</td><td>R</td><td>I</td></tr>
+        <tr><td>Restaurant &amp; Bar</td><td>POS, kitchen, stock</td><td>C</td><td>I</td><td>R</td><td>I</td></tr>
+        <tr><td>Dive center</td><td>Trips, manifest, gear, courses</td><td>C</td><td>C</td><td>R</td><td>I</td></tr>
+        <tr><td>Accountant / Bookkeeper</td><td>Books, VAT, BIR, payroll</td><td>C</td><td>C</td><td>R</td><td>C</td></tr>
+        <tr><td>Technext (implementer)</td><td>Deliver &amp; support</td><td>R</td><td>R</td><td>C</td><td>R</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note rv">R = Responsible · A = Accountable · C = Consulted · I = Informed.</p>
+  </section>
+
+  <!-- 04 OBJECTIVES -->
+  <section class="sec" id="objectives" data-nav="Objectives &amp; Metrics" data-grp="Business">
+    <h2 class="rv"><span class="n">04</span>Business objectives &amp; success metrics</h2>
+    <div class="tbl-wrap rv"><table>
+      <thead><tr><th>ID</th><th>Objective</th><th>Success metric / target</th></tr></thead>
+      <tbody>
+        <tr><td>OBJ-1</td><td>Stop revenue leakage</td><td>100% of sales &amp; gear rentals captured in-system; stock variance &lt; 2%</td></tr>
+        <tr><td>OBJ-2</td><td>Eliminate repeat data-entry errors</td><td>Zero manual re-keying between POS/folio/books; reconciliation exceptions only</td></tr>
+        <tr><td>OBJ-3</td><td>Shift to direct bookings</td><td>OTA share down; direct-booking share up; enquiry response &lt; 5 min (AI)</td></tr>
+        <tr><td>OBJ-4</td><td>Live visibility</td><td>Daily occupancy, RevPAR, dive-utilisation, cash &amp; per-dept P&amp;L dashboards</td></tr>
+        <tr><td>OBJ-5</td><td>Compliance</td><td>BIR-accredited POS/CAS; VAT &amp; withholding from the ledger; on-time filings</td></tr>
+        <tr><td>OBJ-6</td><td>Faster close</td><td>Monthly close ≤ 3 days; ~90% bank lines auto-reconciled</td></tr>
+        <tr><td>OBJ-7</td><td>Guest experience &amp; reputation</td><td>Automated reviews/win-back; rating maintained/improved</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- 05 BUSINESS REQUIREMENTS -->
+  <section class="sec" id="br" data-nav="Business Requirements" data-grp="Requirements">
+    <h2 class="rv"><span class="n">05</span>Business requirements (BR)</h2>
+    <p class="lead rv">High-level "what the business needs", traceable to objectives. Functional detail follows in §06.</p>
+    <div class="tbl-wrap rv"><table>
+      <thead><tr><th>ID</th><th>Requirement</th><th>Obj.</th><th>Pri</th></tr></thead>
+      <tbody>
+        <tr><td>BR-01</td><td>A single system of record across all five revenue streams and the back office</td><td>OBJ-1,2,4</td><td><span class="pill p-red">M</span></td></tr>
+        <tr><td>BR-02</td><td>Capture every transaction once, at source, with no re-keying downstream</td><td>OBJ-1,2</td><td><span class="pill p-red">M</span></td></tr>
+        <tr><td>BR-03</td><td>BIR-compliant sales documents and tax handling out of the box</td><td>OBJ-5</td><td><span class="pill p-red">M</span></td></tr>
+        <tr><td>BR-04</td><td>Omni-channel enquiry capture and direct online booking</td><td>OBJ-3</td><td><span class="pill p-red">M</span></td></tr>
+        <tr><td>BR-05</td><td>Live operational &amp; financial dashboards for owner and dept heads</td><td>OBJ-4</td><td><span class="pill p-amber">S</span></td></tr>
+        <tr><td>BR-06</td><td>Automation of routine work (pricing, reconciliation, comms, reminders)</td><td>OBJ-2,3,6</td><td><span class="pill p-amber">S</span></td></tr>
+        <tr><td>BR-07</td><td>Role-based access &amp; approval controls (segregation of duties)</td><td>OBJ-1,5</td><td><span class="pill p-red">M</span></td></tr>
+        <tr><td>BR-08</td><td>Mobile-friendly access for staff on the floor / dock</td><td>OBJ-2</td><td><span class="pill p-amber">S</span></td></tr>
+        <tr><td>BR-09</td><td>Data migration from current spreadsheets/records with integrity</td><td>OBJ-2</td><td><span class="pill p-red">M</span></td></tr>
+        <tr><td>BR-10</td><td>Low-risk, phased rollout with training and hypercare</td><td>all</td><td><span class="pill p-red">M</span></td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- 06 FUNCTIONAL REQUIREMENTS -->
+  <section class="sec" id="fr" data-nav="Functional Requirements (FRD)" data-grp="Requirements">
+    <h2 class="rv"><span class="n">06</span>Functional requirements (FRD)</h2>
+    <p class="lead rv">What the system must <em>do</em>, by module. Each maps to an Odoo capability; priority is MoSCoW for the initial programme.</p>
+    <div class="tbl-wrap rv"><table>
+      <thead><tr><th>ID</th><th>Module</th><th>Functional requirement</th><th>Odoo</th><th>Pri</th></tr></thead>
+      <tbody>
+        <tr><td>FR-PMS-01</td><td>Hotel/PMS</td><td>Create reservations from website, OTA &amp; walk-in; prevent double-booking</td><td>Hotel + booking</td><td><span class="pill p-red">M</span></td></tr>
+        <tr><td>FR-PMS-02</td><td>Hotel/PMS</td><td>One folio per guest accumulating room + dive + F&amp;B + retail; single invoice at checkout</td><td>folio → sale.order → invoice</td><td><span class="pill p-red">M</span></td></tr>
+        <tr><td>FR-PMS-03</td><td>Hotel/PMS</td><td>Room-status &amp; housekeeping board; check-in/out workflow</td><td>Housekeeping/project</td><td><span class="pill p-amber">S</span></td></tr>
+        <tr><td>FR-PMS-04</td><td>Hotel/PMS</td><td>Variable/seasonal pricing with min/max guardrails</td><td>pricelists + rules</td><td><span class="pill p-amber">S</span></td></tr>
+        <tr><td>FR-POS-01</td><td>POS</td><td>Restaurant floor plan, kitchen display, charge-to-room in one tap</td><td>pos_restaurant</td><td><span class="pill p-red">M</span></td></tr>
+        <tr><td>FR-POS-02</td><td>POS</td><td>BIR-accredited, sequential receipts/invoices</td><td>POS + l10n_ph</td><td><span class="pill p-red">M</span></td></tr>
+        <tr><td>FR-POS-03</td><td>POS</td><td>Sales decrement stock &amp; post COGS on session close</td><td>stock valuation</td><td><span class="pill p-red">M</span></td></tr>
+        <tr><td>FR-DIVE-01</td><td>Dive</td><td>Capacity-aware trip scheduling &amp; boat/guide rostering (6:1 ratio)</td><td>Appointments/Planning</td><td><span class="pill p-amber">S</span></td></tr>
+        <tr><td>FR-DIVE-02</td><td>Dive</td><td>Digital manifest + e-waivers; course &amp; certification tracking</td><td>Sign + Documents</td><td><span class="pill p-amber">S</span></td></tr>
+        <tr><td>FR-DIVE-03</td><td>Dive</td><td>Serial-tracked gear with rental &amp; preventive servicing</td><td>Inventory + Maintenance</td><td><span class="pill p-amber">S</span></td></tr>
+        <tr><td>FR-INV-01</td><td>Inventory</td><td>Live stock for F&amp;B/retail/dive consumables; reorder rules (diesel, O₂)</td><td>stock</td><td><span class="pill p-red">M</span></td></tr>
+        <tr><td>FR-ACC-01</td><td>Accounting</td><td>12% VAT &amp; expanded withholding computed per line; returns from ledger</td><td>l10n_ph + fiscal pos.</td><td><span class="pill p-red">M</span></td></tr>
+        <tr><td>FR-ACC-02</td><td>Accounting</td><td>Bank/GCash feed import + reconciliation models (~90% auto)</td><td>account + recon models</td><td><span class="pill p-amber">S</span></td></tr>
+        <tr><td>FR-ACC-03</td><td>Accounting</td><td>AI vendor-bill capture + 3-way match; per-department analytic P&amp;L</td><td>OCR + analytic</td><td><span class="pill p-amber">S</span></td></tr>
+        <tr><td>FR-CRM-01</td><td>CRM</td><td>Capture leads from all channels; pipeline by persona/source</td><td>crm</td><td><span class="pill p-amber">S</span></td></tr>
+        <tr><td>FR-WEB-01</td><td>Website</td><td>Direct booking site, multi-language, PWA; remove "Odoo implementation" copy</td><td>website_sale</td><td><span class="pill p-red">M</span></td></tr>
+        <tr><td>FR-HR-01</td><td>HR</td><td>Employees, PADI/EFR skills &amp; renewal reminders; payroll + statutory</td><td>hr / payroll</td><td><span class="pill p-blue">C</span></td></tr>
+        <tr><td>FR-AI-01</td><td>AI</td><td>Omni-channel concierge → CRM lead/quote for next-day approval; auto-translate</td><td>external AI + MCP</td><td><span class="pill p-amber">S</span></td></tr>
+        <tr><td>FR-AI-02</td><td>AI</td><td>Dive daily-briefing; dynamic pricing; review/win-back; overbooking guard</td><td>scheduled actions + AI</td><td><span class="pill p-blue">C</span></td></tr>
+      </tbody>
+    </table></div>
+    <p class="note rv">Full module-by-module behaviour is detailed in the report's §16 workflows and §19 architecture, and the <a href="accounting-revamp.html">accounting overhaul</a>.</p>
+  </section>
+
+  <!-- 07 NFR -->
+  <section class="sec" id="nfr" data-nav="Non-Functional (NFR)" data-grp="Requirements">
+    <h2 class="rv"><span class="n">07</span>Non-functional requirements (NFR)</h2>
+    <div class="tbl-wrap rv"><table>
+      <thead><tr><th>ID</th><th>Attribute</th><th>Requirement</th></tr></thead>
+      <tbody>
+        <tr><td>NFR-01</td><td>Availability</td><td>Cloud-hosted (Odoo Online/SH); target ≥ 99.9% uptime; resilient to local power/internet via cloud + Starlink failover.</td></tr>
+        <tr><td>NFR-02</td><td>Performance</td><td>POS sale &lt; 1s to record; page loads &lt; 3s on resort Wi-Fi; booking site usable on 3G/4G.</td></tr>
+        <tr><td>NFR-03</td><td>Scalability</td><td>Handle peak-season concurrency (multiple POS, dive + front desk) and multi-year data growth.</td></tr>
+        <tr><td>NFR-04</td><td>Security</td><td>Role-based access, segregation of duties, encrypted in transit, audit log on every posting; secrets never in code.</td></tr>
+        <tr><td>NFR-05</td><td>Compliance</td><td>BIR (VAT, withholding, invoice/CAS/POS accreditation) and PH Data Privacy Act for guest data.</td></tr>
+        <tr><td>NFR-06</td><td>Usability</td><td>Minimal-training UI for non-technical staff; mobile-friendly; English primary, guest-facing multi-language.</td></tr>
+        <tr><td>NFR-07</td><td>Reliability / integrity</td><td>Idempotent integrations (no duplicates); period locks; reversals not deletions.</td></tr>
+        <tr><td>NFR-08</td><td>Backup / DR</td><td>Daily managed backups; documented restore; defined RPO/RTO with the host.</td></tr>
+        <tr><td>NFR-09</td><td>Maintainability</td><td>Standard Odoo config over custom code; documented; upgrade-safe.</td></tr>
+        <tr><td>NFR-10</td><td>Auditability</td><td>Every record traceable to who/when; source documents attached to entries.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- 08 DATA & INTEGRATION -->
+  <section class="sec" id="data" data-nav="Data &amp; Integration" data-grp="Requirements">
+    <h2 class="rv"><span class="n">08</span>Data &amp; integration requirements</h2>
+    <div class="grid g2">
+      <div class="card rv"><h4>Data migration</h4><ul class="muted"><li>Customers/guests, vendors (with TINs for 2307), products &amp; rates, employees (statutory IDs), gear/serials.</li><li>Opening balances: trial balance, open AR/AP, inventory valuation, fixed-asset register, deposit liabilities.</li><li>Cleansing &amp; de-duplication; reconcile control totals before sign-off.</li></ul></div>
+      <div class="card rv"><h4>Integrations</h4><ul class="muted"><li>OTAs (Booking.com) — channel sync / commission capture (phasing down).</li><li>Payments — card &amp; GCash; bank statement feeds/imports.</li><li>Email/SMS/messaging for guest comms &amp; the AI concierge.</li><li>BIR EIS e-invoicing — ready if/when mandated.</li></ul></div>
+    </div>
+    <div class="callout warn rv"><strong>Key constraint:</strong> the <code>l10n_ph</code> chart-of-accounts adoption needs an <strong>empty-books cutover window</strong> (posted entries block the template swap) — see the migration plan on the <a href="accounting-revamp.html#migration">accounting page</a>.</div>
+  </section>
+
+  <!-- 09 ASSUMPTIONS -->
+  <section class="sec" id="assumptions" data-nav="Assumptions &amp; Constraints" data-grp="Requirements">
+    <h2 class="rv"><span class="n">09</span>Assumptions, constraints &amp; dependencies</h2>
+    <div class="grid g3">
+      <div class="card rv"><h4>Assumptions</h4><ul class="muted"><li>Reliable internet (incl. Starlink) at the property.</li><li>Owner/heads available for discovery, UAT &amp; training.</li><li>Accountant available for BIR/CAS specifics.</li><li>Hardware (POS terminals, printers) available or procured.</li></ul></div>
+      <div class="card rv"><h4>Constraints</h4><ul class="muted"><li>BIR accreditation lead time gates go-live selling.</li><li>CoA swap needs an empty-books window (timing).</li><li>Seasonal peak — avoid go-live in the busiest window.</li><li>Small team — change capacity is limited; phase it.</li></ul></div>
+      <div class="card rv"><h4>Dependencies</h4><ul class="muted"><li>BIR RDO approvals (CAS/POS, invoice series).</li><li>Bank feed availability / statement formats.</li><li>OTA/channel-manager subscription for two-way sync.</li><li>Source data quality from existing records.</li></ul></div>
+    </div>
+  </section>
+
+  <!-- 10 ACCEPTANCE -->
+  <section class="sec" id="acceptance" data-nav="Acceptance &amp; UAT" data-grp="Delivery">
+    <h2 class="rv"><span class="n">10</span>Acceptance criteria &amp; UAT</h2>
+    <p class="lead rv">A requirement is "done" when its acceptance test passes in UAT, witnessed by the responsible stakeholder. Representative criteria:</p>
+    <div class="tbl-wrap rv"><table>
+      <thead><tr><th>Req</th><th>Acceptance test</th></tr></thead>
+      <tbody>
+        <tr><td>FR-PMS-02</td><td>A guest with room + a dive + a bar tab checks out → one VAT-correct invoice; revenue tagged Rooms/Dive/F&amp;B.</td></tr>
+        <tr><td>FR-POS-03</td><td>A POS sale of a stocked item decrements stock and posts COGS on session close.</td></tr>
+        <tr><td>FR-ACC-01</td><td>Quarterly VAT (2550Q) figures reconcile to the ledger with no manual adjustment.</td></tr>
+        <tr><td>FR-ACC-02</td><td>An imported bank statement auto-reconciles ≥ 90% of lines; the rest are flagged for review.</td></tr>
+        <tr><td>FR-WEB-01</td><td>A guest completes a direct booking online and receives confirmation; folio opens automatically.</td></tr>
+        <tr><td>BR-02</td><td>No process requires re-typing a transaction already entered in another module.</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note rv">UAT runs against the live demo (<a href="https://edu-escondida.odoo.com/odoo">edu-escondida.odoo.com</a>) during a structured cycle; defects triaged by severity; go-live gated on zero criticals.</p>
+  </section>
+
+  <!-- 11 RTM -->
+  <section class="sec" id="rtm" data-nav="Traceability Matrix (RTM)" data-grp="Delivery">
+    <h2 class="rv"><span class="n">11</span>Requirements traceability matrix (RTM)</h2>
+    <p class="lead rv">Need → business requirement → functional requirement → Odoo feature → acceptance — so nothing is lost and every build item earns its place.</p>
+    <div class="tbl-wrap rv"><table>
+      <thead><tr><th>Business need</th><th>BR</th><th>FR</th><th>Odoo feature</th><th>Acceptance</th></tr></thead>
+      <tbody>
+        <tr><td>Stop leakage</td><td>BR-01,02</td><td>FR-POS-03, FR-INV-01</td><td>POS + stock valuation</td><td>Stock ↔ sales ↔ COGS tie out</td></tr>
+        <tr><td>No re-keying</td><td>BR-02</td><td>FR-PMS-02</td><td>Folio → invoice</td><td>One invoice at checkout</td></tr>
+        <tr><td>Compliance</td><td>BR-03</td><td>FR-POS-02, FR-ACC-01</td><td>l10n_ph + accredited POS</td><td>VAT ties to ledger; accredited series</td></tr>
+        <tr><td>Direct bookings</td><td>BR-04</td><td>FR-WEB-01, FR-AI-01</td><td>website_sale + AI concierge</td><td>Online booking + lead capture</td></tr>
+        <tr><td>Visibility</td><td>BR-05</td><td>FR-ACC-03</td><td>Analytic accounting</td><td>Live per-dept P&amp;L</td></tr>
+        <tr><td>Automation</td><td>BR-06</td><td>FR-ACC-02, FR-AI-02</td><td>Recon models + scheduled actions</td><td>~90% auto-reconcile; briefings fire</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- 12 RISKS -->
+  <section class="sec" id="risks" data-nav="Risks" data-grp="Delivery">
+    <h2 class="rv"><span class="n">12</span>Key risks &amp; mitigations</h2>
+    <div class="tbl-wrap rv"><table>
+      <thead><tr><th>Risk</th><th>Impact</th><th>Mitigation</th></tr></thead>
+      <tbody>
+        <tr><td>BIR accreditation delay</td><td>Blocks compliant selling at go-live</td><td>Start accreditation in Phase 1; keep interim compliant process</td></tr>
+        <tr><td>CoA swap timing (empty books)</td><td>Delays clean PH accounting</td><td>Plan cutover at a fiscal boundary; opening balances prepared in advance</td></tr>
+        <tr><td>Staff adoption</td><td>Workarounds, data gaps</td><td>Phased rollout, role-based training, champions, hypercare</td></tr>
+        <tr><td>Connectivity</td><td>POS/booking downtime</td><td>Cloud + Starlink failover; POS offline mode</td></tr>
+        <tr><td>Source-data quality</td><td>Migration errors</td><td>Cleanse + reconcile control totals; parallel run</td></tr>
+        <tr><td>Scope creep</td><td>Timeline/cost overrun</td><td>This baseline + change control; MoSCoW phasing</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note rv">Full scored risk register &amp; RACI across phases: <a href="index.html#risk">report §24</a>.</p>
+  </section>
+
+  <!-- 13 GLOSSARY -->
+  <section class="sec" id="glossary" data-nav="Glossary" data-grp="Reference">
+    <h2 class="rv"><span class="n">13</span>Glossary</h2>
+    <div class="tbl-wrap rv"><table><tbody>
+      <tr><td><b>BRD / FRD / NFR</b></td><td>Business / Functional Requirements Document; Non-Functional Requirements.</td></tr>
+      <tr><td><b>RTM</b></td><td>Requirements Traceability Matrix.</td></tr>
+      <tr><td><b>MoSCoW</b></td><td>Must / Should / Could / Won't — prioritisation.</td></tr>
+      <tr><td><b>RACI</b></td><td>Responsible / Accountable / Consulted / Informed.</td></tr>
+      <tr><td><b>PMS</b></td><td>Property Management System (hotel front office).</td></tr>
+      <tr><td><b>BIR / CAS / EIS</b></td><td>Bureau of Internal Revenue; Computerised Accounting System; Electronic Invoicing System.</td></tr>
+      <tr><td><b>VAT / EWT</b></td><td>Value-Added Tax (12%); Expanded Withholding Tax.</td></tr>
+      <tr><td><b>UAT</b></td><td>User Acceptance Testing.</td></tr>
+      <tr><td><b>RevPAR</b></td><td>Revenue per available room.</td></tr>
+    </tbody></table></div>
+  </section>
+
+  <!-- 14 RELATED -->
+  <section class="sec" id="related" data-nav="Related Documents" data-grp="Reference">
+    <h2 class="rv"><span class="n">14</span>Related documents</h2>
+    <div class="grid g3">
+      <div class="card rv"><h4>📊 Strategy report</h4><p class="muted"><a href="index.html">The full due-diligence &amp; strategy report</a> — workflows, architecture, roadmap, KPIs.</p></div>
+      <div class="card rv"><h4>📒 Accounting overhaul</h4><p class="muted"><a href="accounting-revamp.html">Detailed finance design</a> &amp; automation.</p></div>
+      <div class="card rv"><h4>⚓ Sales presentation</h4><p class="muted"><a href="odoo-sales.html">Why Odoo for the property</a> + engagement tiers.</p></div>
+      <div class="card rv"><h4>🧾 Quotation</h4><p class="muted"><a href="quotation.html">Indicative scope-of-work &amp; pricing.</a></p></div>
+      <div class="card rv"><h4>🧭 Demo walkthrough</h4><p class="muted"><a href="odoo-demo-guide.html">9-step live-demo script.</a></p></div>
+      <div class="card rv"><h4>📋 Discovery questions</h4><p class="muted"><a href="stakeholder-questions.html">Stakeholder question bank.</a></p></div>
+    </div>
+  </section>
+
+  <!-- 15 SIGN-OFF -->
+  <section class="sec" id="signoff" data-nav="Sign-off" data-grp="Reference">
+    <h2 class="rv"><span class="n">15</span>Approval &amp; sign-off</h2>
+    <div class="tbl-wrap rv"><table>
+      <thead><tr><th>Role</th><th>Name</th><th>Signature</th><th>Date</th></tr></thead>
+      <tbody>
+        <tr><td>Client — Owner</td><td>Edwin / Evan</td><td style="height:40px"></td><td></td></tr>
+        <tr><td>Client — GM</td><td>"Dong" Vergara</td><td></td><td></td></tr>
+        <tr><td>Client — Accountant</td><td>&nbsp;</td><td></td><td></td></tr>
+        <tr><td>Technext — Lead</td><td>&nbsp;</td><td></td><td></td></tr>
+      </tbody>
+    </table></div>
+    <p class="note rv">On sign-off this baseline is frozen; further changes follow change control (impact on scope, timeline &amp; cost assessed before approval).</p>
+    <div class="callout rv"><strong>Disclaimer.</strong> Requirements reflect Scoping Meetings 1 &amp; 2 and the live build; Philippine tax/BIR specifics are to be confirmed with the client's accountant and BIR RDO. This document does not constitute tax or legal advice.</div>
+  </section>
+
+  <div class="foot note">Casa Escondida Anilao × Technext · Business Requirements Set v1.0 · <a href="index.html">back to the report</a></div>
+</div>
+
+<script>
+const secnav=document.getElementById('secnav');
+const groups={};document.querySelectorAll('section[data-nav]').forEach(s=>{const g=s.dataset.grp||'';(groups[g]=groups[g]||[]).push(s);});
+let nh='';for(const g in groups){if(g)nh+=`<div class="gh">${g}</div>`;groups[g].forEach(s=>nh+=`<a href="#${s.id}">${s.dataset.nav}</a>`);}secnav.innerHTML=nh;
+function toggleNav(){secnav.classList.toggle('open');}
+secnav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>secnav.classList.remove('open')));
+document.addEventListener('click',e=>{if(!secnav.contains(e.target)&&!/Sections/.test(e.target.textContent||''))secnav.classList.remove('open');});
+function toggleTheme(){const h=document.documentElement;const l=h.getAttribute('data-theme')==='light';h.setAttribute('data-theme',l?'dark':'light');document.getElementById('logo').style.filter=l?'none':'invert(1) brightness(.3)';}
+window.addEventListener('scroll',()=>{
+  const h=document.documentElement;document.getElementById('prog').style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';
+  let cur='';document.querySelectorAll('section[data-nav]').forEach(s=>{if(s.getBoundingClientRect().top<140)cur=s.id;});
+  secnav.querySelectorAll('a').forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+cur));
+});
+const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target);}});},{threshold:.12});
+document.querySelectorAll('.rv').forEach(x=>io.observe(x));
+</script>
+</body>
+</html>
