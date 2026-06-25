@@ -62,15 +62,18 @@ print(f"Connected uid={UID} @ {URL} ({DB})")
 data = base64.b64encode(open(INDEX, "rb").read()).decode()
 print(f"Read index.html ({len(data)*3//4/1_048_576:.2f} MB) — uploading…")
 
-# 1) idempotent public attachment
-vals = {"name": ATT_NAME, "datas": data, "mimetype": "text/html",
-        "is_public": True, "type": "binary"}
+# 1) idempotent public attachment (public-flag field name varies: 'public' vs 'is_public')
+pub_field = "public" if has_field("ir.attachment", "public") else ("is_public" if has_field("ir.attachment", "is_public") else None)
+base = {"name": ATT_NAME, "datas": data, "mimetype": "text/html", "type": "binary"}
+if pub_field: base[pub_field] = True
 found = x("ir.attachment", "search", [[["name", "=", ATT_NAME]]], {"limit": 1})
 if found:
-    att_id = found[0]; x("ir.attachment", "write", [found, {"datas": data, "is_public": True, "mimetype": "text/html"}])
-    print(f"attachment refreshed (id={att_id})")
+    att_id = found[0]
+    wr = {"datas": data, "mimetype": "text/html"}
+    if pub_field: wr[pub_field] = True
+    x("ir.attachment", "write", [found, wr]); print(f"attachment refreshed (id={att_id})")
 else:
-    att_id = x("ir.attachment", "create", [vals]); print(f"attachment created (id={att_id})")
+    att_id = x("ir.attachment", "create", [base]); print(f"attachment created (id={att_id})")
 
 served = f"/web/content/{att_id}"
 public_url = URL.rstrip("/") + served
