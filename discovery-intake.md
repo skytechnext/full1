@@ -1,47 +1,50 @@
 # Casa Escondida — Google Drive intake inventory (documented 20 Aug 2026)
 
-Documentation of the two Drive folders provided by the client. Captured via the Drive API
-(titles, owners, dates, links). **Google Forms question/answer content is not retrievable through
-the Drive API** — see the limitation note below.
+Two parallel sets of **intake Google Forms**, one form per audience in each set — a short "quick one"
+and a longer "when you have time". All owned by **jett@technext.asia**. Captured via the Drive API
+(titles/owners/dates/links). **Form question & response text is NOT retrievable through the Drive API
+or via the shared links** — see the limitation note.
 
-## Folder 1 — "Casa Escondida - intake, when you have time (2026)"
-- **ID:** `1PYA5oTC8AQJ0Di0I3q7VmZiYu7ol2Kuu` · owner **jett@technext.asia** · created 15 Aug 2026
-- **URL:** https://drive.google.com/drive/folders/1PYA5oTC8AQJ0Di0I3q7VmZiYu7ol2Kuu
-- **Contents:** 4 role-specific intake **Google Forms** ("when you have time" questionnaires) — one per
-  department/stakeholder, to gather operational detail for the ERP build. Response content not yet
-  extractable (see below).
-
-| Form (title) | Audience / purpose | File ID | Created | Approx. size |
-|---|---|---|---|---|
-| Casa Escondida — when you have time, **for Andrew & Dong** | Owners / GM & dive lead — leadership & cross-ops | `1AQNO_txVBFnU99Ugc_TQjyUZzkXgPtKlenvCb5G8Mb4` | 15 Aug 2026 | 3.0 KB (largest) |
-| Casa Escondida — when you have time, **for Eloisa** | Ms. Eloisa — front office / reservations | `1ZDoQdP-i-LUNCe7Hsf8vDsm4MwV2SaxwHSemM3eL4eo` | 15 Aug 2026 | 2.4 KB |
-| Casa Escondida — when you have time, **for the kitchen and bar** | Restaurant & bar / F&B | `1GJgnZ8zJ9gf0dxFqfTK8bJKxjN0Qyr8N1t5WoSLwnOo` | 15 Aug 2026 | 2.3 KB |
-| Casa Escondida — when you have time, **for the dive centre** | Dive operations | `1E0LP1LidVXO-pi02WhKlxAC7Ru-Ez6zqwID9eJbg1Hk` | 15 Aug 2026 | 1.0 KB (smallest) |
-
-Form edit links:
-- Andrew & Dong — https://docs.google.com/forms/d/1AQNO_txVBFnU99Ugc_TQjyUZzkXgPtKlenvCb5G8Mb4/edit
-- Eloisa — https://docs.google.com/forms/d/1ZDoQdP-i-LUNCe7Hsf8vDsm4MwV2SaxwHSemM3eL4eo/edit
-- Kitchen & bar — https://docs.google.com/forms/d/1GJgnZ8zJ9gf0dxFqfTK8bJKxjN0Qyr8N1t5WoSLwnOo/edit
-- Dive centre — https://docs.google.com/forms/d/1E0LP1LidVXO-pi02WhKlxAC7Ru-Ez6zqwID9eJbg1Hk/edit
-
-## Folder 2 — "Casa Escondida - intake (2026)"
-- **ID:** `1Pva-xUoU2TJiYJ8h6eAewEbSNCqQQco7` · owner **jett@technext.asia** · created 13 Aug 2026 · shared 20 Aug 2026
+## Set A — "quick one" — folder "Casa Escondida - intake (2026)"
+- **Folder ID:** `1Pva-xUoU2TJiYJ8h6eAewEbSNCqQQco7` · created 13 Aug 2026
 - **URL:** https://drive.google.com/drive/folders/1Pva-xUoU2TJiYJ8h6eAewEbSNCqQQco7
-- **Contents:** **empty** at time of documentation (no files accessible under this parent). Likely the
-  destination for collected intake responses / materials once submitted.
 
-## Limitation — extracting the Forms' actual questions & answers
-The Drive API cannot export Google Forms content (`read_file_content` → unsupported mime type;
-`download_file_content` → internal error). To document the real questions and any responses, do ONE of:
-1. In each Form → **Responses → link to Sheets** (creates a responses spreadsheet), then share the
-   sheet — it reads cleanly and I can document questions + answers.
-2. Or **File → Download / print each Form** and share as PDF/Doc.
-3. Or grant Forms-API access.
-Once any of those is available, this inventory can be expanded into a full Q&A capture per department.
+| Form | Audience | File ID | Size |
+|---|---|---|---|
+| Casa Escondida — the quick one, **for Andrew** | Owner/GM | `1I8ckYiL66zDKdfOdiEvboK0SsGpw71SuCeiJh-1Cr8E` | 2.3 KB |
+| Casa Escondida — the quick one, **for Eloisa** | Front office / reservations | `1zDS4D5uOoq092BxH1PK-mNdofq87q4NimLxOwiMnQzA` | 1.0 KB |
+| Casa Escondida — the quick one, **for the dive centre** | Dive ops | `1-pAqslp00nYj-cEZbs9zFpvEd1NeOh0sTDkQfkoyIaI` | 1.0 KB |
+| Casa Escondida — the quick one, **for the kitchen and bar** | F&B | `1FqshB1HQEbsDb9RjE-RoFVY5owltE7g2IIqTP_ZWU0o` | 1.0 KB |
 
-## Related Casa Escondida materials seen elsewhere in the Drive (NOT in the two folders above)
-Surfaced by search; readable if you want them documented too (say the word):
-- *Casa Escondida x TechNext — Scoping Meeting 2 (18 Jun 2026) — Notes by Gemini* (Google Doc) + recording (MP4)
-- *Casa_Escondida_Marketing_Proposal_TechNextAsia_2026.docx*
-- *Casa Escondida Estimates.xlsx* · *Team Activities.xlsx*
-- Various `index.html` / `CASA_Discovery.html` / `Casa 5-Day Plan.html` / `changelog.html` and `dive_resort.py`
+## Set B — "when you have time" — folder "Casa Escondida - intake, when you have time (2026)"
+- **Folder ID:** `1PYA5oTC8AQJ0Di0I3q7VmZiYu7ol2Kuu` · created 15 Aug 2026
+- **URL:** https://drive.google.com/drive/folders/1PYA5oTC8AQJ0Di0I3q7VmZiYu7ol2Kuu
+
+| Form | Audience | File ID | Size |
+|---|---|---|---|
+| Casa Escondida — when you have time, **for Andrew & Dong** | Owners/GM & dive lead | `1AQNO_txVBFnU99Ugc_TQjyUZzkXgPtKlenvCb5G8Mb4` | 3.0 KB |
+| Casa Escondida — when you have time, **for Eloisa** | Front office / reservations | `1ZDoQdP-i-LUNCe7Hsf8vDsm4MwV2SaxwHSemM3eL4eo` | 2.4 KB |
+| Casa Escondida — when you have time, **for the dive centre** | Dive ops | `1E0LP1LidVXO-pi02WhKlxAC7Ru-Ez6zqwID9eJbg1Hk` | 1.0 KB |
+| Casa Escondida — when you have time, **for the kitchen and bar** | F&B | `1GJgnZ8zJ9gf0dxFqfTK8bJKxjN0Qyr8N1t5WoSLwnOo` | 2.3 KB |
+
+Structure: 4 audiences × 2 depths (quick / detailed) = 8 role-specific questionnaires gathering
+department-level operational detail for the ERP build.
+
+## Limitation — why the shared links don't let me read the questions
+- The Drive API cannot export Google Forms content (`read_file_content` → unsupported mime type;
+  `download_file_content` → internal error).
+- The public `/viewform` and `/preview` pages return **HTTP 401** — the forms require Google sign-in,
+  which my tools don't have (the edit/preview links open for the owner only).
+- Link *format* is irrelevant (`?usp=…&ouid=…`, `/edit`, `/preview` all resolve to the same file ID).
+
+### To get the questions & answers to me, pick one (best first):
+1. **Responses → Sheets:** in each Form, Responses tab → the green **Sheets** icon → "Link to Sheets".
+   Share the resulting spreadsheet. Header row = the questions, rows = answers. I read Sheets cleanly →
+   full Q&A capture per department.
+2. **Export to PDF:** Form → ⋮ → **Print → Save as PDF** → upload to Drive. Gives the questions (no answers).
+3. **Copy questions into a Google Doc** and share it. I read Docs.
+
+## Related Casa Escondida materials elsewhere in the Drive (not in these folders; readable on request)
+Scoping Meeting 2 notes (Doc) + recording (MP4); `Casa_Escondida_Marketing_Proposal_TechNextAsia_2026.docx`;
+`Casa Escondida Estimates.xlsx`; `Team Activities.xlsx`; various `index.html`/`CASA_Discovery.html`/
+`Casa 5-Day Plan.html`/`changelog.html`; `dive_resort.py`.
