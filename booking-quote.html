@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Casa Escondida — Booking & Quotation Builder</title>
+<meta name="description" content="Interactive booking quotation creator for Casa Escondida — drag-and-drop guests into rooms, estimate room-nights, dives, courses and extras, and generate a live itemized VAT quote.">
+<link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0a0f1a"><link rel="icon" href="assets/favicon.svg"><link rel="apple-touch-icon" href="icon-192.png">
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));}</script>
+<style>
+:root{--bg:#0a0f1a;--panel:#121c30;--panel2:#16223a;--panel3:#1b2942;--line:#1f2d49;--ink:#e8f0fb;--ink2:#a9bdd8;--muted:#7388ab;--teal:#19c6c6;--aqua:#37e0c8;--blue:#3b82f6;--green:#36d399;--amber:#ffb454;--coral:#ff6b6b;--purple:#a78bfa;--grad:linear-gradient(135deg,#19c6c6,#3b82f6 55%,#6366f1);--shadow:0 18px 50px -20px rgba(0,0,0,.6);--mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;--sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+html[data-theme=light]{--bg:#eef3fb;--panel:#fff;--panel2:#f3f7ff;--panel3:#e9f0fb;--line:#d3deef;--ink:#10203a;--ink2:#33486a;--muted:#64789a;--shadow:0 18px 50px -28px rgba(20,40,80,.35)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.5;overflow-x:hidden}
+h1,h2,h3,h4{margin:0 0 .4em;font-weight:800;letter-spacing:-.02em}a{color:var(--teal);text-decoration:none}
+#bar{position:sticky;top:0;z-index:100;background:rgba(10,15,26,.86);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 16px;flex-wrap:wrap}
+html[data-theme=light] #bar{background:rgba(255,255,255,.85)}
+#bar img{height:24px}.bar-r{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.btn{background:var(--grad);color:#fff;font-weight:700;padding:8px 13px;border-radius:10px;font-size:.8rem;border:0;cursor:pointer}
+.btn.ghost{background:var(--panel);border:1px solid var(--line);color:var(--ink)}
+.btn.sm{padding:5px 9px;font-size:.74rem}
+header{padding:34px 20px 4px;text-align:center}
+header .eyebrow{font-size:.72rem;text-transform:uppercase;letter-spacing:.14em;color:var(--aqua);font-weight:700}
+header h1{font-size:clamp(1.5rem,4vw,2.3rem);background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;margin-top:6px}
+header p{color:var(--ink2);max-width:760px;margin:6px auto;font-size:.92rem}
+.wrap{max-width:1280px;margin:0 auto;padding:12px 18px 80px}
+.layout{display:grid;grid-template-columns:1fr 380px;gap:18px;align-items:start}
+@media(max-width:980px){.layout{grid-template-columns:1fr}}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:var(--shadow);margin-bottom:16px;min-width:0}
+.card h3{font-size:1rem;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.cap{font-size:.74rem;color:var(--muted);margin:-2px 0 10px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.fld{display:flex;flex-direction:column;gap:3px;font-size:.72rem;color:var(--ink2)}
+input,select{background:var(--panel2);border:1px solid var(--line);color:var(--ink);border-radius:8px;padding:6px 8px;font-size:.84rem;font-family:inherit}
+input[type=number]{width:90px;text-align:right}
+input.mini{width:64px}
+input[type=date]{width:150px}
+.hint{font-size:.74rem;color:var(--muted)}
+/* guests pool */
+.pool{display:flex;gap:8px;flex-wrap:wrap;min-height:52px;border:1.5px dashed var(--line);border-radius:12px;padding:10px;background:var(--panel2);transition:border-color .15s,background .15s}
+.pool.over{border-color:var(--teal);background:var(--panel3)}
+.guest{display:inline-flex;align-items:center;gap:6px;background:var(--panel3);border:1px solid var(--line);border-radius:20px;padding:5px 10px;font-size:.82rem;cursor:grab;user-select:none;touch-action:manipulation}
+.guest:active{cursor:grabbing}
+.guest.sel{border-color:var(--teal);box-shadow:0 0 0 2px rgba(25,198,198,.4);background:var(--panel)}
+.guest .dv{font-size:.66rem;color:var(--aqua)}
+.guest .rm{color:var(--coral);font-weight:700;cursor:pointer;margin-left:2px}
+/* rooms board */
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:.72rem;color:var(--muted);margin:2px 0 10px}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;vertical-align:middle;margin-right:4px}
+.rtgroup{margin-bottom:12px}
+.rtgroup .rh{font-size:.8rem;font-weight:700;color:var(--ink);margin-bottom:6px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px}
+.rtgroup .rh .meta{font-weight:400;color:var(--muted);font-size:.74rem}
+.units{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.unit{border:1.5px solid var(--line);border-radius:11px;padding:8px;background:var(--panel2);min-height:74px;transition:border-color .15s,background .15s;cursor:pointer}
+.unit.over{border-color:var(--teal);background:var(--panel3)}
+.unit.occ{border-color:#2c527d}
+.unit.full{border-color:var(--amber)}
+.unit.oc{border-color:var(--coral);box-shadow:0 0 0 1px var(--coral)}
+.unit .uh{font-size:.72rem;font-weight:700;display:flex;justify-content:space-between;color:var(--ink)}
+.unit .uh .cnt{color:var(--muted);font-weight:600}
+.unit .occs{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px}
+.occ-chip{font-size:.72rem;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:3px 7px;cursor:grab;user-select:none}
+.tv{color:var(--aqua)}.tv2{color:var(--purple)}
+/* table */
+table{width:100%;border-collapse:collapse;font-size:.82rem}td,th{text-align:left;padding:6px 6px;border-bottom:1px solid var(--line)}th{color:var(--aqua);font-size:.66rem;text-transform:uppercase;letter-spacing:.04em}
+td.r,th.r{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+/* quote panel */
+.quote{position:sticky;top:64px}
+.qline{display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px dashed var(--line);font-size:.86rem}
+.qline .lbl{color:var(--ink2)}.qline .amt{font-variant-numeric:tabular-nums;font-weight:600}
+.qline.sub .lbl,.qline.sub .amt{font-weight:800}
+.qtot{display:flex;justify-content:space-between;align-items:baseline;margin-top:8px;padding-top:8px;border-top:2px solid var(--line)}
+.qtot .t{font-size:1.5rem;font-weight:900;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.pp{font-size:.78rem;color:var(--muted);text-align:right;margin-top:2px}
+.pill{display:inline-block;font-size:.64rem;font-weight:700;padding:2px 7px;border-radius:20px}
+.p-green{background:#0e2a1e;color:var(--green)}.p-amber{background:#2a230e;color:var(--amber)}.p-red{background:#2a0e14;color:var(--coral)}.p-teal{background:#0e2a2c;color:var(--aqua)}
+.warn{color:var(--amber);font-size:.78rem;margin-top:6px}
+.meter{height:8px;border-radius:6px;background:var(--panel2);overflow:hidden;margin:6px 0}
+.meter i{display:block;height:100%;background:var(--grad);width:0;transition:width .3s}
+details.rates summary{cursor:pointer;font-weight:700;font-size:.86rem;color:var(--aqua)}
+details.rates{border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--panel2)}
+.rate-row{display:grid;grid-template-columns:1fr 96px;gap:8px;align-items:center;margin:5px 0;font-size:.8rem;color:var(--ink2)}
+.note{font-size:.74rem;color:var(--muted)}
+@media print{#bar,header,.controls-hide,.rates,.legend{display:none!important}.layout{grid-template-columns:1fr}.quote{position:static}body{background:#fff;color:#000}}
+</style></head>
+<body>
+<div id="bar">
+  <img src="assets/logo-white.svg" alt="Casa Escondida" id="logo">
+  <div class="bar-r">
+    <a href="index.html" class="btn ghost sm">← Report</a>
+    <button class="btn ghost sm" onclick="toggleTheme()">◐ Theme</button>
+    <button class="btn ghost sm" onclick="copyQuote()">⧉ Copy</button>
+    <button class="btn sm" onclick="window.print()">🖨 Print / PDF</button>
+  </div>
+</div>
+<header>
+  <div class="eyebrow">Casa Escondida Anilao · Reservations</div>
+  <h1>Booking &amp; Quotation Builder</h1>
+  <p>Drag guests into rooms (or tap a guest then tap a room on mobile), add dives &amp; extras, and get a live itemized quote. <strong>Every rate is editable — indicative only, not a fixed offer.</strong></p>
+</header>
+
+<div class="wrap">
+<div class="layout">
+  <!-- LEFT: builder -->
+  <div>
+    <!-- trip -->
+    <div class="card controls-hide">
+      <h3>① Trip &amp; guests</h3>
+      <div class="row" style="margin-bottom:10px">
+        <label class="fld">Check-in<input type="date" id="ci" oninput="fromDates()"></label>
+        <label class="fld">Check-out<input type="date" id="co" oninput="fromDates()"></label>
+        <label class="fld">Nights<input type="number" id="nights" min="1" value="3" oninput="setNights(this.value)"></label>
+      </div>
+      <div class="row">
+        <input id="gname" placeholder="Guest name" style="flex:1;min-width:140px" onkeydown="if(event.key==='Enter')addGuest()">
+        <label class="hint" style="display:flex;gap:5px;align-items:center"><input type="checkbox" id="gdiver" style="width:auto"> diver</label>
+        <button class="btn sm" onclick="addGuest()">+ Add guest</button>
+        <button class="btn ghost sm" onclick="addGuest('Guest');addGuest('Guest')">+ Couple</button>
+        <button class="btn ghost sm" onclick="autoAssign()">✨ Auto-assign</button>
+        <button class="btn ghost sm" onclick="clearAssign()">Unassign all</button>
+      </div>
+      <div class="cap" style="margin-top:8px">Unassigned guests — drag into a room below:</div>
+      <div class="pool" id="pool" data-zone="pool"></div>
+    </div>
+
+    <!-- rooms -->
+    <div class="card">
+      <h3>② Assign rooms <span class="pill p-teal" id="occPill">0 / 24 rooms</span></h3>
+      <div class="cap">24 rooms · 8 ocean-view. Drop guests onto a room; drag between rooms; over-capacity is flagged.</div>
+      <div class="legend">
+        <span><span class="dot" style="background:var(--panel2);border:1px solid var(--line)"></span>empty</span>
+        <span><span class="dot" style="background:#2c527d"></span>occupied</span>
+        <span><span class="dot" style="background:var(--amber)"></span>full</span>
+        <span><span class="dot" style="background:var(--coral)"></span>over capacity</span>
+      </div>
+      <div id="board"></div>
+    </div>
+
+    <!-- dives -->
+    <div class="card controls-hide">
+      <h3>③ Dives, courses &amp; activities</h3>
+      <div class="cap">Quantities for the whole party. Diver count auto-suggests park fees &amp; day packages.</div>
+      <div id="diveList"></div>
+    </div>
+
+    <!-- fnb + extras -->
+    <div class="card controls-hide">
+      <h3>④ Meals &amp; extras</h3>
+      <div id="extraList"></div>
+    </div>
+
+    <!-- rates editor -->
+    <details class="rates controls-hide">
+      <summary>⚙ Edit rates (₱, VAT-exclusive)</summary>
+      <div id="rateEditor" style="margin-top:10px"></div>
+      <button class="btn ghost sm" onclick="resetAll()" style="margin-top:8px">↺ Reset everything</button>
+    </details>
+  </div>
+
+  <!-- RIGHT: quote -->
+  <div class="quote">
+    <div class="card">
+      <h3>Quotation <span class="pill p-teal" id="qmeta"></span></h3>
+      <div class="cap">Casa Escondida Anilao Resort &amp; Dive Center</div>
+      <div id="qlines"></div>
+      <div class="qtot"><span class="lbl">Total (VAT-incl)</span><span class="t" id="qtotal">₱0</span></div>
+      <div class="pp" id="qpp"></div>
+      <div id="qwarn"></div>
+      <div class="row" style="margin-top:12px">
+        <button class="btn" onclick="window.print()">🖨 Print / PDF</button>
+        <button class="btn ghost" onclick="copyQuote()">⧉ Copy summary</button>
+      </div>
+      <p class="note" style="margin-top:10px">Indicative estimate for discussion; final rates, availability &amp; VAT treatment confirmed on booking. Saved in your browser.</p>
+    </div>
+    <div class="card">
+      <h3>Occupancy</h3>
+      <div class="meter"><i id="occMeter"></i></div>
+      <div class="note" id="occText"></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<script>
+/* ---------------- data ---------------- */
+const ROOM_TYPES=[
+  {k:'std',name:'Standard',sqm:18,view:'No view',count:16,cap:2},
+  {k:'dlx',name:'Deluxe',sqm:40,view:'Sea view',count:2,cap:3},
+  {k:'wbd',name:'White Beach Deluxe',sqm:40,view:'Sea view',count:2,cap:3},
+  {k:'ste',name:'Suite',sqm:50,view:'Sea view',count:4,cap:4},
+];
+const DEFAULT_RATES={std:6500,dlx:13000,wbd:14000,ste:16300,breakfast:450,fullboard:1800};
+const DIVES=[
+  {k:'fun',name:'Fun dive (single)',rate:1800},
+  {k:'day3',name:'3-dive day package',rate:4500},
+  {k:'night',name:'Night dive',rate:2200},
+  {k:'try',name:'Discover Scuba / Try dive',rate:4500},
+  {k:'ow',name:'Open Water course',rate:24000},
+  {k:'aow',name:'Advanced OW course',rate:18000},
+  {k:'nitrox',name:'Nitrox fill (per tank)',rate:400},
+  {k:'gear',name:'Gear rental (full set / day)',rate:1200},
+];
+const EXTRAS=[
+  {k:'park',name:'Anilao marine park fee (per pax/day)',rate:300},
+  {k:'van',name:'Van transfer Manila↔resort (per van)',rate:6500},
+];
+const VAT=0.12;
+const KEY='ce_bookingquote_v1';
+const peso=n=>'₱'+Math.round(n).toLocale0();
+Number.prototype.toLocale0=function(){return this.toLocaleString('en-PH');};
+
+/* ---------------- state ---------------- */
+let S=load()||fresh();
+function fresh(){
+  const rooms={}; ROOM_TYPES.forEach(t=>{for(let i=1;i<=t.count;i++)rooms[t.k+'-'+i]={type:t.k,label:t.name.split(' ')[0]+' '+num(t.k,i)};});
+  return {nights:3,gid:1,guests:[],assign:{},rates:{...DEFAULT_RATES},
+    dives:Object.fromEntries(DIVES.map(d=>[d.k,0])),
+    extras:{park:0,van:0}, opts:{breakfast:true,fullboard:false}, ci:'',co:''};
+}
+function num(k,i){return ({std:100,dlx:200,wbd:210,ste:300}[k])+i;}
+function save(){localStorage.setItem(KEY,JSON.stringify(S));}
+function load(){try{const j=JSON.parse(localStorage.getItem(KEY));return (j&&j.rates)?j:null;}catch(e){return null;}}
+
+/* room units (regenerated from types; assignments keyed by unit id) */
+function units(){const u=[];ROOM_TYPES.forEach(t=>{for(let i=1;i<=t.count;i++)u.push({id:t.k+'-'+i,type:t,label:t.name.split(' ')[0]+' '+num(t.k,i)});});return u;}
+function occupantsOf(uid){return S.guests.filter(g=>S.assign[g.id]===uid);}
+
+/* ---------------- guests ---------------- */
+function addGuest(forceName){
+  const el=document.getElementById('gname');
+  let nm=(forceName!==undefined?forceName:el.value).trim()||('Guest '+(S.guests.length+1));
+  const diver=forceName!==undefined?false:document.getElementById('gdiver').checked;
+  S.guests.push({id:'g'+(S.gid++),name:nm,diver}); if(forceName===undefined){el.value='';document.getElementById('gdiver').checked=false;}
+  render();
+}
+function removeGuest(id){S.guests=S.guests.filter(g=>g.id!==id);delete S.assign[id];render();}
+function clearAssign(){S.assign={};render();}
+function autoAssign(){
+  const order=['std','dlx','wbd','ste'];
+  const free={}; units().forEach(u=>free[u.id]=u.type.cap-occupantsOf(u.id).length);
+  S.guests.filter(g=>!S.assign[g.id]).forEach(g=>{
+    for(const k of order){const u=units().find(u=>u.type.k===k&&free[u.id]>0);if(u){S.assign[g.id]=u.id;free[u.id]--;break;}}
+  });
+  render();
+}
+
+/* ---------------- nights/dates ---------------- */
+function setNights(v){S.nights=Math.max(1,+v||1);render();}
+function fromDates(){
+  S.ci=document.getElementById('ci').value;S.co=document.getElementById('co').value;
+  if(S.ci&&S.co){const d=(new Date(S.co)-new Date(S.ci))/86400000;if(d>=1){S.nights=d;document.getElementById('nights').value=d;}}
+  render();
+}
+
+/* ---------------- drag & drop + tap ---------------- */
+let SEL=null,DRAGID=null;
+function selectGuest(id){SEL=(SEL===id?null:id);render();}
+function assignTo(guestId,zone){ if(!guestId)return; S.assign[guestId]=(zone==='pool'?null:zone); if(!S.assign[guestId])delete S.assign[guestId]; SEL=null; render();}
+function onDrop(e,zone){e.preventDefault();const id=DRAGID||e.dataTransfer.getData('text');assignTo(id,zone);DRAGID=null;}
+function allowDrop(e){e.preventDefault();}
+
+/* clicking a zone assigns the selected guest (mobile-friendly) */
+function zoneClick(zone){ if(SEL){assignTo(SEL,zone);} }
+
+/* ---------------- render ---------------- */
+function chip(g,inRoom){
+  return `<span class="guest ${SEL===g.id?'sel':''}" draggable="true" data-g="${g.id}"
+    ondragstart="DRAGID='${g.id}';event.dataTransfer.setData('text','${g.id}')"
+    onclick="event.stopPropagation();selectGuest('${g.id}')">
+    ${esc(g.name)}${g.diver?'<span class="dv">🤿</span>':''}
+    <span class="rm" title="remove" onclick="event.stopPropagation();removeGuest('${g.id}')">✕</span></span>`;
+}
+function esc(s){return (s+'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+
+function render(){
+  // pool
+  const pool=document.getElementById('pool');
+  const un=S.guests.filter(g=>!S.assign[g.id]);
+  pool.innerHTML=un.length?un.map(g=>chip(g)).join(''):'<span class="hint">No unassigned guests. Add guests above.</span>';
+
+  // board
+  let html='';
+  ROOM_TYPES.forEach(t=>{
+    const us=units().filter(u=>u.type.k===t.k);
+    const seated=us.reduce((a,u)=>a+occupantsOf(u.id).length,0);
+    html+=`<div class="rtgroup"><div class="rh"><span>${t.name} <span class="meta">· ${t.sqm}m² · ${t.view} · ${t.view==='Sea view'?'<span class="tv">ocean-view</span>':'sleeps '+t.cap} · ${peso(S.rates[t.k])}/night</span></span><span class="meta">${us.length} rooms · ${seated} guest(s)</span></div><div class="units">`;
+    us.forEach(u=>{
+      const occ=occupantsOf(u.id);const over=occ.length>t.cap;
+      const cls=over?'oc':(occ.length>=t.cap&&occ.length>0?'full':(occ.length>0?'occ':''));
+      html+=`<div class="unit ${cls}" data-zone="${u.id}" ondragover="allowDrop(event)" ondrop="onDrop(event,'${u.id}')" onclick="zoneClick('${u.id}')">
+        <div class="uh"><span>${u.label}</span><span class="cnt">${occ.length}/${t.cap}</span></div>
+        <div class="occs">${occ.map(g=>`<span class="occ-chip" draggable="true" data-g="${g.id}" ondragstart="DRAGID='${g.id}';event.dataTransfer.setData('text','${g.id}')" onclick="event.stopPropagation();selectGuest('${g.id}')">${esc(g.name)}${g.diver?' 🤿':''}</span>`).join('')}</div>
+      </div>`;
+    });
+    html+=`</div></div>`;
+  });
+  document.getElementById('board').innerHTML=html;
+
+  // dive list
+  document.getElementById('diveList').innerHTML=DIVES.map(d=>`
+    <div class="row" style="justify-content:space-between;border-bottom:1px solid var(--line);padding:6px 0">
+      <span style="font-size:.85rem">${d.name} <span class="hint">· ${peso(S.rates_dv?S.rates_dv[d.k]:d.rate)}</span></span>
+      <span class="row" style="gap:6px"><button class="btn ghost sm" onclick="dive('${d.k}',-1)">−</button>
+      <b style="min-width:22px;text-align:center">${S.dives[d.k]||0}</b>
+      <button class="btn ghost sm" onclick="dive('${d.k}',1)">+</button></span></div>`).join('');
+
+  // extras + meals
+  const divers=S.guests.filter(g=>g.diver).length;
+  document.getElementById('extraList').innerHTML=`
+    <label class="row" style="gap:8px;font-size:.86rem;margin-bottom:6px"><input type="checkbox" style="width:auto" ${S.opts.breakfast?'checked':''} onchange="S.opts.breakfast=this.checked;render()"> Breakfast (optional) — ${peso(S.rates.breakfast)}/pax/night</label>
+    <label class="row" style="gap:8px;font-size:.86rem;margin-bottom:10px"><input type="checkbox" style="width:auto" ${S.opts.fullboard?'checked':''} onchange="S.opts.fullboard=this.checked;render()"> Full board (3 meals) — ${peso(S.rates.fullboard)}/pax/night (replaces breakfast)</label>
+    ${EXTRAS.map(x=>`<div class="row" style="justify-content:space-between;border-bottom:1px solid var(--line);padding:6px 0">
+      <span style="font-size:.85rem">${x.name} <span class="hint">· ${peso(x.rate)}</span></span>
+      <span class="row" style="gap:6px"><button class="btn ghost sm" onclick="extra('${x.k}',-1)">−</button>
+      <b style="min-width:22px;text-align:center">${S.extras[x.k]||0}</b>
+      <button class="btn ghost sm" onclick="extra('${x.k}',1)">+</button></span></div>`).join('')}
+    <div class="hint" style="margin-top:6px">${divers} diver(s) · tip: park fee ≈ divers × nights = ${divers*S.nights}</div>`;
+
+  // rate editor
+  document.getElementById('rateEditor').innerHTML=
+    ROOM_TYPES.map(t=>rateRow(t.name+' /night','r_'+t.k,S.rates[t.k])).join('')+
+    rateRow('Breakfast /pax/night','r_breakfast',S.rates.breakfast)+
+    rateRow('Full board /pax/night','r_fullboard',S.rates.fullboard);
+
+  computeQuote();
+  document.getElementById('nights').value=S.nights;
+  if(S.ci)document.getElementById('ci').value=S.ci; if(S.co)document.getElementById('co').value=S.co;
+  save();
+}
+function rateRow(lbl,id,val){return `<div class="rate-row"><span>${lbl}</span><input type="number" value="${val}" oninput="setRate('${id}',this.value)"></div>`;}
+function setRate(id,v){const k=id.slice(2);S.rates[k]=Math.max(0,+v||0);computeQuote();save();}
+function dive(k,d){S.dives[k]=Math.max(0,(S.dives[k]||0)+d);render();}
+function extra(k,d){S.extras[k]=Math.max(0,(S.extras[k]||0)+d);render();}
+
+/* ---------------- quote ---------------- */
+function computeQuote(){
+  const n=S.nights, lines=[]; let sub=0;
+  // rooms
+  const usedByType={}; units().forEach(u=>{if(occupantsOf(u.id).length>0)usedByType[u.type.k]=(usedByType[u.type.k]||0)+1;});
+  ROOM_TYPES.forEach(t=>{const c=usedByType[t.k]||0;if(c){const amt=c*S.rates[t.k]*n;sub+=amt;lines.push([`${t.name} × ${c} room(s) × ${n} night(s)`,amt]);}});
+  const guests=S.guests.length;
+  // meals
+  if(S.opts.fullboard){const amt=S.rates.fullboard*guests*n;if(amt){sub+=amt;lines.push([`Full board × ${guests} pax × ${n} night(s)`,amt]);}}
+  else if(S.opts.breakfast){const amt=S.rates.breakfast*guests*n;if(amt){sub+=amt;lines.push([`Breakfast × ${guests} pax × ${n} night(s)`,amt]);}}
+  // dives
+  DIVES.forEach(d=>{const q=S.dives[d.k]||0;if(q){const amt=q*d.rate;sub+=amt;lines.push([`${d.name} × ${q}`,amt]);}});
+  // extras
+  EXTRAS.forEach(x=>{const q=S.extras[x.k]||0;if(q){const amt=q*x.rate;sub+=amt;lines.push([`${x.name} × ${q}`,amt]);}});
+
+  const vat=sub*VAT, tot=sub+vat;
+  let h=lines.length?lines.map(([l,a])=>`<div class="qline"><span class="lbl">${l}</span><span class="amt">${peso(a)}</span></div>`).join(''):'<div class="hint">Add rooms, dives or extras to build the quote.</div>';
+  h+=`<div class="qline sub"><span class="lbl">Subtotal</span><span class="amt">${peso(sub)}</span></div>`;
+  h+=`<div class="qline"><span class="lbl">VAT 12%</span><span class="amt">${peso(vat)}</span></div>`;
+  document.getElementById('qlines').innerHTML=h;
+  document.getElementById('qtotal').textContent=peso(tot);
+  document.getElementById('qpp').textContent=guests?`${peso(tot/guests)} per guest · ${peso(tot/(n||1))} per night`:'';
+  document.getElementById('qmeta').textContent=`${guests} pax · ${n} night(s)`;
+
+  // occupancy + warnings
+  const usedRooms=units().filter(u=>occupantsOf(u.id).length>0).length;
+  const seated=S.guests.filter(g=>S.assign[g.id]).length, unse=guests-seated;
+  const over=units().filter(u=>occupantsOf(u.id).length>u.type.cap).length;
+  document.getElementById('occPill').textContent=`${usedRooms} / 24 rooms`;
+  document.getElementById('occMeter').style.width=Math.min(100,usedRooms/24*100)+'%';
+  document.getElementById('occText').innerHTML=`${usedRooms} of 24 rooms used · ${seated} of ${guests} guests seated`+(usedByType.ste||usedByType.dlx||usedByType.wbd?` · ocean-view rooms in use`:'');
+  let w='';
+  if(unse>0)w+=`<div class="warn">⚠ ${unse} guest(s) not yet assigned to a room.</div>`;
+  if(over>0)w+=`<div class="warn">⚠ ${over} room(s) over capacity — split the party across more rooms.</div>`;
+  document.getElementById('qwarn').innerHTML=w;
+}
+
+/* ---------------- copy / theme / reset ---------------- */
+function copyQuote(){
+  const n=S.nights,g=S.guests.length,lines=[...document.querySelectorAll('#qlines .qline')].map(l=>l.querySelector('.lbl').textContent+': '+l.querySelector('.amt').textContent);
+  const txt=`CASA ESCONDIDA ANILAO — Booking Quotation (indicative)\n${g} guest(s) · ${n} night(s)\n\n`+lines.join('\n')+`\nTOTAL (VAT-incl): ${document.getElementById('qtotal').textContent}\n${document.getElementById('qpp').textContent}\n\nIndicative estimate; final rates & availability confirmed on booking.`;
+  navigator.clipboard.writeText(txt).then(()=>{const b=event.target;const t=b.textContent;b.textContent='✓ Copied';setTimeout(()=>b.textContent=t,1400);}).catch(()=>alert(txt));
+}
+function toggleTheme(){const h=document.documentElement;const l=h.getAttribute('data-theme')==='light';h.setAttribute('data-theme',l?'dark':'light');document.getElementById('logo').style.filter=l?'none':'invert(1) brightness(.3)';}
+function resetAll(){if(confirm('Clear all guests, assignments and reset rates?')){localStorage.removeItem(KEY);S=fresh();render();}}
+
+/* click empty space clears selection */
+document.addEventListener('click',e=>{if(!e.target.closest('.guest,.occ-chip,.unit,.pool')&&SEL){SEL=null;render();}});
+
+/* seed a small example on first load */
+if(S.guests.length===0 && !localStorage.getItem(KEY)){S.guests=[{id:'g1',name:'Maria',diver:true},{id:'g2',name:'Josh',diver:true}];S.gid=3;S.assign={g1:'dlx-1',g2:'dlx-1'};}
+render();
+</script>
+</body>
+</html>

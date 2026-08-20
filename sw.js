@@ -1,5 +1,5 @@
 /* Casa Escondida report — service worker (offline-capable PWA) */
-const CACHE = 'casa-escondida-v6';
+const CACHE = 'casa-escondida-v7';
 const CORE = [
   './',
   'index.html',
@@ -8,6 +8,7 @@ const CORE = [
   'accounting-revamp.html',
   'requirements.html',
   'quotation.html',
+  'booking-quote.html',
   'stakeholder-questions.html',
   'staff-guides.html',
   'odoo-sales.html',
